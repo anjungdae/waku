@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>combination</title>
+<meta charset="UTF-8">
+    <link rel="stylesheet" href="//code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
+<script src="../js/htmlform.js"></script>
+</head>
+<body id="main">
+	<div id="top">
+        <a id="slidepop" href="#sideList" class="ui-btn ui-btn-inline" data-iconpos="notext"><img src='../image/back.png' height="25px"></a>
+        <a id="pcounter" href="../pacecounter/counter.html" class="ui-btn ui-btn-inline" data-transition="slide" data-direction="reverse">만보기</a>
+        <a id="inven" href="#" class="ui-btn ui-btn-inline">가방</a>
+        <a id="colist" href="../couponlist/couponlist.html" class="ui-btn ui-btn-inline" data-transition="slide">쿠폰</a>
+    </div>  
+    
+  <div id='combineList'>
+  <ul data-role='listview'>
+   <li><a href="../coupon/coupon.html" class="ui-btn" data-transition="slide">쿠폰</a></li>
+   <li><a href="../coupon/coupon.html" class="ui-btn" data-transition="slide">쿠폰</a></li>
+   <li><a href="../coupon/coupon.html" class="ui-btn" data-transition="slide">쿠폰</a></li>
+   </ul>
+  </div>
+   
+  
+<!--   <div id='switch' data-role="page">
+    <p>바뀐 페이지 입니다.</p>
+  </div>
+ -->
+   
+  <div id='sideList' data-role='panel' data-position='left' data-position-fixed='true' data-display='overlay'>
+    <div data-role='collapsible-set' data-inset="false" data-collapsed-icon='false'>
+      <div data-role='collapsible'>
+        <h6>
+          <span class='sortName'>과일</span>
+        </h6>
+        <ul>
+          <li>사과</li>
+          <li>오렌지</li>
+          <li>자몽</li>
+        </ul>
+      </div>
+      <div data-role='collapsible'>
+        <h6>
+          <span class='sortName'>잔</span>
+        </h6>
+        <ul>
+          <li>커피잔</li>
+          <li>그냥잔</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

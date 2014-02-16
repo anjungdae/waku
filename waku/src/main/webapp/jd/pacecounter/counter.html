@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="//code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/weather.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdziY_xl5gxaUkekLDsEZ_FqTeD0D7v5U&sensor=false"></script>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
+    <script src="../js/htmlform.js"></script>
+    <script src="../js/weather.js"></script>
+    <script src="../js/map.js"></script>
+    <title>몸</title>
+  </head>
+  <body id="main" onload="initialize_Marker()">
+
+	<div id="top">
+        <a id="slidepop" href="#sideList" class="ui-btn ui-btn-inline ui-panel-inner" data-iconpos="notext"><img src='../image/back.png' height="25px"></a>
+        <a id="pcounter" href="#" class="ui-btn ui-btn-inline">만보기</a>
+        <a id="inven" href="../combine/combine.html" class="ui-btn ui-btn-inline" data-transition="slide">가방</a>
+        <a id="colist" href="../couponlist/couponlist.html" class="ui-btn ui-btn-inline" data-transition="slide">쿠폰</a>
+    </div>  
+
+	<div id='sideList' data-role='panel' data-position='left'	data-position-fixed='true' data-display='overlay'>
+		<div data-role='collapsible-set' data-inset="false"	data-collapsed-icon='false'>
+			<div data-role='collapsible'>
+				<h6>
+					<span class='sortName'>과일</span>
+				</h6>
+				<ul>
+					<li>사과</li>
+					<li>오렌지</li>
+					<li>자몽</li>
+				</ul>
+			</div>
+			<div data-role='collapsible'>
+				<h6>
+					<span class='sortName'>잔</span>
+				</h6>
+				<ul>
+					<li>커피잔</li>
+					<li>그냥잔</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+  <figure class="icons">
+        <canvas id="clear-day" width="40%" height="40%"></canvas>
+        <pre><span class="comment "> 20°C 천둥뒤 맑음</span></pre>
+  </figure>
+        
+  
+  <script>
+      var icons = new Skycons(),
+          list  = [
+            "clear-day", "clear-night", "partly-cloudy-day",
+            "partly-cloudy-night", "cloudy", "rain", "sleet", "snow", "wind",
+            "fog"
+          ],
+          i;
+
+      for(i = list.length; i--; )
+        icons.set(list[i], list[i]);
+
+      icons.play();
+    </script>
+
+	<div id="htmlform">
+	
+	</div>
+
+	<div id="collapsible" data-role="collapsible" data-collapsed-icon="false">
+    <h4>Heading</h4>
+    <p>ㅇㅇ<p>
+    </div>
+    <div id="map-canvas"></div>
+    </body>
+</html>

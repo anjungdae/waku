@@ -1,0 +1,101 @@
+@CHARSET "UTF-8";
+
+body {
+	height:320px;
+	margin:0;
+	padding:0;
+	bgcolor:white;
+	font-size: small;
+}
+
+li {
+    list-style-type: none;
+}
+
+#main{
+	height:320px;
+}
+
+#top{
+  width: 100%;
+  border:0px #DDD solid;
+  /* border-radius:5px; */
+  background-color:#DDD;
+  background:linear-gradient(-30deg, #DDD, #EEE);
+}
+
+#sideList {
+  	border:#DDD;
+    background : rgba(255, 255, 255, .85);
+    width: 20%;
+    top: 8%;
+}
+
+#back{
+	height:25px;
+}
+
+.ui-panel-inner{
+	padding-top:0px;
+}
+
+div #pcounter {
+	border:#DDD;
+	background : rgba(255, 255, 255, .0);
+}
+
+div #inven {
+	border:#DDD;
+  border-left:1px black solid;
+  padding-left:20px;
+  border-right:1px black solid;
+  padding-right:20px;
+  background : rgba(255, 255, 255, .0);
+}
+
+div #colist {
+	border:#DDD;
+	background : rgba(255, 255, 255, .0);
+}
+
+.ui-btn,.ui-btn-inline {
+  display:table-cell; 
+}
+
+.ui-btn{
+	width:320px;
+	padding:3px;
+}
+
+#map-canvas{
+	height: 150px;
+	width:  100%;
+}
+
+#collapsible{
+	margin:0px;
+	width:  100%;
+}
+
+#collapsible>h4{
+	margin:0px;
+	width:  100%;
+}
+
+#combineList{
+	width: 100%;
+  border:0px #fff solid;
+  background-color:#fff;
+}
+
+.collalist .ui-btn-icon-right .ui-icon {
+    display: none;
+}
+
+.sortName {
+  font-size: small;
+}
+
+#sideList ul {
+	padding: 0px;
+}

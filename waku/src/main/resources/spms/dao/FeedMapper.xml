@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="spms.dao.FeedDao">
+  <resultMap type="feed" id="feedResultMap">
+    <id     property="no"           column="FNO"/>
+    <result property="contents"     column="CONTENTS"/>
+    <result property="createdDate"  column="CDATE"/>
+    <result property="writerNo"     column="MNO"/>
+    <result property="projectNo"    column="PNO"/>
+    <association property="writer" javaType="member">
+      <result property="no"    column="MNO"/>
+      <result property="name"  column="MNAME"/>
+      <result property="photo" column="PHOTO"/>
+      <result property="email" column="EMAIL"/>
+    </association>
+  </resultMap>
+  
+  <insert id="insert" parameterType="feed"
+    useGeneratedKeys="true" keyProperty="no" keyColumn="FNO">
+    insert into FEEDS(CONTENTS,CDATE,MNO,PNO) 
+    values(#{contents},now(),#{writerNo},#{projectNo})
+  </insert>
+  
+  <insert id="insertFile" parameterType="attachFile">
+    insert into ATT_FILES(FNO,FILE_PATH) 
+    values(#{feedNo},#{filePath})
+  </insert>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

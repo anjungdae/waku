@@ -1,0 +1,46 @@
+@CHARSET "UTF-8";
+
+
+#CouponPopup1{
+
+position: relative;
+width:70% ;
+height:90% ;	
+margin:16%;
+border: 10px solid; 
+background-color:#999999; 
+	
+}
+
+#title{
+	font-family:serif;
+	font-size:small;
+	color: #000000; 
+}
+
+#couponImg{width:30%;height:25%;
+position:relative;
+left: 35%;
+right: 30%;
+}
+
+
+#codeImg{width:50%;height:40%;
+position:relative;
+left: 25%;
+right: 35%;}
+
+
+
+#time{
+font-family:serif;
+	font-size:small;
+	color: #000000;	
+}
+
+
+#condition{
+font-family:serif;
+	font-size:small;
+	color: #000000;
+	}
