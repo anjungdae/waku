@@ -7,10 +7,20 @@
 <title>날씨 출력</title>
 <script>
 window.onload = function () {
-	var weatherData =
-	$.ajax("http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139");
-	document.getElementById("result").innerHTML = weatherData;
-	console.log(weatherData);
+  // 날씨 데이터를 요청할 Url
+  var apiUrl = "http://api.openweathermap.org/data/2.5/weather?lat=36&lon=127";
+  // jQuery의 getJSON 메소드를 사용하여 해당 url로 데이터 요청, jsonData 변수에 저장
+  var jsonData = $.getJSON( apiUrl )
+  //되면 function 호출
+   .done(function (data) {
+    var image = null;
+    console.log(data);
+    //document.getElementById("result").innerHTML = data.weather[0].main;
+    // <img> 태그
+    image = $("img");
+    // <img> 태그에 attribute 부여 (json으로 받은 데이터의 icon이름을 이용해 아이콘 받음)
+    image.attr("src","http://openweathermap.org/img/w/" + data.weather[0].icon + ".png");
+   });
 };
 </script>
 </head>
