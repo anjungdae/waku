@@ -14,17 +14,18 @@ window.onload = function () {
   //되면 function 호출
    .done(function (data) {
     var image = null;
-    console.log(data);
+    console.log(data.weather[0].icon);
     //document.getElementById("result").innerHTML = data.weather[0].main;
     // <img> 태그
-    image = $("img");
+    image = $("<img>");
     // <img> 태그에 attribute 부여 (json으로 받은 데이터의 icon이름을 이용해 아이콘 받음)
-    image.attr("src","http://openweathermap.org/img/w/" + data.weather[0].icon + ".png");
+    image.attr("src","http://openweathermap.org/img/w/" + data.weather[0].icon + ".png").appendTo("#image");
    });
 };
 </script>
 </head>
 <body>
   <div id="result"></div>
+  <div id="image"></div>
 </body>
 </html>
