@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project-modules id="moduleCoreId" project-version="2.0">
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
 	<wb-module deploy-name="waku">
 		<property name="context-root" value="waku"/>
 		<wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/resources"/>
@@ -9,6 +8,9 @@
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//Users/bit/.gradle/caches/artifacts-23/filestore/org.mybatis/mybatis/3.2.3/jar/7eee8564f107ce26a89ab1563ae908d2ff88e32e/mybatis-3.2.3.jar">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//Users/bit/.gradle/caches/artifacts-23/filestore/org.khronos/opengl-api/gl1.1-android-2.1_r1/jar/8827d279add29cf9115820671e7879de7bf80390/opengl-api-gl1.1-android-2.1_r1.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//Users/bit/.gradle/caches/artifacts-23/filestore/org.springframework/spring-tx/4.0.0.RELEASE/jar/d150bb19360ed1b81a96c9c09ef4d93c2969f34c/spring-tx-4.0.0.RELEASE.jar">
@@ -53,16 +55,28 @@
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//Users/bit/.gradle/caches/artifacts-23/filestore/jstl/jstl/1.2/jar/74aca283cd4f4b4f3e425f5820cda58f44409547/jstl-1.2.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//Users/bit/.gradle/caches/artifacts-23/filestore/commons-codec/commons-codec/1.3/jar/fd32786786e2adb664d5ecc965da47629dca14ba/commons-codec-1.3.jar">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//Users/bit/.gradle/caches/artifacts-23/filestore/dom4j/dom4j/1.6.1/jar/5d3ccc056b6f056dbf0dddfdf43894b9065a8f94/dom4j-1.6.1.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//Users/bit/.gradle/caches/artifacts-23/filestore/org.springframework/spring-core/4.0.0.RELEASE/jar/73b485e25b13a7a44b73a301fe6757c3cbad453e/spring-core-4.0.0.RELEASE.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//Users/bit/.gradle/caches/artifacts-23/filestore/org.apache.httpcomponents/httpcore/4.0.1/jar/e813b8722c387b22e1adccf7914729db09bcb4a9/httpcore-4.0.1.jar">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//Users/bit/.gradle/caches/artifacts-23/filestore/com.google.code.findbugs/jsr305/1.3.9/jar/40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf/jsr305-1.3.9.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//Users/bit/.gradle/caches/artifacts-23/filestore/commons-io/commons-io/2.2/jar/83b5b8a7ba1c08f9e8c8ff2373724e33d3c1e22a/commons-io-2.2.jar">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//Users/bit/.gradle/caches/artifacts-23/filestore/org.json/json/20080701/jar/d652f102185530c93b66158b1859f35d45687258/json-20080701.jar">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//Users/bit/.gradle/caches/artifacts-23/filestore/xpp3/xpp3/1.1.4c/jar/9b988ea84b9e4e9f1874e390ce099b8ac12cfff5/xpp3-1.1.4c.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//Users/bit/.gradle/caches/artifacts-23/filestore/aopalliance/aopalliance/1.0/jar/235ba8b489512805ac13a8f9ea77a1ca5ebe3e8/aopalliance-1.0.jar">
@@ -80,6 +94,9 @@
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//Users/bit/.gradle/caches/artifacts-23/filestore/com.fasterxml.jackson.core/jackson-core/2.3.0/bundle/5e19d8381e01aa64c9dd47ff453e39abc441775c/jackson-core-2.3.0.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//Users/bit/.gradle/caches/artifacts-23/filestore/xerces/xmlParserAPIs/2.6.2/jar/65acede1e5305bd2b92213d7b5761328c6f4fd9/xmlParserAPIs-2.6.2.jar">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//Users/bit/.gradle/caches/artifacts-23/filestore/org.springframework/spring-expression/4.0.0.RELEASE/jar/199be03c976524b6427dff31078227bfc703400b/spring-expression-4.0.0.RELEASE.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
@@ -87,6 +104,12 @@
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//Users/bit/.gradle/caches/artifacts-23/filestore/org.springframework/spring-aop/4.0.0.RELEASE/jar/cceb3e9510774b3f88b008a70c6a9aefb98d891f/spring-aop-4.0.0.RELEASE.jar">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//Users/bit/.gradle/caches/artifacts-23/filestore/com.google.android/android/4.1.1.4/jar/3fb039385e71e9aa2ba547ea9ea8caa34a4ffac7/android-4.1.1.4.jar">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//Users/bit/.gradle/caches/artifacts-23/filestore/org.apache.httpcomponents/httpclient/4.0.1/jar/1d7d28fa738bdbfe4fbd895d9486308999bdf440/httpclient-4.0.1.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//Users/bit/.gradle/caches/artifacts-23/filestore/org.reflections/reflections/0.9.9-RC1/jar/b78b545f452a6b7d4fab2641dd0b0147a0f4fd5e/reflections-0.9.9-RC1.jar">
