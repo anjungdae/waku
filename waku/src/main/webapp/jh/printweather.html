@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script>
+<title>날씨 출력</title>
+<script>
+window.onload = function () {
+	var weatherData =
+	$.ajax("http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139");
+	document.getElementById("result").innerHTML = weatherData;
+	console.log(weatherData);
+};
+</script>
+</head>
+<body>
+  <div id="result"></div>
+</body>
+</html>
