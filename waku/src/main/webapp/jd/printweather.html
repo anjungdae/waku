@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script>
+<title>날씨 출력</title>
+<script>
+window.onload = function () {
+	
+	var latitude = null;
+	var longitude = null;
+	
+	if ("geolocation" in navigator) {
+		
+		var options = {
+				  enableHighAccuracy: true,
+				  timeout: 10000,
+				  maximumAge: 0
+				};
+
+		function success(pos) {
+				  var crd = pos.coords;
+				  
+				  latitude = crd.latitude;
+				  longitude = crd.longitude;
+				  
+				  console.log('Latitude : ' + crd.latitude);
+				  console.log('Longitude: ' + crd.longitude);
+				  console.log('More or less ' + crd.accuracy + ' meters.');
+				  
+				  weather(latitude,longitude);
+				};
+
+		function error(err) {
+				  console.warn('ERROR(' + err.code + '): ' + err.message);
+				};
+
+			navigator.geolocation.getCurrentPosition(success, error, options);
+		} else {
+			function geo_error() {
+			    alert("위치 정보를 사용할 수 없습니다.");
+			};
+		};
+};
+
+function weather(latitude,longitude) {
+	/*latitude = 37.4946019;
+    longitude = 127.0280055; */
+      
+    var weatherApi = "http://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude;
+    
+    var weatherData = $.getJSON(weatherApi).done(function(data){
+    	  var weatherIcon = data.weather[0].icon;
+        var weatherMain = data.weather[0].main;
+        var weatherTemp = Math.round((data.main.temp-273)*10)/10.0;
+        
+        console.log(weatherData);
+        
+        $("img").attr("src","http://api.openweathermap.org/img/w/" + weatherIcon + ".png").appendTo( "#weatherIcon" );
+        $("<a>"+ weatherMain + "&nbsp;" + weatherTemp + "&deg;</p>").appendTo("#weahterNotice");
+    });
+};
+</script>
+<style>
+#weatherForm{
+border:1px #b1d8f5 solid;
+width:15%;
+border-radius:5px;
+background: linear-gradient(135deg, #e1ffff 0%,#e1ffff 7%,#e1ffff 12%,#fdffff 12%,#e6f8fd 30%,#c8eefb 54%,#bee4f8 75%,#b1d8f5 100%);
+}
+
+#weatherFormIcon{
+padding-left:5px;
+float:left;
+align:left;
+}
+
+#weatherFormNotice{
+font-size:large;
+color: #46aaff;
+position:relative;
+top:10px;
+text-align:right;
+padding:5px;
+padding-left:10px: 
+}
+</style>
+</head>
+<body>
+	<div id="weatherForm">
+		<div id="weatherFormIcon">
+			<img id="weatherIcon">
+		</div>
+		<div id="weatherFormNotice">
+			<a id="weahterNotice"></a>
+		</div>
+	</div>
+</body>
+</html>
