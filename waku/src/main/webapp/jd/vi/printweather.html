@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="//code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script>
-<title>날씨 출력</title>
 <script src="js/weather.js"></script>
+<title>날씨 출력</title>
 <style>
 #weatherForm{
-border:1px #b1d8f5 solid;
-width:15%;
+border:1px #b1d8ff solid;
+width:100%;
 border-radius:5px;
 background: linear-gradient(135deg, #e1ffff 0%,#e1ffff 7%,#e1ffff 12%,#fdffff 12%,#e6f8fd 30%,#c8eefb 54%,#bee4f8 75%,#b1d8f5 100%);
 }
@@ -29,6 +29,11 @@ text-align:right;
 padding:5px;
 padding-left:10px: 
 }
+
+#map-canvas{
+  height: 150px;
+  width:  100%;
+}
 </style>
 </head>
 <body>
@@ -40,5 +45,6 @@ padding-left:10px:
 			<a id="weahterNotice"></a>
 		</div>
 	</div>
+	
 </body>
 </html>

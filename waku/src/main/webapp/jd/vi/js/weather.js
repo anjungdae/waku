@@ -54,10 +54,10 @@ function weather(latitude,longitude) {
         switch(weatherMain){
         
         /* 진짜 필요한 목록 */
-	        case "clouds":weatherMainKR="흐림";break;
-	        case "drizzle":weatherMainKR="이슬비";break;
+	        case "Clouds":weatherMainKR="흐림";break;
+	        case "Drizzle":weatherMainKR="이슬비";break;
 	        case "Rain":weatherMainKR="비";break;
-	        case "snow":weatherMainKR="눈";break;
+	        case "Snow":weatherMainKR="눈";break;
         
 	      /* 예비 목록 */
           case "sky is clear":weatherMainKR="맑음";break;
@@ -115,7 +115,7 @@ function weather(latitude,longitude) {
           case "windy":weatherMainKR="바람";break;
           case "hail":weatherMainKR="우박";break;
 
-          default:weatherMainKR="X";
+          default:weatherMainKR="unknown";
         };
         
         
