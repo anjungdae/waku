@@ -42,3 +42,4 @@ function htmlform() {
 		div.innerHTML = html;
 		counter.append(div);
 }
+

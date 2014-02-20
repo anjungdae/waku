@@ -67,6 +67,10 @@ div #colist {
 	padding:3px;
 }
 
+#map-canvas{
+	width:100%;
+	height:40%;
+}
 
 
 #collapsible{

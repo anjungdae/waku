@@ -9,44 +9,82 @@
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
     <script src="../js/htmlform.js"></script>
-    <script src="../js/weather.js"></script>
     <script src="../js/map.js"></script>
+    <script src="../js/weather.js"></script>
+  <style>
+		#weatherForm{
+		border:1px #b1d8ff solid;
+		width:100%;
+		border-radius:5px;
+		background: linear-gradient(135deg, #e1ffff 0%,#e1ffff 7%,#e1ffff 12%,#fdffff 12%,#e6f8fd 30%,#c8eefb 54%,#bee4f8 75%,#b1d8f5 100%);
+		}
+		
+		#weatherFormIcon{
+		padding-left:5px;
+		float:left;
+		align:left;
+		}
+		
+		#weatherFormNotice{
+		font-size:large;
+		color: #46aaff;
+		position:relative;
+		top:10px;
+		text-align:right;
+		padding:5px;
+		padding-left:10px: 
+		}
+		
+		#map-canvas{
+		  height: 300px;
+		  width:  100%;
+		}
+		</style>
     <title>몸</title>
   </head>
-  <body id="main" onload="initialize_Marker()">
+  <body id="main">
 
-	<div id="top">
+  <div id="top">
         <a id="slidepop" href="#sideList" class="ui-btn ui-btn-inline ui-panel-inner" data-iconpos="notext"><img src='../image/back.png' height="25px"></a>
         <a id="pcounter" href="#" class="ui-btn ui-btn-inline">만보기</a>
         <a id="inven" href="../combine/combine.html" class="ui-btn ui-btn-inline" data-transition="slide">가방</a>
         <a id="colist" href="../couponlist/couponlist.html" class="ui-btn ui-btn-inline" data-transition="slide">쿠폰</a>
     </div>  
 
-	<div id='sideList' data-role='panel' data-position='left'	data-position-fixed='true' data-display='overlay'>
-		<div data-role='collapsible-set' data-inset="false"	data-collapsed-icon='false'>
-			<div data-role='collapsible'>
-				<h6>
-					<span class='sortName'>과일</span>
-				</h6>
-				<ul>
-					<li>사과</li>
-					<li>오렌지</li>
-					<li>자몽</li>
-				</ul>
-			</div>
-			<div data-role='collapsible'>
-				<h6>
-					<span class='sortName'>잔</span>
-				</h6>
-				<ul>
-					<li>커피잔</li>
-					<li>그냥잔</li>
-				</ul>
-			</div>
-		</div>
-	</div>
-	
-  <figure class="icons">
+  <div id='sideList' data-role='panel' data-position='left' data-position-fixed='true' data-display='overlay'>
+    <div data-role='collapsible-set' data-inset="false" data-collapsed-icon='false'>
+      <div data-role='collapsible'>
+        <h6>
+          <span class='sortName'>과일</span>
+        </h6>
+        <ul>
+          <li>사과</li>
+          <li>오렌지</li>
+          <li>자몽</li>
+        </ul>
+      </div>
+      <div data-role='collapsible'>
+        <h6>
+          <span class='sortName'>잔</span>
+        </h6>
+        <ul>
+          <li>커피잔</li>
+          <li>그냥잔</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+    <div id="weatherForm">
+    <div id="weatherFormIcon">
+      <img id="weatherIcon">
+    </div>
+    <div id="weatherFormNotice">
+      <a id="weahterNotice"></a>
+    </div>
+  </div>
+  
+  <!-- <figure class="icons">
         <canvas id="clear-day" width="40%" height="40%"></canvas>
         <pre><span class="comment "> 20°C 천둥뒤 맑음</span></pre>
   </figure>
@@ -66,15 +104,15 @@
 
       icons.play();
     </script>
+ -->
+  <div id="htmlform">
+  
+  </div>
 
-	<div id="htmlform">
-	
-	</div>
-
-	<div id="collapsible" data-role="collapsible" data-collapsed-icon="false">
+  <div id="collapsible" data-role="collapsible" data-collapsed-icon="false">
     <h4>Heading</h4>
     <p>ㅇㅇ<p>
     </div>
-    <div id="map-canvas"></div>
+    <div id="map-canvas" style="position: absolute;"></div>
     </body>
 </html>
