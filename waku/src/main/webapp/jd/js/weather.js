@@ -1,41 +1,3 @@
-window.onload = function () {
-	
-	var latitude = null;
-	var longitude = null;
-	
-	if ("geolocation" in navigator) {
-		
-		var options = {
-				  enableHighAccuracy: true,
-				  timeout: 10000,
-				  maximumAge: 0
-				};
-
-		function success(pos) {
-				  var crd = pos.coords;
-				  
-				  latitude = crd.latitude;
-				  longitude = crd.longitude;
-				  
-				  console.log('Latitude : ' + crd.latitude);
-				  console.log('Longitude: ' + crd.longitude);
-				  console.log('More or less ' + crd.accuracy + ' meters.');
-				  
-				  weather(latitude,longitude);
-				};
-
-		function error(err) {
-				  console.warn('ERROR(' + err.code + '): ' + err.message);
-				};
-
-			navigator.geolocation.getCurrentPosition(success, error, options);
-		} else {
-			function geo_error() {
-			    alert("위치 정보를 사용할 수 없습니다.");
-			};
-		};
-};
-
 function weather(latitude,longitude) {
 	/*latitude = 37.4946019;
     longitude = 127.0280055; */
@@ -54,10 +16,11 @@ function weather(latitude,longitude) {
         switch(weatherMain){
         
         /* 진짜 필요한 목록 */
-	        case "Clouds":weatherMainKR="흐림";break;
+        	
+        	case "Clouds":weatherMainKR="흐림";break;
 	        case "Drizzle":weatherMainKR="이슬비";break;
-	        case "Mist":weatherMainKR="안개";break;
 	        case "Rain":weatherMainKR="비";break;
+	        case "Mist":weatherMainKR="안개";break;
 	        case "Snow":weatherMainKR="눈";break;
         
 	      /* 예비 목록 */

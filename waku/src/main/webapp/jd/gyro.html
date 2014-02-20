@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script>
+<title>날씨 출력</title>
+<script>
+
+function handleOrientation(event) {
+  var x = event.beta;  // In degree in the range [-180,180]
+  var y = event.gamma; // In degree in the range [-90,90]
+  
+  console.log(x);
+  console.log(y);
+}
+
+function handleMotionEvent(event) {
+
+    var x = event.accelerationIncludingGravity.x;
+    var y = event.accelerationIncludingGravity.y;
+    var z = event.accelerationIncludingGravity.z;
+    
+    console.log(x);
+    console.log(y);
+    console.log(z);
+    
+    // Do something awesome.
+}
+
+window.addEventListener("devicemotion", handleMotionEvent, true);
+window.addEventListener('deviceorientation', handleOrientation);
+</script>
+<style>
+
+</style>
+</head>
+<body>
+
+</body>
+</html>
