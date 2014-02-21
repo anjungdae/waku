@@ -21,7 +21,6 @@ window.onload = function(){
   var myPosition;
   var myPosSight;
   var myPosMarker;
-  var image = "img/apple.jpeg";
   var mySight = {
       path: google.maps.SymbolPath.BACKWARD_OPEN_ARROW,
       fillColor: "#00bfff",
@@ -93,10 +92,6 @@ window.onload = function(){
     myPosSight.setIcon(mySight);
     myPosMarker.setPosition(myPosition);
     myPosMarker.setIcon(mySymbol);
-  };
-  function dropItem () {
-    var iY = Math.random();
-    console.log(iY);
   };
   
   
