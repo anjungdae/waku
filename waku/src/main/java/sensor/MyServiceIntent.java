@@ -48,7 +48,7 @@ public class MyServiceIntent extends Service implements SensorEventListener  {
 
 	     }  
 	 
-	 @SuppressWarnings("deprecation")
+	@SuppressWarnings("deprecation")
 	@Override
 	 public int onStartCommand(Intent intent, int flags , int startId ) {
 	  // TODO Auto-generated method stub
@@ -70,7 +70,6 @@ public class MyServiceIntent extends Service implements SensorEventListener  {
 	  
 	    if (sensorManager != null)
 	             sensorManager.unregisterListener(this);
-
 	 }
 
 	 @Override

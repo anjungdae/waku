@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <TITLE>markers </title> 
+   
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #googlemap { margin:0;height:100%;}
+    </style>
+    
+    <!-- 스크립트불러오기 -->
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcl7NJr0Ja7bWmVOPpXjZI4WXgm87Mq_c&sensor=true">
+    </script>
+   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script> 
+    
+  
+  <script type="text/javascript">
+      
+      function myLocation() {
+          if ( navigator.geolocation )
+          {
+            navigator.geolocation.getCurrentPosition( successHandler, errorHandler );
+          }
+          else       
+          {
+            alert("not support geolocation");
+          }
+       }
+    
+      function successHandler( position ) {
+          var latitude = position.coords.latitude; 
+          var longitude = position.coords.longitude;  
+          showMap(latitude,longitude);
+      }
+   
+  
+     function errorHandler( error ) {
+          var errorCode = error.code;
+          var errorMessage = error.message; 
+ 
+          var loc = document.getElementById("location");
+          loc.innerHTML = "실패 : "+errorCode+" / "+errorMessage;
+      } 
+     
+ 
+      function showMap(latitude,longitude) {
+            var mapLatLng = new google.maps.LatLng(latitude,longitude);             
+            
+            var mapOption = {  
+            		zoom : 18,
+                    center:mapLatLng  
+            };
+  
+          
+            
+            
+            
+          var map = new google.maps.Map(document.getElementById("googlemap"), mapOption );
+          
+ 
+            
+          var image = new google.maps.MarkerImage("hollys.jpg", null, null, null, new google.maps.Size(30,30));
+          
+          var marker = new google.maps.Marker({ 
+              position:mapLatLng, 
+              map:map,
+              icon: {
+                  path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+                  fillOpacity: 1,
+                  fillColor: 'blue',
+                  strokeWeight: 0,
+                  scale: 10
+                } 
+              }); 
+      
+         var myCircle = new google.maps.Circle({
+          
+         
+        	     map: map,
+        	     strokeColor: '#0000ff',
+        	     strokeOpacity: 0.8,
+        	     strokeWeight: 2,
+        	     fillColor: '#0000ff',
+        	     fillOpacity: 0.35,
+        	     center: mapLatLng, 
+        	     radius: 30
+        	    
+          });
+         
+         
+         var math={
+        		 
+         }
+         
+         
+        
+         <svg>
+         <path m="M latitude,longitude L ">
+         </syg>
+         
+         
+         
+         
+         //myCircle.binTo('center',marker,'position');
+      }
+ window.onload = myLocation;
+
+            
+</script>
+</head>
+ 
+<body>           
+    <div id="googlemap"></div>
+ 
+</body> 
+ 
+</html>
+

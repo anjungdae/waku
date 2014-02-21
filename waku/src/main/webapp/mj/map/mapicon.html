@@ -1,0 +1,98 @@
+<! DOCTYPE HTML> 
+<HTML> 
+  <HEAD> 
+   <meta charset="UTF-8" name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <TITLE>markers </title> 
+    
+    
+    
+    <style> 
+      html , body ,  #map-canvas { 
+        height :  100% ; 
+        margin :  0px ; 
+        padding :  0px 
+      } 
+      element.style {
+      position:absolute;
+      }
+      
+      
+      
+     
+    </style> 
+    
+ <script type="text/javascript"
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcl7NJr0Ja7bWmVOPpXjZI4WXgm87Mq_c&sensor=true">
+ </script>
+    
+    <script type="text/javascript">
+    
+    
+    
+    //랜덤 아이콘 생성하기
+   // function iconRandom(max,min){
+    	//return Math.floor(Math.random()*(max-min)+min;
+    	
+    //}
+    
+    
+   // var iconCount=iconRandom(10,2);
+    
+   
+    //var ns = 37.478034;
+    //var ew = 127.184032;
+    //var radian = -30;
+    
+    //var x = Math.random();//0.2
+    //var y = Math.random();//0.2
+    
+   
+    
+    //ew = ew + ((x*Math.cos(radian)-y*Math.sin(radian))*0.0001);
+    //ns = ns + ((x*Math.sin(radian)+y*Math.cos(radian))*0.0001);
+    
+   
+    
+    
+    
+     //지도 관련 API 
+    function initialize ()  { 
+   
+
+   	
+   
+   var myLatlng = new google.maps.LatLng(37.56744,126.978114);//구글맵의 마크위치정보 
+   
+   var mapOptions = { 
+   zoom:15, 
+   center:myLatlng 
+   };//맵 옵션설정
+   
+   var map= new google.maps.Map(document.getElementById('map-canvas'), mapOptions); 
+
+   
+   var image = new google.maps.MarkerImage("hollys.jpg", null, null, null, new google.maps.Size(30,30));
+   
+//   var image = 'hollys.jpg';
+   var marker = new google.maps.Marker({ 
+      position:myLatlng, 
+      map:map,
+      icon:image
+  }); 
+} 
+
+    
+
+    
+google.maps.event.addDomListener(window,'load',initialize);
+
+
+
+    </script> 
+  
+  </head> 
+  <body> 
+   
+    <div  id = "map-canvas" ></div> 
+  </body> 
+</html>

@@ -68,9 +68,10 @@ div #colist {
 }
 
 #map-canvas{
-	height: 150px;
-	width:  100%;
+	width:100%;
+	height:40%;
 }
+
 
 #collapsible{
 	margin:0px;
