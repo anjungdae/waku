@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" name="viewport"
+content="width=device-width initial-scale=1.0, user-scalable=no" />
+<title>drop</title>
+<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="//code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaHqi_Nj-BrwoVkaRBNvKM3iCtLMOqsjQ&sensor=false"></script>
+
+<script>
+function toRad (deg) {
+	return deg * Math.PI / 180;
+};
+
+window.onload = function(){
+  var myPosLat;
+  var myPosLon; 
+  var heading;
+  var map;
+  var myPosition;
+  var myPosSight;
+  var myPosMarker;
+  var image = "img/apple.jpeg";
+  var mySight = {
+      path: google.maps.SymbolPath.BACKWARD_OPEN_ARROW,
+      fillColor: "#00bfff",
+      fillOpacity: 0.2,
+      rotation: 270,
+      scale: 20,
+      strokeColor: "#fff",
+      strokeWeight: 1
+   };
+  var mySymbol = {
+      path: "M20,10 A10,10 0 0,0 0,10 A-10,-10 0 0,0 20,10 z",
+      anchor: new google.maps.Point(11,11),
+      fillColor: "#00bfff",
+      fillOpacity: 1,
+      scale: 1,
+      strokeColor: "white",
+      strokeWeight: 2
+  }
+  function initMap() {
+    navigator.geolocation.getCurrentPosition(function(pos) {
+      myPosLat = pos.coords.latitude;
+      myPosLon = pos.coords.longitude;
+      heading = pos.coords.heading;
+      console.log(myPosLat + ", " + myPosLon);
+      myPosition = new google.maps.LatLng(myPosLat,myPosLon);
+      console.log(myPosition);
+      map = new google.maps.Map(document.getElementById("map-canvas"),{
+        center: myPosition,
+        zoom: 17,
+        //draggable: false,
+        panControl: false,
+        zoomControl: false,
+        scaleControl: true,
+        streetViewControl:false,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+      myPosSight = new google.maps.Marker({
+        map: map,
+        position: myPosition,
+        icon: mySight
+      });
+      myPosMarker = new google.maps.Marker({
+        map: map,
+        position: myPosition,
+        icon: mySymbol
+      });
+    });
+  };
+  /*
+  function dropItem () {
+    var iY = Math.random() * .001;
+    var iX = Math.random() * iY * Math.tan(toRad(10));
+    var sign = Math.random() < 0.5;
+    if(sign === false) {
+      iX *= -1;
+    }
+    console.log(sign);
+    console.log(myPosition.lat() + iY);
+    console.log(myPosition.lng() + iX);
+  };
+  */
+  initMap();
+  function move() {
+    myPosLat += 0.0001;
+    myPosition = new google.maps.LatLng(myPosLat,myPosLon);
+    mySight.rotation += 1;
+    map.panTo(myPosition);
+    myPosSight.setPosition(myPosition);
+    myPosSight.setIcon(mySight);
+    myPosMarker.setPosition(myPosition);
+    myPosMarker.setIcon(mySymbol);
+  };
+  function dropItem () {
+    var iY = Math.random();
+    console.log(iY);
+  };
+  
+  
+  //setInterval(move,150);
+  
+  $("#map-canvas").on("click",function() {
+  	do {
+  	  var iY = Math.random() * .0009;
+  	}while(iY<0.0005);
+    var iX = Math.random() * iY * Math.tan(toRad(10));
+    var sign = Math.random() < 0.5;
+    if(sign === false) {
+      iX *= -1;
+    }
+    var rotateY = -1 * iX * Math.sin(toRad(mySight.rotation)) + iY * Math.cos(toRad(mySight.rotation));
+    var rotateX = iX * Math.cos(toRad(mySight.rotation)) + iY * Math.sin(toRad(mySight.rotation));
+    console.log(sign);
+    itemMarker = new google.maps.Marker({
+    	map: map,
+    	position: new google.maps.LatLng(myPosition.lat() + rotateY, myPosition.lng() + rotateX),
+    	icon: mySymbol
+    });
+  });
+  
+}
+</script>
+<style>
+body {
+  height: 100%;
+  width: 100%;
+}
+#map-canvas {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+</style>
+</head>
+<body>
+<div id="map-canvas"></div>
+</body>
+</html>
