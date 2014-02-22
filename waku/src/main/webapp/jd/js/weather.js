@@ -16,11 +16,12 @@ function weather(latitude,longitude) {
         switch(weatherMain){
         
         /* 진짜 필요한 목록 */
-        	
+        	case "Clear":weatherMainKR="맑음";break;
         	case "Clouds":weatherMainKR="흐림";break;
 	        case "Drizzle":weatherMainKR="이슬비";break;
 	        case "Rain":weatherMainKR="비";break;
 	        case "Mist":weatherMainKR="안개";break;
+	        case "Haze":weatherMainKR="실안개";break;
 	        case "Snow":weatherMainKR="눈";break;
         
 	      /* 예비 목록 */
@@ -32,7 +33,7 @@ function weather(latitude,longitude) {
           
           //
           case "smoke":weatherMainKR="안개";break;
-          case "haze":weatherMainKR="실안개";break;
+          //
           case "Sand/Dust Whirls":weatherMainKR="모래바람";break;
           case "Fog":weatherMainKR="안개";break;
           //

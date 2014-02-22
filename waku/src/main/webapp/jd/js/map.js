@@ -3,6 +3,8 @@ window.onload = function () {
 	var longitude = null;
 	var heading = null;
 	
+	weather(latitude,longitude);
+	
 	if ("geolocation" in navigator) {
 		
 		var options = {
@@ -24,7 +26,6 @@ window.onload = function () {
 				  console.log('heading: ' + heading);
 				  console.log('More or less ' + crd.accuracy + ' meters.');
 				  
-				  weather(latitude,longitude);
 				  userMaker(latitude,longitude,heading);
 				};
 
@@ -32,7 +33,7 @@ window.onload = function () {
 				  console.warn('ERROR(' + err.code + '): ' + err.message);
 				};
 
-			navigator.geolocation.getCurrentPosition(success, error, options);
+			navigator.geolocation.watchPosition(success, error, options);
 			
 		} else {
 			function geo_error() {
@@ -59,24 +60,45 @@ function userMaker(latitude,longitude,heading){
 //      console.log(rad);
 //      var tangen = Math.tan(rad);
       
-      var radian = 0;
+      var hrotation = 90;
+      
+      var radian = 30 * Math.PI/180;
+      console.log(radian);
       
       var x = Math.random();//0.2
       var y = Math.random();//0.2
 
-      itemY = ns + ((x*Math.cos(radian)-y*Math.sin(radian))*0.0005);
-      itemX = ew + ((x*Math.sin(radian)+y*Math.cos(radian))*0.0005);
+      itemX = Math.cos(radian)*(ew+ew)-Math.sin(radian)*(ns+0.0005+ns)+ew;
+      itemY = Math.sin(radian)*(ew+ew)+Math.cos(radian)*(ns+0.0005+ns)+ns;
+      
+      console.log(itemX);
+      console.log(itemY);
       
 //      itemY = ns + ((x*Math.cos(radian)-y*Math.sin(radian))*0.0001);
 //      itemX = ew + ((x*Math.sin(radian)+y*Math.cos(radian))*0.0001);
       
 	  var latlng = null;
 	  var latlng2 = null;
-	  
+	  	  
       function initialize_Marker(){
     	  latlng = new google.maps.LatLng(ns,ew);
     	  latlng2 = new google.maps.LatLng(itemY,itemX);
-    	      	      	  
+    	      	      
+    	  var service = new google.maps.DistanceMatrixService();
+    	  service.getDistanceMatrix(
+    	    {
+    	      origins: [latlng2],
+    	      destinations: [latlng2],
+    	      travelMode: google.maps.TravelMode.WALKING,
+    	      avoidHighways: false,
+    	      avoidTolls: false
+    	    }, callback);
+
+    	  function callback(response, status) {
+    	    // See Parsing the Results for
+    	    // the basics of a callback function.
+    	  }
+    	  
     	  var mapOptions = {
     	          center: latlng,
     	          zoom: 17,
@@ -87,7 +109,7 @@ function userMaker(latitude,longitude,heading){
     	          zoomControl: false,
     	          scaleControl: false,
     	          streetViewControl:false,
-    	          mapTypeId: google.maps.MapTypeId.ROADMAP
+    	          mapTypeId: google.maps.MapTypeId.ROADMAP,
     	   };
     	  
     	  map = new google.maps.Map(document.getElementById("map-canvas"),
@@ -97,11 +119,11 @@ function userMaker(latitude,longitude,heading){
               path:"M-3.8,1 A3.8,1 0 0,1 3.8,1 L0,15 L-3.8,1 Z, M2,15 A2,2 0 1,1 -2,15 A2,2 0 0,1 2,15 Z",
               anchor:new google.maps.Point(0,15),
               scale: 5,
-              rotation: radian,
+              rotation: hrotation,
               fillColor:"32f1ff",
               fillOpacity:0.2,
               strokeColor: "#32f1ff",
-              strokeWeight:2
+              strokeWeight:1
       };
       //"M0,0 A9.8,1.2 0 1,0 L0,15 L-9.8,1.2 A0,0 0 0,0 Z"
       
