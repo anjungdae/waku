@@ -42,8 +42,8 @@ window.onload = function(){
   }
   function initMap() {
     navigator.geolocation.getCurrentPosition(function(pos){
-      myPosLat = pos.coords.latitude;
-      myPosLon = pos.coords.longitude;
+      myPosLat = pos.coords.latitude;//위도
+      myPosLon = pos.coords.longitude;//경도
       heading = pos.coords.heading;
       console.log(myPosLat + ", " + myPosLon);
       myPosition = new google.maps.LatLng(myPosLat,myPosLon);
@@ -63,11 +63,16 @@ window.onload = function(){
         position: myPosition,
         icon: mySight
       });
+      
+      myPosSight.setZIndex(-1002);
+      
       myPosMarker = new google.maps.Marker({
         map: map,
         position: myPosition,
         icon: mySymbol
       });
+      
+      myPosMarker.setZIndex(-1001);
   /*
   function dropItem () {
     var iY = Math.random() * .001;
@@ -114,30 +119,41 @@ window.onload = function(){
 							iX *= -1;
 						}
 	
-						var rotateY = -1 * iX * Math.sin(toRad(mySight.rotation))+ iY * Math.cos(toRad(mySight.rotation));
-						var rotateX = iX * Math.cos(toRad(mySight.rotation)) + iY * Math.sin(toRad(mySight.rotation));
-	
+						var rotateY = -1 * iX * Math.sin(toRad(mySight.rotation))+ iY * Math.cos(toRad(mySight.rotation));//북서
+						var rotateX = iX * Math.cos(toRad(mySight.rotation)) + iY * Math.sin(toRad(mySight.rotation));//동서
+						
+						var tempX
+						
+						var itemImage = "newglasscup.png";
+						
 						itemMarker = new google.maps.Marker({
 							map : map,
 							position : new google.maps.LatLng(myPosition.lat()
 									+ rotateY, myPosition.lng() + rotateX),
-							icon : mySymbol,
+							title:"컵",
+							icon:itemImage,
 							animation : google.maps.Animation.DROP
 						});
-						
+												
 						function removeItem() {
 				              itemMarker.setMap(null);
-				            }
-            setTimeout(removeItem, 3000);
+				    }
+						
+						if(myPosLat==rotateY && myPosLon==rotateX){
+							itemMarker.setMap(null);
+						};
+						
+						setTimeout(removeItem, 3000);
+						
 			};
 		  
 			var refreshInterval = null;
 			
-			var offSet = 0;
+			var offSet = 1;
 			console.log(offSet);
 			if(offSet == 1){ 
 				refreshInterval = setInterval(itemMakePoint, 5000);
-			} else {
+			} else if(offSet == 0){
 				clearInterval(refreshInterval);
 			};
 			/* 
@@ -155,10 +171,36 @@ window.onload = function(){
 					};
 				} while (flagStand == 0);
 			 */
+			var rangeOptions = {
+		            strokeColor: "#0000ff",
+		            strokeOpacity: 0.5,
+		            strokeWeight: 2,
+		            fillColor: "#0000ff",
+		            fillOpacity: 0.15,
+		            map: map,
+		            center: myPosition,
+		            radius: 90
+		      };
+			 
+			 var rangeOptions2 = {
+		                strokeColor: "#0000ff",
+		                strokeOpacity: 0.5,
+		                strokeWeight: 2,
+		                fillColor: "#ffffff",
+		                fillOpacity: 0.5,
+		                map: map,
+		                center: myPosition,
+		                radius: 45
+		          };
+			 
+			var Circle = new google.maps.Circle(rangeOptions);
+			var Circle = new google.maps.Circle(rangeOptions2);
+			 
 			});
 		};
 		
 		initMap();
+		
 	};
 </script>
 <style>
