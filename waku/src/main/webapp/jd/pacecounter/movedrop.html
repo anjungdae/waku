@@ -73,6 +73,7 @@ window.onload = function(){
       });
       
       myPosMarker.setZIndex(-1001);
+      
   /*
   function dropItem () {
     var iY = Math.random() * .001;
@@ -88,7 +89,8 @@ window.onload = function(){
   */
   
   function move() {
-    myPosLat += 0.0001;
+    myPosLat += 0.00001*(Math.random()*10-5);
+    myPosLon += 0.00001*(Math.random()*10-5);
     myPosition = new google.maps.LatLng(myPosLat,myPosLon);
     mySight.rotation += 1;
     map.panTo(myPosition);
@@ -103,7 +105,7 @@ window.onload = function(){
     console.log(iY);
   };
  
-  //setInterval(move,150);
+  setInterval(move,150);
 
 			function itemMakePoint() {
 				var itemMarker = null;
@@ -124,26 +126,88 @@ window.onload = function(){
 						
 						var tempX
 						
-						var itemImage = "newglasscup.png";
-						
 						itemMarker = new google.maps.Marker({
 							map : map,
 							position : new google.maps.LatLng(myPosition.lat()
 									+ rotateY, myPosition.lng() + rotateX),
 							title:"컵",
-							icon:itemImage,
+							icon:"icon/newglasscup"+parseInt((Math.random()*7)+1)+".png",
 							animation : google.maps.Animation.DROP
 						});
+						
+						var rangeOptions = {
+				                strokeColor: "#0000ff",
+				                strokeOpacity: 0.5,
+				                strokeWeight: 2,
+				                fillColor: "#0000ff",
+				                fillOpacity: 0.15,
+				                map: map,
+				                center: myPosition,
+				                radius: 95
+				    };
+				       
+				    var rangeOptions2 = {
+				                strokeColor: "#0000ff",
+				                strokeOpacity: 0.5,
+				                strokeWeight: 2,
+				                fillColor: "#ffffff",
+				                fillOpacity: 0.5,
+				                map: map,
+				                center: myPosition,
+				                radius: 45
+				    };
+				       
+				      var Circle = new google.maps.Circle(rangeOptions);
+				      var Circle2 = new google.maps.Circle(rangeOptions2);
 												
 						function removeItem() {
-				              itemMarker.setMap(null);
+				             itemMarker.setMap(null);
+				             Circle.setMap(null);
+				             Circle2.setMap(null);
 				    }
 						
 						if(myPosLat==rotateY && myPosLon==rotateX){
 							itemMarker.setMap(null);
 						};
 						
-						setTimeout(removeItem, 3000);
+						function blinkSet(){
+						
+							var	blinkOn = "on";
+							
+							if(blinkOn == "on"){
+	
+						  var max = 1000;//기본 깜밖임 속
+						  var timeValue = 0;
+								
+							function minusTime(){
+								max = max - 185;
+								console.log(max);
+								timeValue = max;
+							}
+							
+							var timeContract = setInterval(minusTime,1000);//1초다마 0.185 간격 줄어듬
+								
+							 var blinkMarker = setInterval(function(){toggleMarker()}, timeValue);
+				              
+							  function toggleMarker() {
+								  if (itemMarker.getVisible()) {
+									  itemMarker.setVisible(false);
+				          } else {
+				        	  itemMarker.setVisible(true);
+				          }
+								};
+								
+						  function clearInter(){		
+								clearInterval(timeContract);
+					      clearInterval(blinkMarker);
+						  };
+						  
+						  setTimeout(clearInter,6000);
+						  };
+						};
+			      
+			      setTimeout(blinkSet,6000);//깜박임이 시작하는 시간
+						setTimeout(removeItem, 12000);//아이템 유지시간
 						
 			};
 		  
@@ -152,7 +216,7 @@ window.onload = function(){
 			var offSet = 1;
 			console.log(offSet);
 			if(offSet == 1){ 
-				refreshInterval = setInterval(itemMakePoint, 5000);
+				refreshInterval = setInterval(itemMakePoint, 15000);//아이템 뿌리는 간격
 			} else if(offSet == 0){
 				clearInterval(refreshInterval);
 			};
@@ -171,30 +235,7 @@ window.onload = function(){
 					};
 				} while (flagStand == 0);
 			 */
-			var rangeOptions = {
-		            strokeColor: "#0000ff",
-		            strokeOpacity: 0.5,
-		            strokeWeight: 2,
-		            fillColor: "#0000ff",
-		            fillOpacity: 0.15,
-		            map: map,
-		            center: myPosition,
-		            radius: 90
-		      };
-			 
-			 var rangeOptions2 = {
-		                strokeColor: "#0000ff",
-		                strokeOpacity: 0.5,
-		                strokeWeight: 2,
-		                fillColor: "#ffffff",
-		                fillOpacity: 0.5,
-		                map: map,
-		                center: myPosition,
-		                radius: 45
-		          };
-			 
-			var Circle = new google.maps.Circle(rangeOptions);
-			var Circle = new google.maps.Circle(rangeOptions2);
+			
 			 
 			});
 		};
@@ -217,5 +258,6 @@ body {
 </head>
 <body>
 <div id="map-canvas"></div>
+
 </body>
 </html>
