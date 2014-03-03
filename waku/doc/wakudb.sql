@@ -108,13 +108,6 @@ CREATE TABLE `PACE` (
 )
 COMMENT '만보기정보';
 
--- 만보기정보
-ALTER TABLE `PACE`
-  ADD CONSTRAINT `PK_PACE` -- 만보기정보 기본키
-    PRIMARY KEY (
-      `U_NO` -- 사용자번호
-    );
-
 -- 기업정보
 CREATE TABLE `COMPANY` (
   `C_NO`    INTEGER      NOT NULL COMMENT '쿠폰번호', -- 쿠폰번호
