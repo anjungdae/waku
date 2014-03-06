@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="waku.dao.ItemDao">
+  <resultMap type="item" id="itemResultMap">
+    <id     property="iNo"       column="I_NO"/>
+    <result property="iName"     column="I_NAME"/>
+    <result property="iImage"    column="I_IMAGE"/>
+    <result property="iClass"      column="I_CLASS"/>
+    <result property="iPrice"      column="I_PRICE"/>
+    <result property="iSdate" column="I_SDATE"/>
+  </resultMap>
+  
+  <select id="selectList" resultMap="itemResultMap">
+    select I_NO,I_NAME,I_IMAGE,I_CLASS,I_PRICE,I_SDATE
+    from ITEM
+  </select>
+</mapper>

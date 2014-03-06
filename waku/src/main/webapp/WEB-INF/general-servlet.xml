@@ -30,20 +30,20 @@
 		</property>
 	</bean>
 
-	<context:component-scan base-package="spms.controls" />
+	<context:component-scan base-package="waku.controls" />
 
 	<bean
 		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-		<property name="viewResolvers">
+		<!-- <property name="viewResolvers">
 			<list>
 				<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
 				<bean
 					class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-					<property name="prefix" value="/WEB-INF/view/" />
-					<property name="suffix" value=".jsp" />
+					<property name="prefix" value="jd/pacecounter/" />
+					<property name="suffix" value=".html" />
 				</bean>
 			</list>
-		</property>
+		</property> -->
 		<property name="defaultViews">
 			<list>
 				<bean
@@ -64,22 +64,17 @@
 		<!-- <property name="maxUploadSize" value="100000"/> -->
 		<!-- <property name="maxInMemorySize" value="100000"/> -->
 	</bean>
-	<!-- Spring 2.5 까지 설정법 <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"> 
-		<property name="webBindingInitializer"> <bean class="spms.propertyeditors.SpmsBindingInitializer"/> 
-		</property> </bean> -->
+	<!-- Spring 2.5 까지 설정법
+	 <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"> 
+		<property name="webBindingInitializer"> <bean class="waku.propertyeditors.WakuBindingInitializer"/> 
+		</property> 
+		</bean> -->
 	<!-- Spring 3.1부터는 다음과 같이 설정, 단 <mvc:annotation-driven/> 태그를 선언해야 한다. -->
 	<bean
 		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<property name="webBindingInitializer">
-			<bean class="spms.propertyeditors.SpmsBindingInitializer" />
+			<bean class="waku.propertyeditors.WakuBindingInitializer" />
 		</property>
 	</bean>
 
 </beans>
-
-
-
-
-
-
-

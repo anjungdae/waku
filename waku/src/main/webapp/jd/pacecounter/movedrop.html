@@ -123,8 +123,9 @@ window.onload = function(){
 	
 						var rotateY = -1 * iX * Math.sin(toRad(mySight.rotation))+ iY * Math.cos(toRad(mySight.rotation));//북서
 						var rotateX = iX * Math.cos(toRad(mySight.rotation)) + iY * Math.sin(toRad(mySight.rotation));//동서
-						
-						var tempX
+
+						$.ajax('ajax/list.do');
+						console.log(data);
 						
 						itemMarker = new google.maps.Marker({
 							map : map,
