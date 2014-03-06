@@ -24,7 +24,7 @@ function listMember() {
 			table.appendChild(tr);
 		}
 	}, error:function(){
-		alert('시스템이 바쁩니다.\n나중에 다시 시도해 주세요!');
+		alert('시스템이 바쁩니다.\n나중에 다시 시도해 주세요!!');
 	}
   });
 }
