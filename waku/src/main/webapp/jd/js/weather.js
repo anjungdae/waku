@@ -7,7 +7,8 @@ function weather(latitude,longitude) {
     //
     
     var weatherData = $.getJSON(weatherApi).done(function(data){
-    	  var weatherIcon = data.weather[0].icon;
+    	console.log(data);
+    	var weatherIcon = data.weather[0].icon;
         var weatherMain = data.weather[0].main;
         var weatherMainKR = null;
         

@@ -22,6 +22,23 @@ window.onload = function(){
   var myPosSight;
   var myPosMarker;
   var image = "img/apple.jpeg";
+
+  $.ajaxSetup({ async:false });
+  
+  var itemList = [];
+  
+  $.ajax({type:"GET",url:"list.do",success:function(items){
+      var item = items.jsonResult.data;
+      console.log(item);
+		  for (var i = 0; i < item.length; i++) {
+			  itemList.push(item[i].iImage);
+		  }
+		  console.log(itemList);
+  }, error:function(){
+      alert('시스템이 바쁩니다.\n나중에 다시 시도해 주세요!!');  
+     }
+  });
+    
   var mySight = {
       path: google.maps.SymbolPath.BACKWARD_OPEN_ARROW,
       fillColor: "#00bfff",
@@ -123,16 +140,13 @@ window.onload = function(){
 	
 						var rotateY = -1 * iX * Math.sin(toRad(mySight.rotation))+ iY * Math.cos(toRad(mySight.rotation));//북서
 						var rotateX = iX * Math.cos(toRad(mySight.rotation)) + iY * Math.sin(toRad(mySight.rotation));//동서
-
-						$.ajax('ajax/list.do');
-						console.log(data);
 						
 						itemMarker = new google.maps.Marker({
 							map : map,
 							position : new google.maps.LatLng(myPosition.lat()
 									+ rotateY, myPosition.lng() + rotateX),
 							title:"컵",
-							icon:"icon/newglasscup"+parseInt((Math.random()*7)+1)+".png",
+							icon:"icon/"+itemList[Math.floor(Math.random()*itemList.length)],
 							animation : google.maps.Animation.DROP
 						});
 						
