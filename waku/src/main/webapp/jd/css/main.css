@@ -100,3 +100,8 @@ div #colist {
 #sideList ul {
 	padding: 0px;
 }
+
+.itemNameLi{
+  position:absolute;
+  top:50%;
+}

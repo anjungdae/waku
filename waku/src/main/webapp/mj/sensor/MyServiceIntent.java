@@ -99,10 +99,6 @@ public class MyServiceIntent extends Service implements SensorEventListener  {
 	                 speed = Math.abs(x + y + z - lastX - lastY - lastZ) / gabOfTime * 10000; 
 	                 //속도계산부 마지막에 흔들린 xyz를 가지고 계산함
 
-	 
-
-	   
-
 	if (speed > SHAKE_THRESHOLD) {  //800보다 큰경우 흔들린경우로 간주
 	                  
 	Log.e("Step!", "SHAKE");  //로그찍기
@@ -123,10 +119,4 @@ public class MyServiceIntent extends Service implements SensorEventListener  {
 
 	 } 
 
-	}
-
-
-
-
-
-
+}

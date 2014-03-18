@@ -16,4 +16,11 @@
     select I_NO,I_NAME,I_IMAGE,I_CLASS,I_PRICE,I_SDATE
     from ITEM
   </select>
+  
+  <select id="selectOne" parameterType="int" resultMap="itemResultMap">
+    select I_NAME,I_IMAGE,I_CLASS,I_PRICE,I_SDATE
+    from ITEM
+    where I_NO=#{value}
+  </select>
+  
 </mapper>

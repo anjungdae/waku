@@ -22,23 +22,26 @@ window.onload = function(){
   var myPosSight;
   var myPosMarker;
   var image = "img/apple.jpeg";
+  var itemInven ='';
+  var itemNumber;
+  var uNo = 1;
 
-  $.ajaxSetup({ async:false });
-  
   var itemList = [];
   
-  $.ajax({type:"GET",url:"list.do",success:function(items){
-      var item = items.jsonResult.data;
+  $.ajax({type:"GET",url:"item/list.do",async:false,success:function(items){
+	    var item = items.jsonResult.data;
       console.log(item);
 		  for (var i = 0; i < item.length; i++) {
-			  itemList.push(item[i].iImage);
+			  itemList.push({"no":item[i].iNo,"name":item[i].iName,"image":item[i].iImage,"iClass":item[i].iClass});
 		  }
 		  console.log(itemList);
   }, error:function(){
       alert('시스템이 바쁩니다.\n나중에 다시 시도해 주세요!!');  
      }
   });
-    
+  
+  var myItemList = [];
+  
   var mySight = {
       path: google.maps.SymbolPath.BACKWARD_OPEN_ARROW,
       fillColor: "#00bfff",
@@ -123,7 +126,7 @@ window.onload = function(){
   };
  
   setInterval(move,150);
-
+  
 			function itemMakePoint() {
 				var itemMarker = null;
 				
@@ -137,18 +140,54 @@ window.onload = function(){
 						if (sign === false) {
 							iX *= -1;
 						}
-	
+						
 						var rotateY = -1 * iX * Math.sin(toRad(mySight.rotation))+ iY * Math.cos(toRad(mySight.rotation));//북서
 						var rotateX = iX * Math.cos(toRad(mySight.rotation)) + iY * Math.sin(toRad(mySight.rotation));//동서
 						
+						var ilist = Math.floor(Math.random()*itemList.length);
+						
+						if(itemList[ilist].iClass!="엠블럼"){
+							noEmblem();
+						} else {
+							itemMakePoint();
+						};
+						
+						function noEmblem(){
 						itemMarker = new google.maps.Marker({
 							map : map,
 							position : new google.maps.LatLng(myPosition.lat()
 									+ rotateY, myPosition.lng() + rotateX),
-							title:"컵",
-							icon:"icon/"+itemList[Math.floor(Math.random()*itemList.length)],
+							title:itemList[ilist].name,
+							icon:"icon/"+itemList[ilist].image,
 							animation : google.maps.Animation.DROP
 						});
+						
+						itemInven += itemList[ilist].name + ", ";
+						itemNumber = itemList[ilist].no;
+						
+						console.log("itemInven : " + itemInven);
+						console.log("itemNumber : " + itemNumber);
+						
+						  var iNo = itemNumber;
+						  var iStock;
+						
+						$.ajax({type:"GET",url:"myItem/holdRead.do?uNo=" + uNo + "&iNo=" + iNo,async:false,success:function(myItems){
+						      var myItem = myItems.jsonResult.data;
+						      iStock = myItem.iStock
+						  }, error:function(){
+						      alert('시스템이 바쁩니다.\n나중에 다시 시도해 주세요!!');  
+						     }
+						  });
+						  
+						  $.ajax({type:"POST",url:"myItem/update.do",data:{
+						      uNo:uNo,
+						      iNo:itemNumber,
+						      iStock:iStock+1
+						    },async:false,success:function(myItems){
+						  },error:function(){
+						      alert('전송실패!');
+						  }});
+						
 						
 						var rangeOptions = {
 				                strokeColor: "#0000ff",
@@ -223,7 +262,7 @@ window.onload = function(){
 			      
 			      setTimeout(blinkSet,6000);//깜박임이 시작하는 시간
 						setTimeout(removeItem, 12000);//아이템 유지시간
-						
+						};
 			};
 		  
 			var refreshInterval = null;

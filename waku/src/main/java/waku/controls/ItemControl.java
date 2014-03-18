@@ -22,12 +22,20 @@ public class ItemControl {
 	@Autowired(required=false)
 	ItemDao itemDao;
 	
-	@RequestMapping(value="/list.do", produces="application/json")
+	@RequestMapping(value="item/list.do", produces="application/json")
 	public Object ajaxList() throws Exception {
-		
 		try{
 			JsonResult jr = new JsonResult().setResultStatus(JsonResult.SUCCESS).setData(itemDao.selectList());
-			System.out.println(jr);
+			return jr;
+		}catch(Throwable ex){
+			return new JsonResult().setResultStatus(JsonResult.FAIL).setError(ex.getMessage());
+		}
+	}
+	
+	@RequestMapping(value="item/read.do", produces="application/json")
+	public Object ajaxRead(int iNo) throws Exception {
+		try{
+			JsonResult jr = new JsonResult().setResultStatus(JsonResult.SUCCESS).setData(itemDao.selectOne(iNo));
 			return jr;
 		}catch(Throwable ex){
 			return new JsonResult().setResultStatus(JsonResult.FAIL).setError(ex.getMessage());

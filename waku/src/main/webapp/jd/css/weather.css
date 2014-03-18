@@ -22,8 +22,8 @@ canvas{
 	margin-top: 0px;
 }
 
-a,pre span.comment {
-	color: royalblue;
+pre span.comment {
+	color: white;
 }
 
 a:visited,pre span.constant {
