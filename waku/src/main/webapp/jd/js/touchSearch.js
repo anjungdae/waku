@@ -36,7 +36,6 @@ $( document ).ready(function() {
 			for (i = 0; i < myItem.length; i++) {
 				if(myItem[i].iClass == "엠블럼"){
 					myItemClass = myItem[i].iClass;
-					myItemNumber = i;
 					myItemName.push(myItem[i].iName);
 					myItemImage.push(myItem[i].iImage);
 					myItemStock.push(myItem[i].iStock);
@@ -58,9 +57,10 @@ $( document ).ready(function() {
 			myItemClass = '';
 			i = '';
 			
-			myItemClassNoEmBe =[];
-			myItemClassNoEmAf =[];
-				
+			myItemClassNoEmBe =[];//엠블럼이 아닌거에 대해 이전 배열
+			myItemClassNoEmAf =[];//엠블럼이 아닌거에 대해 이후 배열
+			
+			//중복제거
 			for(i=0;i<myItem.length;i++){
 				myItemClassNoEmBe.push(myItem[i].iClass);
 				$.each(myItemClassNoEmBe, function(i, el){
@@ -71,8 +71,7 @@ $( document ).ready(function() {
 					}});
 			};
 			
-			console.log(myItemClassNoEmAf);
-			
+			//
 			for(var i = 0; i < myItemClassNoEmAf.length; i++){
 				myItemName = [];
 				myItemImage = [];
@@ -80,11 +79,9 @@ $( document ).ready(function() {
 				for (var j = 0; j < myItem.length; j++) {
 					if(myItem[j].iClass == myItemClassNoEmAf[i]){
 						myItemClass = myItem[j].iClass;
-						myItemNumber = j;
 						myItemName.push(myItem[j].iName);
 						myItemImage.push(myItem[j].iImage);
 						myItemStock.push(myItem[j].iStock);
-						console.log(myItemName);
 					};
 				};
 			

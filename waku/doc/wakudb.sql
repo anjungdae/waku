@@ -25,6 +25,9 @@ DROP TABLE IF EXISTS `MYCOUPON` RESTRICT;
 -- 도장찍기
 DROP TABLE IF EXISTS `STAMP` RESTRICT;
 
+-- 물품정보
+DROP TABLE IF EXISTS `GOODS` RESTRICT;
+
 -- 사용자
 CREATE TABLE `USER` (
   `U_NO`       INTEGER     NOT NULL COMMENT '사용자번호', -- 사용자번호
@@ -67,7 +70,7 @@ ALTER TABLE `ITEM`
 
 -- 쿠폰아이템
 CREATE TABLE `ELEMENT` (
-  `C_NO`  INTEGER NOT NULL COMMENT '쿠폰번호', -- 쿠폰번호
+  `C_NO`  INTEGER NOT NULL COMMENT '회사번호', -- 회사번호
   `I_NO`  INTEGER NOT NULL COMMENT '필요아이템', -- 필요아이템
   `I_REQ` INTEGER NOT NULL COMMENT '필요수량' -- 필요수량
 )
@@ -77,7 +80,7 @@ COMMENT '쿠폰아이템';
 ALTER TABLE `ELEMENT`
   ADD CONSTRAINT `PK_ELEMENT` -- 쿠폰아이템 기본키
     PRIMARY KEY (
-      `C_NO`, -- 쿠폰번호
+      `C_NO`, -- 회사번호
       `I_NO`  -- 필요아이템
     );
 
@@ -100,22 +103,18 @@ ALTER TABLE `MYITEM`
 -- 만보기정보
 CREATE TABLE `PACE` (
   `U_NO`    INTEGER NOT NULL COMMENT '사용자번호', -- 사용자번호
-  `W_COUNT` INTEGER NULL     COMMENT '걸음수', -- 걸음수
-  `W_CAL`   FLOAT   NULL     COMMENT '칼로리', -- 칼로리
-  `W_M`     FLOAT   NULL     COMMENT '거리', -- 거리
-  `W_TIMER` INTEGER NULL     COMMENT '시간', -- 시간
+  `W_COUNT` INTEGER NULL     COMMENT '누적걸음수', -- 누적걸음수
   `W_DATE`  DATE    NULL     COMMENT '일자' -- 일자
 )
 COMMENT '만보기정보';
 
 -- 기업정보
 CREATE TABLE `COMPANY` (
-  `C_NO`    INTEGER      NOT NULL COMMENT '쿠폰번호', -- 쿠폰번호
+  `C_NO`    INTEGER      NOT NULL COMMENT '회사번호', -- 회사번호
   `C_NAME`  VARCHAR(50)  NOT NULL COMMENT '광고주', -- 광고주
-  `C_IMAGE` VARCHAR(255) NOT NULL COMMENT '쿠폰그림URL', -- 쿠폰그림URL
+  `C_IMAGE` VARCHAR(255) NOT NULL COMMENT '회사마크', -- 회사마크
   `C_PAGE`  VARCHAR(255) NULL     COMMENT '홈페이지', -- 홈페이지
-  `C_AD`    VARCHAR(255) NULL     COMMENT '광고URL', -- 광고URL
-  `I_EDATE` DATE         NOT NULL COMMENT '사용종료일' -- 사용종료일
+  `C_AD`    VARCHAR(255) NULL     COMMENT '광고URL' -- 광고URL
 )
 COMMENT '기업정보';
 
@@ -123,11 +122,11 @@ COMMENT '기업정보';
 ALTER TABLE `COMPANY`
   ADD CONSTRAINT `PK_COMPANY` -- 기업정보 기본키
     PRIMARY KEY (
-      `C_NO` -- 쿠폰번호
+      `C_NO` -- 회사번호
     );
 
 ALTER TABLE `COMPANY`
-  MODIFY COLUMN `C_NO` INTEGER NOT NULL AUTO_INCREMENT COMMENT '쿠폰번호';
+  MODIFY COLUMN `C_NO` INTEGER NOT NULL AUTO_INCREMENT COMMENT '회사번호';
 
 ALTER TABLE `COMPANY`
   AUTO_INCREMENT = 1;
@@ -135,9 +134,8 @@ ALTER TABLE `COMPANY`
 -- 쿠폰바코드
 CREATE TABLE `BARCODE` (
   `C_SERIAL` INTEGER      NOT NULL COMMENT '쿠폰바코드일련번호', -- 쿠폰바코드일련번호
-  `C_NO`     INTEGER      NULL     COMMENT '쿠폰번호', -- 쿠폰번호
-  `C_CODE`   VARCHAR(255) NOT NULL COMMENT '바코드번호', -- 바코드번호
-  `C_VALID`  BOOLEAN      NOT NULL DEFAULT true COMMENT '발급가능여부' -- 발급가능여부
+  `G_NO`     INTEGER      NOT NULL COMMENT '품목 번호', -- 품목 번호
+  `C_CODE`   VARCHAR(255) NOT NULL COMMENT '바코드번호' -- 바코드번호
 )
 COMMENT '쿠폰바코드';
 
@@ -168,11 +166,30 @@ ALTER TABLE `MYCOUPON`
 -- 도장찍기
 CREATE TABLE `STAMP` (
   `C_SERIAL`  INTEGER NULL COMMENT '쿠폰바코드일련번호', -- 쿠폰바코드일련번호
-  `C_NO`      INTEGER NULL COMMENT '쿠폰번호', -- 쿠폰번호
+  `C_NO`      INTEGER NULL COMMENT '회사번호', -- 회사번호
   `I_NO`      INTEGER NULL COMMENT '필요아이템', -- 필요아이템
   `I_DEPOSIT` INTEGER NULL COMMENT '찍은수량' -- 찍은수량
 )
 COMMENT '도장찍기';
+
+-- 물품정보
+CREATE TABLE `GOODS` (
+  `G_NO`    INTEGER      NOT NULL COMMENT '품목 번호', -- 품목 번호
+  `C_NO`    INTEGER      NOT NULL COMMENT '회사번호', -- 회사번호
+  `G_IMAGE` VARCHAR(255) NOT NULL COMMENT '물품 이미지', -- 물품 이미지
+  `G_TITLE` VARCHAR(50)  NOT NULL COMMENT '물품 제목', -- 물품 제목
+  `G_DESC`  VARCHAR(255) NOT NULL COMMENT '물품 설명', -- 물품 설명
+  `G_EDATE` DATE         NOT NULL COMMENT '사용종료일', -- 사용종료일
+  `G_VALID` BOOLEAN      NOT NULL DEFAULT true COMMENT '발급가능여부' -- 발급가능여부
+)
+COMMENT '물품정보';
+
+-- 물품정보
+ALTER TABLE `GOODS`
+  ADD CONSTRAINT `PK_GOODS` -- 물품정보 기본키
+    PRIMARY KEY (
+      `G_NO` -- 품목 번호
+    );
 
 -- 쿠폰아이템
 ALTER TABLE `ELEMENT`
@@ -188,10 +205,10 @@ ALTER TABLE `ELEMENT`
 ALTER TABLE `ELEMENT`
   ADD CONSTRAINT `FK_COMPANY_TO_ELEMENT` -- 기업정보 -> 쿠폰아이템
     FOREIGN KEY (
-      `C_NO` -- 쿠폰번호
+      `C_NO` -- 회사번호
     )
     REFERENCES `COMPANY` ( -- 기업정보
-      `C_NO` -- 쿠폰번호
+      `C_NO` -- 회사번호
     );
 
 -- 소지아이템취득내역
@@ -226,12 +243,12 @@ ALTER TABLE `PACE`
 
 -- 쿠폰바코드
 ALTER TABLE `BARCODE`
-  ADD CONSTRAINT `FK_COMPANY_TO_BARCODE` -- 기업정보 -> 쿠폰바코드
+  ADD CONSTRAINT `FK_GOODS_TO_BARCODE` -- 물품정보 -> 쿠폰바코드
     FOREIGN KEY (
-      `C_NO` -- 쿠폰번호
+      `G_NO` -- 품목 번호
     )
-    REFERENCES `COMPANY` ( -- 기업정보
-      `C_NO` -- 쿠폰번호
+    REFERENCES `GOODS` ( -- 물품정보
+      `G_NO` -- 품목 번호
     );
 
 -- 내쿠폰
@@ -268,10 +285,20 @@ ALTER TABLE `STAMP`
 ALTER TABLE `STAMP`
   ADD CONSTRAINT `FK_ELEMENT_TO_STAMP` -- 쿠폰아이템 -> 도장찍기
     FOREIGN KEY (
-      `C_NO`, -- 쿠폰번호
+      `C_NO`, -- 회사번호
       `I_NO`  -- 필요아이템
     )
     REFERENCES `ELEMENT` ( -- 쿠폰아이템
-      `C_NO`, -- 쿠폰번호
+      `C_NO`, -- 회사번호
       `I_NO`  -- 필요아이템
+    );
+
+-- 물품정보
+ALTER TABLE `GOODS`
+  ADD CONSTRAINT `FK_COMPANY_TO_GOODS` -- 기업정보 -> 물품정보
+    FOREIGN KEY (
+      `C_NO` -- 회사번호
+    )
+    REFERENCES `COMPANY` ( -- 기업정보
+      `C_NO` -- 회사번호
     );
