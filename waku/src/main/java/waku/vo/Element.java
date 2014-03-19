@@ -1,15 +1,15 @@
 package waku.vo;
 
 public class Element {
-	int cNo;
+	int gNo;
 	int iNo;
 	int iReq;
 	
 	public int getcNo() {
-		return cNo;
+		return gNo;
 	}
-	public void setcNo(int cNo) {
-		this.cNo = cNo;
+	public void setcNo(int gNo) {
+		this.gNo = gNo;
 	}
 	public int getiNo() {
 		return iNo;

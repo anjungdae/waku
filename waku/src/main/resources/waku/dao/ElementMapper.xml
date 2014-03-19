@@ -4,20 +4,20 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="waku.dao.ElementDao">
   <resultMap type="element" id="elementResultMap">
-    <id     property="cNo"       column="C_NO"/>
+    <id     property="gNo"       column="G_NO"/>
     <id     property="iNo"     column="I_NO"/>
     <result property="iReq"    column="I_REQ"/>
   </resultMap>
   
   <select id="selectList" resultMap="elementResultMap">
-    select C_NO,I_NO,I_REQ
+    select G_NO,I_NO,I_REQ
+    from ELEMENT
   </select>
     
   <select id="selectPlur" parameterType="map" resultMap="elementResultMap">
-    select C_NO,I_NO,I_REQ
-    from MYITEM
-    where U_NO=#{uNo}
-    and I_NO=#{iNo}
+    select G_NO,I_NO,I_REQ
+    from ELEMENT
+    
   </select>
   
 </mapper>

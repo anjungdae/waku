@@ -70,7 +70,7 @@ ALTER TABLE `ITEM`
 
 -- 쿠폰아이템
 CREATE TABLE `ELEMENT` (
-  `C_NO`  INTEGER NOT NULL COMMENT '회사번호', -- 회사번호
+  `G_NO`  INTEGER NOT NULL COMMENT '품목 번호', -- 품목 번호
   `I_NO`  INTEGER NOT NULL COMMENT '필요아이템', -- 필요아이템
   `I_REQ` INTEGER NOT NULL COMMENT '필요수량' -- 필요수량
 )
@@ -80,7 +80,7 @@ COMMENT '쿠폰아이템';
 ALTER TABLE `ELEMENT`
   ADD CONSTRAINT `PK_ELEMENT` -- 쿠폰아이템 기본키
     PRIMARY KEY (
-      `C_NO`, -- 회사번호
+      `G_NO`, -- 품목 번호
       `I_NO`  -- 필요아이템
     );
 
@@ -166,7 +166,7 @@ ALTER TABLE `MYCOUPON`
 -- 도장찍기
 CREATE TABLE `STAMP` (
   `C_SERIAL`  INTEGER NULL COMMENT '쿠폰바코드일련번호', -- 쿠폰바코드일련번호
-  `C_NO`      INTEGER NULL COMMENT '회사번호', -- 회사번호
+  `G_NO`      INTEGER NULL COMMENT '품목 번호', -- 품목 번호
   `I_NO`      INTEGER NULL COMMENT '필요아이템', -- 필요아이템
   `I_DEPOSIT` INTEGER NULL COMMENT '찍은수량' -- 찍은수량
 )
@@ -203,12 +203,12 @@ ALTER TABLE `ELEMENT`
 
 -- 쿠폰아이템
 ALTER TABLE `ELEMENT`
-  ADD CONSTRAINT `FK_COMPANY_TO_ELEMENT` -- 기업정보 -> 쿠폰아이템
+  ADD CONSTRAINT `FK_GOODS_TO_ELEMENT` -- 물품정보 -> 쿠폰아이템
     FOREIGN KEY (
-      `C_NO` -- 회사번호
+      `G_NO` -- 품목 번호
     )
-    REFERENCES `COMPANY` ( -- 기업정보
-      `C_NO` -- 회사번호
+    REFERENCES `GOODS` ( -- 물품정보
+      `G_NO` -- 품목 번호
     );
 
 -- 소지아이템취득내역
@@ -285,11 +285,11 @@ ALTER TABLE `STAMP`
 ALTER TABLE `STAMP`
   ADD CONSTRAINT `FK_ELEMENT_TO_STAMP` -- 쿠폰아이템 -> 도장찍기
     FOREIGN KEY (
-      `C_NO`, -- 회사번호
+      `G_NO`, -- 품목 번호
       `I_NO`  -- 필요아이템
     )
     REFERENCES `ELEMENT` ( -- 쿠폰아이템
-      `C_NO`, -- 회사번호
+      `G_NO`, -- 품목 번호
       `I_NO`  -- 필요아이템
     );
 

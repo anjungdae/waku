@@ -4,6 +4,7 @@ select * from item;
 select * from myitem;
 select * from element;
 select * from company;
+select * from ELEMENT;
 
 /* UERS DATA */
 INSERT INTO USER(U_NO,U_EMAIL,U_PASSWORD,U_W_TOTAL) VALUES (1,'hun@naver.com','111',10000);
@@ -54,19 +55,19 @@ INSERT INTO COMPANY(C_NO,C_IMAGE,C_NAME,C_PAGE,C_AD) VALUES (1,'starbuck.png','S
 INSERT INTO COMPANY(C_NO,C_IMAGE,C_NAME,C_PAGE,C_AD) VALUES (2,'tomtom.png','TomnToms','www.tomntoms.com','www.tomntoms.com');
 INSERT INTO COMPANY(C_NO,C_IMAGE,C_NAME,C_PAGE,C_AD) VALUES (3,'smoothieking.png','SmoothieKing','www.smoothieking.co.kr','www.smoothieking.co.kr');
 
-/* ELEMENT DATA */
-INSERT INTO ELEMENT(C_NO,I_NO,I_REQ) VALUES (1,5,1);/* 스타벅스 - 스타벅스 엠블럼 - 1개 */
-INSERT INTO ELEMENT(C_NO,I_NO,I_REQ) VALUES (1,1,10);
-INSERT INTO ELEMENT(C_NO,I_NO,I_REQ) VALUES (1,3,20);
-INSERT INTO ELEMENT(C_NO,I_NO,I_REQ) VALUES (2,6,1);/* 탐탐 - 탐탐 엠블럼 - 1개 */
-INSERT INTO ELEMENT(C_NO,I_NO,I_REQ) VALUES (3,7,1);
-
 /* GOODS DATA */
 INSERT INTO GOODS(G_NO,C_NO,G_IMAGE,G_TITLE,G_DESC,G_EDATE,G_VALID) VALUES (1,1,'starbuckamerica.png','스타벅스 아메리카노','20% 할인','2014-03-28',1);
 INSERT INTO GOODS(G_NO,C_NO,G_IMAGE,G_TITLE,G_DESC,G_EDATE,G_VALID) VALUES (2,2,'tomtomcafe.png','탐탐 카페라떼','30% 할인','2014-03-28',0);
 INSERT INTO GOODS(G_NO,C_NO,G_IMAGE,G_TITLE,G_DESC,G_EDATE,G_VALID) VALUES (3,3,'smoothiestraw.png','스트로베리가 무료!','공짜','2014-03-28',1);
 INSERT INTO GOODS(G_NO,C_NO,G_IMAGE,G_TITLE,G_DESC,G_EDATE,G_VALID) VALUES (4,1,'starbuckhot.png','스타벅스 핫초코','시그니처 시음권','2014-03-28',0);
 INSERT INTO GOODS(G_NO,C_NO,G_IMAGE,G_TITLE,G_DESC,G_EDATE,G_VALID) VALUES (5,2,'tomtombanana.png','탐탐 바닐라','바나나 아이스크림','2014-03-28',1);
+
+/* ELEMENT DATA */
+INSERT INTO ELEMENT(G_NO,I_NO,I_REQ) VALUES (1,5,1);/* 스타벅스 - 스타벅스 엠블럼 - 1개 */
+INSERT INTO ELEMENT(G_NO,I_NO,I_REQ) VALUES (1,1,10);
+INSERT INTO ELEMENT(G_NO,I_NO,I_REQ) VALUES (1,3,20);
+INSERT INTO ELEMENT(G_NO,I_NO,I_REQ) VALUES (2,6,1);/* 탐탐 - 탐탐 엠블럼 - 1개 */
+INSERT INTO ELEMENT(G_NO,I_NO,I_REQ) VALUES (3,7,1);
 
 /* BARCODE DATA */
 INSERT INTO BARCODE(C_SERIAL,G_NO,C_CODE) VALUES (1,1,'1234-1234-1234-1234');/* 스타벅스 - 바코드*/
