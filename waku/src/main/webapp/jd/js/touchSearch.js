@@ -48,7 +48,7 @@ $( document ).ready(function() {
 			tTemp += "<ul id = 'itemName'>";
 					for(var j = 0; j < myItemName.length; j++){
 						if(myItemStock[j] != 0){
-						tTemp += "<li class='itemNameLi'><img src='sideicon/" + myItemImage[j] + "'>" + myItemName[j] + "</li>";
+						tTemp += "<li id='" + myItemImage[j].substring(0,myItemImage[j].length-4) + "' class='itemNameLi'><img src='sideicon/" + myItemImage[j] + "'>" + myItemName[j] + "</li>";
 						};
 					};
 			tTemp += "</ul>"
@@ -89,7 +89,7 @@ $( document ).ready(function() {
 				tTemp += "<h6><span id = 'itemClass' class='sortName'>"+ myItemClass + "</span></h6>";
 				tTemp += "<ul id = 'itemName'>";
 						for(var k = 0; k < myItemName.length; k++){
-							tTemp += "<li><img src='sideicon/" + myItemImage[k] + "'>" + myItemName[k] + "</li>";
+							tTemp += "<li id='" + myItemImage[k].substring(0,myItemImage[k].length-4) + "' class='itemNameLi'><img src='sideicon/" + myItemImage[k] + "'>" + myItemName[k] + "</li>";
 						};
 				tTemp += "</ul>";
 				tTemp += "</div>";

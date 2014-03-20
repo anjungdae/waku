@@ -14,10 +14,8 @@
     from ELEMENT
   </select>
     
-  <select id="selectPlur" parameterType="map" resultMap="elementResultMap">
-    select G_NO,I_NO,I_REQ
-    from ELEMENT
-    
+  <select id="selectPlur" parameterType="String" resultMap="elementResultMap">
+    ${sql}
   </select>
   
 </mapper>
