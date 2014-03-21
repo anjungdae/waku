@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+  <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #paceChart {
+        height: 40%;
+        width: 100%;
+      }
+  </style>
+  <link rel="stylesheet" href="../css//jqplot/jquery.jqplot.min.css" type="text/css">
+  <script type="text/javascript" src="../js/jquery.min.js"></script>
+  <script type="text/javascript" src="../js/jqplot/jquery.jqplot.min.js"></script>
+  <script type="text/javascript" src="../js/jqplot/plugins/jqplot.categoryAxisRenderer.min.js"></script>
+  <script type="text/javascript" charset="utf-8">
+window.onload = function() {
+	var now = new Date();
+  var nowYear = now.getYear() + 1900;
+  var nowMonth = now.getMonth() + 1;
+  
+	function showPaceOfUser(no) {
+		$.ajax("/htmltest2/take1/paceOfUser.do?no="+no, {
+			type:'GET',
+			success:function(data){
+				var paceList = data.paceList;
+				var paceLabel = new Array();
+				var paceData = new Array();
+				var pace = null;
+				for(var i = 0 ; i < paceList.length ; i++) {
+					pace = paceList[i];
+					$.each(pace, function(key,value) {
+						if(key === "date") {
+							paceLabel.push(value);
+						}
+						if(key === "walkCount") {
+							paceData.push(value);
+						}
+					});
+				}
+				drawChart(paceLabel,paceData);
+			},
+			error:function(){
+				alert("시스템이 바쁩니다.\n나중에 다시 시도해 주세요!");
+			}
+		});
+	};
+	showPaceOfUser(1);
+	function padStr(i) {
+		return (i < 10) ? "0" + i : "" + i;
+	}
+	function preMonth() {
+		nowMonth -= 1;
+		if(nowMonth === 0) {
+			nowYear -= 1;
+			nowMonth = 12;
+		}
+		console.log(nowMonth);
+		clearChart();
+		showPaceOfUser(1);
+	}
+	function nextMonth() {
+    nowMonth += 1;
+    if(nowMonth === 13) {
+      nowYear += 1;
+      nowMonth = 1;
+    }
+    console.log(nowMonth);
+    clearChart();
+    showPaceOfUser(1);
+  }
+	$("#preMonth").click(preMonth);
+	$("#nextMonth").click(nextMonth);
+	function clearChart () {
+		$('#paceChart').empty();
+	}
+	function drawChart(paceLabel,paceData) {
+		var paceForChart = [];
+		console.log(nowYear + "년 " + nowMonth + "월");
+		console.log(paceLabel);
+		for(var i = 0 ; i < paceLabel.length ; i += 1) {
+			if(paceLabel[i].split("-")[0] === nowYear.toString()
+					&& paceLabel[i].split("-")[1] === padStr(nowMonth.toString())) {
+				console.log(paceLabel[i]);
+				paceForChart.push([paceLabel[i].split("-")[2],paceData[i]]);
+			}
+		}
+		console.log(paceForChart);
+		
+		var plot = $.jqplot("paceChart", [paceForChart],{
+			title: nowYear + "년 " + nowMonth + "월",
+			series:[{showMarker:false}],
+			axes:{
+				xaxis:{
+					label:"날짜",
+					renderer: $.jqplot.CategoryAxisRenderer
+				},
+				yaxis:{
+					label:"걸음수"
+				}
+			}
+		});
+	};
+};
+  </script>
+  <title>statistics</title>
+</head>
+<body>
+  <div id="statisticActivity" data-role="page">
+    <div id="paceChart"></div>
+    <button id="preMonth">pre</button>
+    <button id="nextMonth">next</button>
+  </div>
+</body>
+</html>

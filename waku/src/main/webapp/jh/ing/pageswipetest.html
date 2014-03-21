@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+<title>Insert title here</title>
+<link rel="stylesheet" href="//code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css" />
+<link rel="stylesheet" href="../css//jqplot/jquery.jqplot.min.css" type="text/css">
+<style>
+  .jqplot-target {
+    width: 100%;
+  }
+</style>
+<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="//code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+<script type="text/javascript" src="../js/jqplot/jquery.jqplot.min.js"></script>
+<script type="text/javascript" src="../js/jqplot/plugins/jqplot.categoryAxisRenderer.min.js"></script>
+<script>
+$(document).ready(function() {
+	$("div[data-role='page']").on("pageshow",function() {
+		if(this.id == "page2") {
+			drawChart2();
+		}
+		if(this.id == "page3") {
+			drawChart3();
+		}
+	}); 
+	var now = new Date();
+  var monthToDraw = now.getMonth() + 1;
+  var yearToDraw = now.getYear() + 1900;
+  var plot1, plot2, plot3;
+  var plot1Data = [];
+  var plot2Data = [];
+  var plot3Data = [];
+  var i;
+  
+	function padStr(i) {
+    return (i < 10) ? "0" + i : "" + i;
+  };
+	
+	//$("#page1").on( "swipeleft", swipeleftHandler );
+	//$("#page1").on( "swiperight", swiperightHandler );
+	function drawChart1() {
+		plot1 = $.jqplot("plot1Chart", [plot1Data],{
+      title: yearToDraw + "년 " + monthToDraw + "월",
+      series:[{showMarker:false}],
+      axes:{
+        xaxis:{
+          label:"날짜",
+          renderer: $.jqplot.CategoryAxisRenderer
+        },
+        yaxis:{
+          label:"걸음수"
+        }
+      }
+    });
+	}
+	function drawChart2() {
+		plot2 = $.jqplot("plot2Chart", [plot2Data],{
+      title: yearToDraw + "년 " + (monthToDraw-1) + "월",
+      series:[{showMarker:false}],
+      axes:{
+        xaxis:{
+          label:"날짜",
+          renderer: $.jqplot.CategoryAxisRenderer
+        },
+        yaxis:{
+          label:"걸음수"
+        }
+      }
+    });
+	}
+	function drawChart3() {
+		plot3 = $.jqplot("plot3Chart", [plot3Data],{
+      title: yearToDraw + "년 " + (monthToDraw-2) + "월",
+      series:[{showMarker:false}],
+      axes:{
+        xaxis:{
+          label:"날짜",
+          renderer: $.jqplot.CategoryAxisRenderer
+        },
+        yaxis:{
+          label:"걸음수"
+        }
+      }
+    });
+	}
+	for(i = 0 ; i < localStorage.length - 1 ; i +=1) {
+		if(localStorage.key(i).split("-")[0] === yearToDraw.toString() && localStorage.key(i).split("-")[1] === padStr(monthToDraw - 2)) {
+			plot3Data.push([ localStorage.key(i).split("-")[2] , parseInt(localStorage[localStorage.key(i)]) ]);
+		} else if(localStorage.key(i).split("-")[0] === yearToDraw.toString() && localStorage.key(i).split("-")[1] === padStr(monthToDraw - 1)) {
+			plot2Data.push([ localStorage.key(i).split("-")[2] , parseInt(localStorage[localStorage.key(i)]) ]);
+		} else if(localStorage.key(i).split("-")[0] === yearToDraw.toString() && localStorage.key(i).split("-")[1] === padStr(monthToDraw)) {
+			plot1Data.push([ localStorage.key(i).split("-")[2] , parseInt(localStorage[localStorage.key(i)]) ]);
+		}
+	}
+});
+</script>
+</head>
+<body>
+  <div id="chartDiv">
+    <div data-role="page" id="page1">
+      <div id="plot1Chart"></div>
+      <div>
+        <a href="#page3" data-transition="slide"><button>Next Month</button></a>
+        <a href="#page2" data-transition="slide" data-direction="reverse" data-prefetch><button>Prev Month</button></a>
+      </div>
+    </div>
+	  <div data-role="page" id="page2">
+	    <div id="plot2Chart"></div>
+	    <div>
+        <a href="#page1" data-transition="slide"><button>Next Month</button></a>
+	      <a href="#page3" data-transition="slide" data-direction="reverse" data-prefetch><button>Prev Month</button></a>
+	    </div>
+	  </div>
+	  <div data-role="page" id="page3">
+      <div id="plot3Chart"></div>
+      <div>
+        <a href="#page2" data-transition="slide"><button>Next Month</button></a>
+        <a href="#page1" data-transition="slide" data-direction="reverse" data-prefetch><button>Prev Month</button></a>
+      </div>
+    </div>
+	  
+	</div>
+</body>
+</html>

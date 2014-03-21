@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+window.onload = function() {
+  var output = document.getElementById("output");
+  var str = "";
+  for (var i = 0 ; i < localStorage.length ; i++){
+    console.log(localStorage.key(i) + ": " + localStorage[localStorage.key(i)]);
+  }
+  //output.innerHTML += str;
+  //localStorage.x = 1;
+  console.log(localStorage.x);
+};
+</script>
+</head>
+<body>
+<div id="output">aaa</div>
+</body>
+</html>

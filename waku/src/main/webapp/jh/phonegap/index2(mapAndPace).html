@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport"
+	content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdziY_xl5gxaUkekLDsEZ_FqTeD0D7v5U&sensor=true"></script>
+  <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="http//code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+  <script type="text/javascript" src="js/Toast.js"></script>
+<script type="text/javascript">
+
+var walkCount = 0;
+var SHAKE_THRESHOLD_MIN = 3;
+var SHAKE_THRESHOLD_MAX = 12;
+var x,y,z,stamp = 0;
+var lastX,lastY,lastZ,lastStamp = 0;
+var lastStepTime = new Date().getTime();
+var speed = 0;
+var time = 0;
+var cal = 0;
+var updateInterval = 1000;
+var spentTime = 0;
+
+document.addEventListener("deviceready", onDeviceReady, false);
+
+setInterval(function(){spentTime += updateInterval;},updateInterval);
+
+var watchID = null;
+var watchPositionId = null;
+
+function onDeviceReady() {
+	watchID = navigator.accelerometer.watchAcceleration(onAccelerSuccess, onError, { frequency: 200 });
+  watchPositionId = navigator.geolocation.watchPosition(onMapSuccess, onError,{ maximumAge: 3000, timeout: 10000, enableHighAccuracy: true });
+}
+
+function watchWalk (acceleration) {
+	x = acceleration.x;
+  y = acceleration.y;
+  z = acceleration.z;
+  stamp = acceleration.timestamp;
+  speed = Math.abs(x + y + z - lastX - lastY - lastZ);
+  if(speed > SHAKE_THRESHOLD_MIN && speed < SHAKE_THRESHOLD_MAX && stamp-lastStepTime > 400) {
+  	walkCount += 1;
+  	lastStepTime = stamp;
+  }
+}
+function onAccelerSuccess(acceleration) {
+	watchWalk(acceleration);
+  var accelerWalk = document.getElementById('accelerWalk');
+  var accelerData = document.getElementById('accelerData');
+  var html = '';
+  html += "<td colspan='2'><h1>" + walkCount + "</h1></td>";
+  accelerWalk.innerHTML = html;
+  html = '';
+  html += "<td><h1>" + spentTime / 1000 + "</h1></td>" +
+  "<td><h1>" + (400 / 6 / 1000 * spentTime / 1000).toFixed(2) + "</h1></td>";
+  accelerData.innerHTML = html;
+  lastX = acceleration.x;
+  lastY = acceleration.y;
+  lastZ = acceleration.z;
+  lastStamp = acceleration.timestamp;
+}
+
+function onError(error) {
+	alert('code: '    + error.code    + '\n' +
+			'message: ' + error.message + '\n');
+}
+
+
+
+var latlng;
+var map;
+var myMarker;
+var watchHeadingId;
+var mySymbol = {
+    path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+    fillColor: "#00bfff",
+    fillOpacity: 1,
+    scale: 6,
+    strokeColor: "white",
+    strokeWeight: 2
+};
+function onMapSuccess(myPosition) {
+  /*
+  position.coords.latitude
+  position.coords.longitude
+  position.coords.altitude
+  position.coords.accuracy
+  position.coords.altitudeAccuracy
+  position.coords.heading
+  position.coords.speed
+  position.timestamp
+  */
+  
+  if(typeof map === "undefined") {
+    initializeMap(myPosition);
+  } else {
+    positionChange(myPosition);
+  }
+};
+function positionChange(myPosition) {
+  latlng = new google.maps.LatLng(myPosition.coords.latitude,myPosition.coords.longitude);
+  if(myPosition.coords.heading) {
+    mySight.rotation = myPosition.coords.heading;
+  }
+  map.panTo(latlng);
+  myMarker.setPosition(latlng);
+}
+function initializeMap(myPosition){
+  window.plugins.toast.showShortBottom("Map initialized...");
+  latlng = new google.maps.LatLng(myPosition.coords.latitude,myPosition.coords.longitude);
+  var mapOptions = {
+      center: latlng,
+      zoom: 18,
+      draggable: false,
+      mapTypeControl: false,
+      disableDoubleClickZoom: true,
+      panControl: false,
+      zoomControl: false,
+      scaleControl: false,
+      streetViewControl:false,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+  map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
+  myMarker = new google.maps.Marker({
+    map: map,
+    position: latlng,
+    icon: mySymbol
+  });
+  myMarker.setZIndex(1000);
+};
+</script>
+<style>
+  table {
+    width: 100%;
+    border: solid white 1px;
+  }
+  td {
+    border: solid black 1px;
+    text-align: center;
+  }
+  #accelerData td {
+    width: 50%;
+    font-size: 2em;
+    color: #fff;
+    background-color: #000;
+  }
+  #accelerWalk td {
+    font-size: 3em;
+    color: #fff;
+     background-color: #000;
+  }
+  
+  html { height: 100% }
+  body { height: 100%; margin: 0; padding: 0 }
+  #map-canvas {
+    height: 30%;
+    width: 100%;
+  }
+</style>
+<title>for testing</title>
+</head>
+<body>
+  <div id="accelerometer">
+    <table>
+      <tr id="accelerWalk"></tr>
+      <tr id="accelerData"></tr>
+    </table>
+  </div>
+  <div id="mainActivity" data-role="page">
+    <div id="map-canvas"></div>
+  </div>
+</body>
+</html>

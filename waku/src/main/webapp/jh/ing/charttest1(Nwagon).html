@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+  <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #paceChart {
+        height: 40%;
+        width: 100%;
+      }
+  </style>
+  <link rel="stylesheet" href="Nwagon.css" type="text/css">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="../js/Nwagon.js"></script>
+  <script type="text/javascript" charset="utf-8">
+window.onload = function() {
+	function drawChart(paceLabel,paceData) {
+		var options = {
+				"legend":{
+					names: paceLabel,
+					hrefs: []},
+				"dataset":{
+          title:"Walk Count per Day",
+          values: paceData,
+          colorset: ['#DC143C'],
+          fields:['Count']},
+         "chartDiv" : "paceChart",
+         "chartType" : "line",
+         "chartSize" : {width:700, height:300},
+         "increment" : 1000
+         }
+		Nwagon.chart(options);
+	}
+    function showPaceOfUser(no) {
+      $.ajax("/htmltest2/take1/paceOfUser.do?no="+no, {
+        type:'GET',
+        success:function(data){
+          var paceList = data.paceList;
+          var paceLabel = new Array();
+          var paceData = new Array();
+          var pace = null;
+          for(var i = 0 ; i < paceList.length ; i++) {
+         	 pace = paceList[i];
+            $.each(pace, function(key,value) {
+              if(key === "date") {
+              	console.log("date: " + value)
+                paceLabel.push(value);
+              }
+              if(key === "walkCount") {
+                paceData.push([value]);
+              }
+            });
+          }
+          drawChart(paceLabel,paceData);
+          },
+        error:function(){
+          alert("시스템이 바쁩니다.\n나중에 다시 시도해 주세요!");
+        }}
+      );
+    };
+   showPaceOfUser(1);
+};
+  </script>
+  <title>GpsTest</title>
+</head>
+<body>
+  <div id="statisticActivity" data-role="page">
+    <div id="paceChart"></div>
+  </div>
+</body>
+</html>
