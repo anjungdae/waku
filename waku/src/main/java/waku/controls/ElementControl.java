@@ -1,7 +1,11 @@
 package waku.controls;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import waku.dao.ElementDao;
+import waku.vo.Element;
 import waku.vo.JsonResult;
 
 @Controller
@@ -51,21 +56,13 @@ public class ElementControl {
 			String element = "ELEMENT";
 			
 			if(arrayiNo.size() > 0){
-				System.out.println("1 => " + arrayiNo.get(0));
 				sql += "select * from (select * from " + element + " where I_NO=" + arrayiNo.get(0)+ ") T1";
-				System.out.println("1-1 => " + sql);
 				if(arrayiNo.size() > 1){
-					System.out.println("2 => " + arrayiNo.get(1));
 					sql += " inner join (select * from " + element + " where I_NO=" + arrayiNo.get(1) +") T2 using (G_NO)";
-					System.out.println("2-1 => " + sql);
 					if(arrayiNo.size() > 2){
-						System.out.println("2 => " + arrayiNo.get(2));
 						sql += " inner join ( select * from " + element + " where I_NO=" + arrayiNo.get(2)+") T3 using (G_NO)";
-						System.out.println("3-1 => " + sql);
 						if(arrayiNo.size() > 3){
-							System.out.println("3 => " + arrayiNo.get(3));
 							sql += " inner join ( select * from " + element + " where I_NO=" + arrayiNo.get(3)+") T4 using (G_NO)";
-							System.out.println("4-1 => " + sql);
 							if(arrayiNo.size() > 5){
 								System.out.println("꺼져");
 							}
@@ -75,11 +72,34 @@ public class ElementControl {
 			}
 			
 			System.out.println("sql total : " + sql);
-					
-			JsonResult jr = new JsonResult().setResultStatus(JsonResult.SUCCESS).setData(elementDao.selectPlur(sql));
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("sql", sql);
+			/*
+			List<Map<String, Integer>> elm  = elementDao.selectPlur(map);
+			
+			for(int i = 0; i<elm.size();i++){
+				System.out.println(elm.get(i));
+				
+				Map<String, Integer> eln = elm.get(i);
+				
+				String key = null;
+				Integer value = null;
+				
+				Set set = eln.keySet();
+				Iterator iterator = set.iterator();
+
+				while (iterator.hasNext()) {
+				    key = (String)iterator.next();
+				    value = eln.get(key);
+				    System.out.println("key : "+key+", value : "+value);
+				}
+			}
+			*/
+			JsonResult jr = new JsonResult().setResultStatus(JsonResult.SUCCESS).setData(elementDao.selectPlur(map));
 			System.out.println(jr);
 			return jr;
 		}catch(Throwable ex){
+			ex.printStackTrace();
 			return new JsonResult().setResultStatus(JsonResult.FAIL).setError(ex.getMessage());
 		}
 	}
