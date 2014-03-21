@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+  <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #paceChart {
+        height: 40%;
+        width: 100%;
+      }
+  </style>
+  <link rel="stylesheet" href="../css//jqplot/jquery.jqplot.min.css" type="text/css">
+  <script type="text/javascript" src="../js/jquery.min.js"></script>
+  <script type="text/javascript" src="../js/jqplot/jquery.jqplot.min.js"></script>
+  <script type="text/javascript" src="../js/jqplot/plugins/jqplot.categoryAxisRenderer.min.js"></script>
+  <script type="text/javascript" charset="utf-8">
+window.onload = function() {
+	function padStr(i) {
+		return (i < 10) ? "0" + i : "" + i;
+	}
+	$("#preMonth").click(preMonth);
+	$("#nextMonth").click(nextMonth);
+	
+	function clearChart () {
+		$('#paceChart').empty();
+	}
+	function drawChart(paceLabel,paceData) {
+		
+// 		var paceForChart = [];
+// 		console.log(nowYear + "년 " + nowMonth + "월");
+// 		console.log(paceLabel);
+// 		for(var i = 0 ; i < paceLabel.length ; i += 1) {
+// 				console.log(paceLabel[i]);
+// 				localStorage[paceLabel[i]] = paceData[i];
+// 				paceForChart.push([paceLabel[i].split("-")[2],paceData[i]]);
+			
+// 		}
+// 		console.log(paceForChart);
+		
+// 		var plot = $.jqplot("paceChart", [paceForChart],{
+// 			title: nowYear + "년 " + nowMonth + "월",
+// 			series:[{showMarker:false}],
+// 			axes:{
+// 				xaxis:{
+// 					label:"날짜",
+// 					renderer: $.jqplot.CategoryAxisRenderer
+// 				},
+// 				yaxis:{
+// 					label:"걸음수"
+// 				}
+// 			}
+// 		});
+	};
+};
+  </script>
+  <title>statistics</title>
+</head>
+<body>
+  <div id="statisticActivity">
+    <div id="paceChart"></div>
+  </div>
+</body>
+</html>
