@@ -15,7 +15,14 @@
   </select>
     
   <select id="selectPlur" parameterType="map" resultMap="elementResultMap">
-    ${sql}
+    SELECT G_NO, T2.I_NO, T2.I_REQ 
+      FROM (
+      SELECT G_NO, COUNT(G_NO) CNT FROM ELEMENT WHERE I_NO IN (${joinList}) group by G_NO
+      )
+      T1 LEFT OUTER JOIN ELEMENT T2 USING(G_NO) 
+      WHERE T1.CNT = #{selectCount}
+      
+      ${sql}
   </select>
   
 </mapper>
