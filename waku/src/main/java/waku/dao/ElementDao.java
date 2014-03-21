@@ -8,5 +8,5 @@ import waku.vo.Element;
 
 public interface ElementDao {
 	public List<Element> selectList() throws Exception;
-	public List<Map<String, Integer>> selectPlur(HashMap<String, Object> sqlmap) throws Exception;
+	public List<Element> selectPlur(HashMap<String, Object> sqlmap) throws Exception;
 }

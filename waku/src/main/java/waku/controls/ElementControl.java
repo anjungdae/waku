@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import waku.dao.ElementDao;
+import waku.vo.Element;
 import waku.vo.JsonResult;
 
 @Controller
@@ -61,7 +62,13 @@ public class ElementControl {
 			sqlmap.put("joinList", joinList);
 			sqlmap.put("selectCount",selectCount);
 			
-			List<Map<String, Integer>> combineList = elementDao.selectPlur(sqlmap);
+			List<Element> combineMap = elementDao.selectPlur(sqlmap);
+			
+			Element combine =   combineMap.get(1);
+			
+			System.out.println(combine.getgNo());
+			System.out.println(combine.getiNo());
+			System.out.println(combine.getiReq());
 			
 			/*
 			String sql = "";

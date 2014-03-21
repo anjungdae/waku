@@ -5,10 +5,10 @@ public class Element {
 	int iNo;
 	int iReq;
 	
-	public int getcNo() {
+	public int getgNo() {
 		return gNo;
 	}
-	public void setcNo(int gNo) {
+	public void setgNo(int gNo) {
 		this.gNo = gNo;
 	}
 	public int getiNo() {
