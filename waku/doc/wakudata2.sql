@@ -1,0 +1,85 @@
+desc wakudb;
+
+select * from USER;
+select * from PACE;
+select * from item;
+select * from myitem;
+select * from element;
+select * from company;
+
+INSERT INTO ITEM(I_NO,I_NAME,I_IMAGE,I_CLASS,I_PRICE,I_SDATE) VALUES (8,'커핀그루나루','gurunaru.png','엠블럼',30000,'2014-03-14');
+INSERT INTO MYITEM(U_NO,I_NO,I_STOCK) VALUES (1,8,1);/* 헌 - 스타벅스 - 1개 */ 
+
+INSERT INTO ELEMENT(C_NO,I_NO,I_REQ) VALUES (1,1,10);
+INSERT INTO ELEMENT(C_NO,I_NO,I_REQ) VALUES (1,3,20);
+
+INSERT INTO ELEMENT(C_NO,I_NO,I_REQ) VALUES (2,1,30);
+INSERT INTO ELEMENT(C_NO,I_NO,I_REQ) VALUES (2,3,20);
+
+INSERT INTO ELEMENT(C_NO,I_NO,I_REQ) VALUES (3,2,30);
+INSERT INTO ELEMENT(C_NO,I_NO,I_REQ) VALUES (3,3,20);
+
+delete from MYITEM where I_NO = 2;
+
+select M1.U_NO, M1.I_NO, M1.I_STOCK, M2.I_NAME, M2.I_CLASS
+    from MYITEM M1 LEFT OUTER JOIN ITEM M2
+  USING (I_NO)
+    where U_NO=1;
+
+select T1.MNO, T2.MNAME, T2.PHOTO
+    from PRJ_MEMS T1 left outer join MEMBERS T2
+      using (MNO)
+    where T1.PNO=2;
+
+select M1.U_NO, M1.I_NO, M2.I_CLASS, M2.I_NAME, M2.I_IMAGE, M1.I_STOCK 
+    from MYITEM M1 LEFT OUTER JOIN ITEM M2
+    USING (I_NO)
+    where U_NO=1
+    ORDER BY M2.I_CLASS DESC;
+
+select G_NO, I_NO, I_REQ
+    from ELEMENT;
+
+select G_NO
+    from ELEMENT  
+    where I_NO=5 AND I_NO = 3 OR I_NO = 1;
+
+select M1.G_NO, M1.I_NO, M1.I_REQ, M2.I_NO, M2.I_REQ
+    from ELEMENT M1 LEFT JOIN ELEMENT M2
+  USING (G_NO);
+
+select M1.G_NO, M1.I_NO, M1.I_REQ, M2.I_NO, M2.I_REQ, M3.I_NO, M3.I_REQ
+    from ELEMENT M1 LEFT JOIN ELEMENT M2
+  USING (G_NO)
+  LEFT JOIN ELEMENT M3
+  USING (G_NO)
+  WHERE M1.I_NO<M2.I_NO AND M2.I_NO <M3.I_NO;
+
+select * from (select * from ELEMENT where I_NO=1) T1
+ inner join (select * from ELEMENT where I_NO=3) T2 using (G_NO)
+ inner join ( select * from ELEMENT where I_NO=5) T3 using (G_NO);
+
+
+
+SELECT * FROM GOODS WHERE G_NO IN (1, 4);
+SELECT * FROM ELEMENT 
+WHERE G_NO IN (SELECT G_NO FROM ELEMENT WHERE I_NO IN (1, 3));
+
+
+SELECT G_NO, COUNT(G_NO) CNT FROM ELEMENT WHERE I_NO IN (1, 3, 5) group by G_NO;
+
+/* 쿠폰정보 가져오기*/
+SELECT T1.G_NO, T2.C_NO, T2.G_IMAGE, T2.G_TITLE, T2.G_DESC, T2.G_EDATE 
+FROM (
+SELECT G_NO, COUNT(G_NO) CNT FROM ELEMENT WHERE I_NO IN (1, 3, 5) group by G_NO
+) T1 LEFT OUTER JOIN GOODS T2 USING(G_NO) 
+WHERE T1.CNT = 3;
+
+/* 항목정보 가져오기*/
+SELECT * FROM ELEMENT WHERE G_NO IN (1, 4);
+
+SELECT G_NO, T2.I_NO, T2.I_REQ 
+FROM (
+SELECT G_NO, COUNT(G_NO) CNT FROM ELEMENT WHERE I_NO IN (1) group by G_NO)
+T1 LEFT OUTER JOIN ELEMENT T2 USING(G_NO) 
+WHERE T1.CNT = 1

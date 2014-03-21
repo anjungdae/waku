@@ -2,10 +2,8 @@ package waku.controls;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.ServletContext;
 
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import waku.dao.ElementDao;
-import waku.vo.Element;
 import waku.vo.JsonResult;
 
 @Controller
@@ -44,17 +41,33 @@ public class ElementControl {
 	@RequestMapping(value="element/read.do", produces="application/json")
 	public Object ajaxHoldRead(@RequestParam("iNo[]") int[] iNo) throws Exception {
 		try{
-			List<Integer> arrayiNo = new ArrayList<Integer>();
+			List<Integer> arrayiNoCount = new ArrayList<Integer>();
+			
+			String arrayiNo = "";
 			
 			for(int i = 0; i<iNo.length; i++){
-				System.out.println(iNo[i]);
-				arrayiNo.add(iNo[i]);
+				arrayiNoCount.add(iNo[i]);
+				arrayiNo += iNo[i] + ",";
 			};
-						
+								
+			System.out.println(arrayiNo.substring(0,arrayiNo.length()-1));
+			
+			String joinList = arrayiNo.substring(0,arrayiNo.length()-1);
+			
+			int selectCount = arrayiNoCount.size();
+			
+			HashMap<String, Object> sqlmap = new HashMap<String, Object>();
+			
+			sqlmap.put("joinList", joinList);
+			sqlmap.put("selectCount",selectCount);
+			
+			List<Map<String, Integer>> combineList = elementDao.selectPlur(sqlmap);
+			
+			/*
 			String sql = "";
 						
 			String element = "ELEMENT";
-			
+						
 			if(arrayiNo.size() > 0){
 				sql += "select * from (select * from " + element + " where I_NO=" + arrayiNo.get(0)+ ") T1";
 				if(arrayiNo.size() > 1){
@@ -74,28 +87,9 @@ public class ElementControl {
 			System.out.println("sql total : " + sql);
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put("sql", sql);
-			/*
-			List<Map<String, Integer>> elm  = elementDao.selectPlur(map);
-			
-			for(int i = 0; i<elm.size();i++){
-				System.out.println(elm.get(i));
-				
-				Map<String, Integer> eln = elm.get(i);
-				
-				String key = null;
-				Integer value = null;
-				
-				Set set = eln.keySet();
-				Iterator iterator = set.iterator();
-
-				while (iterator.hasNext()) {
-				    key = (String)iterator.next();
-				    value = eln.get(key);
-				    System.out.println("key : "+key+", value : "+value);
-				}
-			}
 			*/
-			JsonResult jr = new JsonResult().setResultStatus(JsonResult.SUCCESS).setData(elementDao.selectPlur(map));
+			
+			JsonResult jr = new JsonResult().setResultStatus(JsonResult.SUCCESS);
 			System.out.println(jr);
 			return jr;
 		}catch(Throwable ex){
