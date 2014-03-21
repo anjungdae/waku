@@ -69,7 +69,7 @@ public class ElementControl {
 			System.out.println(combine.getgNo());
 			System.out.println(combine.getiNo());
 			System.out.println(combine.getiReq());
-			
+			//
 			/*
 			String sql = "";
 						
