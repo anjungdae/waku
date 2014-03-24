@@ -11,8 +11,8 @@ public class Goods {
 	Date gEdate;
 	boolean gValid;
 	
-	int iNo;
-	int iReq;
+
+	Company company;
 	
 	public int getgNo() {
 		return gNo;
@@ -63,19 +63,15 @@ public class Goods {
 		this.gValid = gValid;
 		return this;
 	}
+
 	
-	public int getiNo() {
-		return iNo;
+	public Company getCompany() {
+		return company;
 	}
-	public Goods setiNo(int iNo) {
-		this.iNo = iNo;
+	public Goods setComapny(Company company) {
+		this.company = company;
 		return this;
 	}
-	public int getiReq() {
-		return iReq;
-	}
-	public Goods setiReq(int iReq) {
-		this.iReq = iReq;
-		return this;
-	}
+	
+	
 }

@@ -25,7 +25,16 @@ function loadCoupon() {
 			$.each(coupon, function(i, item){
 				console.log(item);
 				
+			//for (var i = 0; i < coupon.length; i++){
 				var temp = '';
+				//console.log(i);
+				//delete에서 쓸 전역변수들.
+				
+//				 var serial= coupon[i].barCode.cSerial;
+//				 console.log("s"+serial);
+//				 gno=coupon[i].barCode.gNo;
+//				 console.log("g"+serial);
+//				 
 				temp += "<div id='container" + i + "' class = 'container'>";
 				temp += "<div id='bottom" + i + "' class = 'bottom'>";
 				temp += "<div id='use" + i + "' class='use' >"+"사용하기"+'</div>';
@@ -34,18 +43,22 @@ function loadCoupon() {
 				
 				temp += "<div id='slider-container" + i + "' class='slider-container'>";
 				temp += "<div id='slider-turn" + i + "' class = 'slider-turn'>";
+				//var s=$(".slider-turn" ).css( "margin-left", "0" );
 				
 				temp += '<nav>';
 
 	                	$.ajax({
 						async: false,
-	                	url : "/waku/barcode/joinGoods.do?gNo="+coupon[i].barcode.gNo,
+	                	url : "/waku/barcode/joinGoods.do?gNo="+coupon[i].barCode.gNo,
 	                	success : function(coupons) {
 	                		var coupon = coupons.jsonResult.data;
 	                		console.log(coupon[0]);
-	            		    temp += "<div id ='gImage'>" +  coupon[0].goods.gImage + '</div>';
-	            		    temp += "<div id ='gTitle'>" +  coupon[0].goods.gTitle + '</div>';
-	            		    temp += "<div id ='gEdate'>"+"사용종료 일" +  coupon[0].goods.gEdate + '</div>';
+	            			for (var j = 0; j < coupon.length; j++){
+	            		    temp += "<div id ='gImage'>" +  coupon[j].goods.gImage + '</div>';
+	            		    temp += "<div id ='gTitle'>" +  coupon[j].goods.gTitle + '</div>';
+	            		    temp += "<div id ='gEdate'>"+"사용종료 일" +  coupon[j].goods.gEdate + '</div>';
+	            		    
+	            			};
 	                	}
 	                });
                
@@ -57,15 +70,17 @@ function loadCoupon() {
 				temp += '</nav>';
 			
 				temp += '<nav>';
-				temp += "<div id = 'cCode'>" +  coupon[i].barcode.cCode + '</div>';
+				temp += "<div id = 'cCode'>" +  coupon[i].barCode.cCode + '</div>';
 				
 				$.ajax({
 					async: false,
-                	url : "/waku/barcode/joinGoods.do?gNo="+coupon[i].barcode.gNo,
+                	url : "/waku/barcode/joinGoods.do?gNo="+coupon[i].barCode.gNo,
                 	success : function(coupons) {
                 		var coupon = coupons.jsonResult.data;
                 		console.log(coupon[0]);
-            		    temp += "<div id ='gDesc'>" +  coupon[0].goods.gDesc + '</div>';
+            			for (var j = 0; j < coupon.length; j++){
+            		    temp += "<div id ='gDesc'>" +  coupon[j].goods.gDesc + '</div>';
+            			};
                 	}
                 });
 				temp+="<a href='index.html'data-role='button' data-icon='delete' data-iconpos='notext' data-theme='b' data-inline='true' id='cancel"+i+"' class='ui-link ui-btn ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-inline ui-shadow ui-corner-all'  role='button' style='opacity: 1;'>";
@@ -120,7 +135,7 @@ function loadCoupon() {
 									});
 							 $.ajax({
 									async: false,
-				                	url : "/waku/barcode/barcodeDelete.do?cSerial="+coupon[i].barcode.cSerial,
+				                	url : "/waku/barcode/barcodeDelete.do?cSerial="+coupon[i].barCode.cSerial,
 				                	success : function(deletebarcode) {
 				            		console.log("바코드테이블삭제");	
 				                	}
@@ -128,11 +143,14 @@ function loadCoupon() {
 
 						     $.ajax({
 										async: false,
-					                	url : "/waku/goods/goodsDelete.do?gNo="+coupon[i].barcode.gNo,
+					                	url : "/waku/goods/goodsDelete.do?gNo="+coupon[i].barCode.gNo,
 					                	success : function(deletegoods) {
 						            		console.log("물품테이블 삭제완료!");	
      					               }
 					                });	
+									
+					                
+			                       
 									
 									
 									$.ajax({

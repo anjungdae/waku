@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="waku.dao.CompanyDao">
+  <resultMap type="company" id="companyResultMap">
+    <id     property="cNo"       column="C_NO"/>
+    <result     property="cName"     column="C_NAME"/>
+    <result     property="cImage"     column="C_IMAGE"/>
+    <result     property="cPage"     column="C_PAGE"/>
+    <result     property="cAd"     column="C_AD"/>
+  </resultMap>
+
+	
+	<select id="selectList" resultMap="companyResultMap">
+		select C_NO,C_NAME,C_IMAGE,C_PAGE,C_AD
+		from COMPANY
+	</select>
+  
+  <delete id="delete" parameterType="int">
+    delete from COMPANY where C_NO=#{Salue}
+  </delete>
+</mapper>

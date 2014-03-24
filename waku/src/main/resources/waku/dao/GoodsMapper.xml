@@ -10,16 +10,36 @@
     <result     property="gTitle"     column="G_TITLE"/>
     <result     property="gDesc"     column="G_DESC"/>
     <result     property="gEdate"     column="G_EDATE"/>
+    <result     property="gValid"     column="G_VALID"/>
     <result     property="iNo"     column="I_NO"/>
     <result     property="iReq"    column="I_REQ"/>
+      <association property="company" javaType="company">
+      <result property="cNo"    column="C_NO"/>
+      <result property="cName"  column="G_NAME"/>
+      <result property="cImage"  column="C_IMAGE"/>
+      <result property="cPage"  column="C_PAGE"/>
+      <result property="cAd"  column="C_AD"/>
+    </association>
+    
+    
   </resultMap>
 
-<select id="goodsInformation" parameterType="map" resultMap="goodsResultMap">
-    SELECT T1.G_NO, T2.I_NO, T2.I_REQ, T3.C_NO, T3.G_IMAGE, T3.G_TITLE, T3.G_DESC, T3.G_EDATE
-		FROM (
-		SELECT G_NO, COUNT(G_NO) CNT FROM ELEMENT WHERE I_NO IN (${joinList}) group by G_NO)
-		T1 LEFT OUTER JOIN ELEMENT T2 USING(G_NO)
-		LEFT OUTER JOIN GOODS T3 USING(G_NO) 
-		WHERE T1.CNT = #{selectCount} AND T3.G_VALID = 1;
+	<select id="selectList" resultMap="goodsResultMap">
+		select G_NO,C_NO,G_IMAGE,G_TITLE,G_DESC,G_EDATE,G_VALID
+		from GOODS
+	</select>
+  
+  <delete id="delete" parameterType="int">
+    delete from GOODS where G_NO=#{value}
+  </delete>
+  
+  
+   <select id="ByCompany" parameterType="int" 
+     resultMap="goodsResultMap">
+    select T1.G_NO,T1.C_NO,T1.G_IMAGE,T1.G_TITLE,T1.G_DESC,T1.G_EDATE,T1.G_VALID,T2.C_NO,T2.C_NAME,T2.C_IMAGE,T2.C_PAGE,T2.C_AD
+    from GOODS T1 left outer join COMPANY T2
+    using(C_NO)
+    where C_NO=#{value}
   </select>
+
 </mapper>

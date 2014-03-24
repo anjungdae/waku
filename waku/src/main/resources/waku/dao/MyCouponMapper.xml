@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="waku.dao.MyCouponDao">
+  <resultMap type="mycoupon" id="mycouponResultMap">
+    <id     property="cSerial"       column="C_SERIAL"/>
+    <result property="uNo"     column="U_NO"/>
+    <result property="uPay"    column="U_PAY"/>
+    <result property="cGdate"      column="C_GDATE"/>
+    <result property="cState"      column="C_STATE"/>
+      <association property="barcode" javaType="barcode">
+      <result property="cSerial"    column="C_SERIAL"/>
+      <result property="gNo"  column="G_NO"/>
+      <result property="cCode"  column="C_CODE"/>
+    </association>
+  </resultMap>
+	
+	<select id="selectList" resultMap="mycouponResultMap">
+		select C_SERIAL,U_NO,U_PAY,C_GDATE,C_STATE
+		from MYCOUPON
+	</select>
+  
+  <delete id="delete" parameterType="int">
+    delete from MYCOUPON where C_SERIAL=#{value}
+  </delete>
+  
+   <select id="joinBarcode" parameterType="int" 
+     resultMap="mycouponResultMap">
+    select T1.C_SERIAL,T1.U_NO,T1.U_PAY,T1.C_GDATE,T1.C_STATE,T2.C_SERIAL,T2.G_NO,T2.C_CODE
+    from MYCOUPON T1 right outer join BARCODE T2
+    using(C_SERIAL)
+    where U_NO=#{value}
+  </select>
+ 
+
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

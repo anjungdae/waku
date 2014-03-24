@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="waku.dao.BarCodeDao">
+  <resultMap type="barcode" id="barcodeResultMap">
+    <id     property="cSerial"       column="C_SERIAL"/>
+    <result property="gNo"     column="G_NO"/>
+    <result property="cCode"    column="C_CODE"/>
+      <association property="goods" javaType="goods">
+      <result property="gNo"    column="G_NO"/>
+      <result property="cNo"  column="C_NO"/>
+      <result property="gImage"  column="G_IMAGE"/>
+      <result property="gTitle"  column="G_TITLE"/>
+      <result property="gDesc"  column="G_DESC"/>
+      <result property="gEdate"  column="G_EDATE"/>
+      <result property="gValid"  column="G_VALID"/>
+    </association>
+  </resultMap>
+	
+	<select id="selectList" resultMap="barcodeResultMap">
+		select C_SERIAL,G_NO,C_CODE
+		from BARCODE
+	</select>
+  
+  <delete id="delete" parameterType="int">
+    delete from BARCODE where C_SERIAL=#{value}
+  </delete>
+  
+  <select id="ByGoods" parameterType="int" 
+     resultMap="barcodeResultMap">
+    select T1.C_SERIAL,T1.G_NO,T1.C_CODE,T2.G_NO,T2.C_NO,T2.G_IMAGE,T2.G_TITLE,T2.G_DESC,T2.G_EDATE,T2.G_VALID
+    from BARCODE T1 left outer join GOODS T2
+    using(G_NO)
+    where G_NO=#{value}
+  </select>
+  
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
