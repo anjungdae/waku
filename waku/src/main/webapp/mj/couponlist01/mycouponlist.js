@@ -8,9 +8,6 @@ a.run=function(a){d.each(c,function(d,c){b[c]=h(e[c],g,a)})}}};var l={aqua:[0,25
 
 var uNo=2;
 var temp = '';
-//var serial=[];
-//var gno;
-
 
 function loadCoupon() {
 	var result = new Array();
@@ -36,22 +33,33 @@ function loadCoupon() {
 				temp += "<div id='slider-turn" + i + "' class = 'slider-turn'>";
 				
 				temp += '<nav>';
-
+	
 	                	$.ajax({
 						async: false,
 	                	url : "/waku/barcode/joinGoods.do?gNo="+coupon[i].barcode.gNo,
 	                	success : function(coupons) {
-	                		var coupon = coupons.jsonResult.data;
-	                		console.log(coupon[0]);
-	            		    temp += "<div id ='gImage'>" +  coupon[0].goods.gImage + '</div>';
-	            		    temp += "<div id ='gTitle'>" +  coupon[0].goods.gTitle + '</div>';
-	            		    temp += "<div id ='gEdate'>"+"사용종료 일" +  coupon[0].goods.gEdate + '</div>';
+	                		var barcode = coupons.jsonResult.data;
+	            		    temp += "<div id ='gImage'>" +  barcode[0].goods.gImage + '</div>';
+	            		    var num=barcode[0].goods.cNo;
+	            		    console.log("qjsgh"+barcode[0].goods.cNo);
+	            		    $.ajax({
+	    						async: false,
+	    	                	url : "/waku/goods/joinCompany.do?cNo="+num,
+	    	                	success : function(coupons) {
+	    	                		var company = coupons.jsonResult.data;
+	    	                		
+	    	                		temp += "<div id ='cName'>" +  company[0].company.cName + '</div>';
+	    	                	}
+	            		    });
+	            		    
+	            		    temp += "<div id ='gTitle'>" +  barcode[0].goods.gTitle + '</div>';
+	            		    temp += "<div id ='gEdate'>"+"사용종료 일" +  barcode[0].goods.gEdate + '</div>';
 	                	}
 	                });
                
 				temp += "<div id = 'uPay'>" +"지불걸음 수"+  coupon[i].uPay + '</div>';
 				temp += "<div id = 'cGdate'>" +"취득일"+  coupon[i].cGdate + '</div>';
-				temp += "<div id = 'cSrial'>" +"시리얼넘버"+  coupon[i].cSerial + '</div>';
+				//temp += "<div id = 'cSrial'>" +"시리얼넘버"+  coupon[i].cSerial + '</div>';
 				
 				//temp += "<div id = 'cState'>" +  coupon[i].cState + '</div>';
 				temp += '</nav>';
@@ -159,16 +167,7 @@ function loadCoupon() {
 				});	
 									
 									
-					
-						
-							
-									
-				
-			     
-				
-				
-			
-			
+
 			});//ajax파싱 for문 끝!!
 			
 			
