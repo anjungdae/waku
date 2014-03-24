@@ -1,23 +1,13 @@
 package waku.controls;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-
 import javax.servlet.ServletContext;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import waku.dao.ElementDao;
-import waku.dao.GoodsDao;
-import waku.vo.Element;
-import waku.vo.Goods;
 import waku.vo.JsonResult;
 
 @Controller
@@ -113,7 +103,6 @@ ArrayList<Integer> refinedNumberList = new ArrayList<Integer>(afMiddleNumberList
 int indexSize = refinedNumberList.size();
 
 String indexStringNumber = "";
-
 
 for(int i = 0; i<refinedNumberList.size(); i++){
 	indexStringNumber += refinedNumberList.get(i) + ",";

@@ -53,15 +53,82 @@ $(document).ready(function() {
 				iNo:iNo
 			},async:false,success:function(goods){
 				goods = goods.jsonResult.data;
-				
 				var table = null;
+				console.log(goods);
+				//G_IMAGE, T3.G_TITLE, T3.G_DESC, T3.G_EDATE, T3.G_VALID
 				
-				for(var i = 0; i<goods.length;i++){
+				goodsImageBe = [];
+				goodsImageAf = [];
+				
+				goodsTitleBe = [];
+				goodsTitleAf = [];
+				
+				goodsDescBe = [];
+				goodsDescAf = [];
+				
+				goodsEdateBe = [];
+				goodsEdateMi = [];
+				goodsEdateAf = [];
+				
+				for(i=0;i<goods.length;i++){
+					goodsImageBe.push(goods[i].gImage);
+					goodsTitleBe.push(goods[i].gTitle);
+					goodsDescBe.push(goods[i].gDesc);
+					//이미지
+					$.each(goodsImageBe, function(i, el){
+						if($.inArray(el, goodsImageAf) === -1){
+							goodsImageAf.push(el);
+						}
+					});
+					//제목
+					$.each(goodsTitleBe, function(i, el){
+						if($.inArray(el, goodsTitleAf) === -1){
+							goodsTitleAf.push(el);
+						}
+					});
+					//내용
+					$.each(goodsDescBe, function(i, el){
+						if($.inArray(el, goodsDescAf) === -1){
+							goodsDescAf.push(el);
+						}
+					});
+					//종료일
+					console.log(i);
+					var j = i;
+					console.log("j값 : "+(j+1));
+					console.log("goods길이 : "+goods.length);
+					if(j == goods.length-1){j}else{j=j+1};
+					console.log("j값 2 : "+j);
+					console.log("i imgae : "+goods[i].gImage);
+					console.log("j imgae : "+goods[j].gImage);
+					
+					if(goods[i].gImage == goods[j].gImage){
+						goodsEdateBe = goods[i].gEdate;
+						
+						$.each(goodsEdateBe, function(i, el){
+							if($.inArray(el, goodsEdateMi) === -1){
+								goodsEdateMi.push(el);
+							}
+						});
+						goodsEdateAf.push();
+					};
+				};
+				
+				for(i=0;i<goodsImageAf.length;i++){
+					console.log(goodsImageAf[i]);
+					console.log(goodsTitleAf[i]);
+					console.log(goodsDescAf[i]);
+				}
+				
+				for(var i = 0; i<goodsImageAf.length;i++){
 					table = document.createElement('table');
 					
 					var trtd = '';
 					trtd += "<tr>";
-					trtd += "<td>"+goods[i].gImage+"</td>";
+					trtd += "<td>"+goodsImageAf[i]+"</td>";
+					trtd += "<td>"+goodsTitleAf[i]+"</td>";
+					trtd += "<td>"+goodsDescAf[i]+"</td>";
+					trtd += "<td>"+goodsEdateAf[i]+"</td>";
 					trtd += "<tr>";
 					table.innerHTML += trtd;
 					combineList.appendChild(table);

@@ -10,14 +10,16 @@
     <result     property="gTitle"     column="G_TITLE"/>
     <result     property="gDesc"     column="G_DESC"/>
     <result     property="gEdate"     column="G_EDATE"/>
+    <result     property="iNo"     column="I_NO"/>
+    <result     property="iReq"    column="I_REQ"/>
   </resultMap>
 
 <select id="goodsInformation" parameterType="map" resultMap="goodsResultMap">
-    SELECT T1.G_NO, T2.I_NO, T2.I_REQ, T3.C_NO, T3.G_IMAGE, T3.G_TITLE, T3.G_DESC, T3.G_EDATE, T3.G_VALID
+    SELECT T1.G_NO, T2.I_NO, T2.I_REQ, T3.C_NO, T3.G_IMAGE, T3.G_TITLE, T3.G_DESC, T3.G_EDATE
 		FROM (
 		SELECT G_NO, COUNT(G_NO) CNT FROM ELEMENT WHERE I_NO IN (${joinList}) group by G_NO)
 		T1 LEFT OUTER JOIN ELEMENT T2 USING(G_NO)
 		LEFT OUTER JOIN GOODS T3 USING(G_NO) 
-		WHERE T1.CNT = #{selectCount};
+		WHERE T1.CNT = #{selectCount} AND T3.G_VALID = 1;
   </select>
 </mapper>

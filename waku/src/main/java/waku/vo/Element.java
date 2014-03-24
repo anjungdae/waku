@@ -8,19 +8,22 @@ public class Element {
 	public int getgNo() {
 		return gNo;
 	}
-	public void setgNo(int gNo) {
+	public Element setgNo(int gNo) {
 		this.gNo = gNo;
+		return this;
 	}
 	public int getiNo() {
 		return iNo;
 	}
-	public void setiNo(int iNo) {
+	public Element setiNo(int iNo) {
 		this.iNo = iNo;
+		return this;
 	}
 	public int getiReq() {
 		return iReq;
 	}
-	public void setiReq(int iReq) {
+	public Element setiReq(int iReq) {
 		this.iReq = iReq;
+		return this;
 	}
 }
