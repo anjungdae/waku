@@ -38,23 +38,19 @@ $(document).ready(function() {
 	
 	function nameGrant(itemName,itemNumber){
 		$("#" + itemName).bind("tap",function(){
-			console.log(itemNumber);
-		
 			if(iNo.length<4){
 			iNo.push(itemNumber);
-			} else {
+			} else {0
 			iNo = [];
 			iNo.push(itemNumber);
 			}
-			
-			console.log(iNo);
 			
 			$.ajax({type:"GET",url:"goods/read.do",data:{
 				iNo:iNo
 			},async:false,success:function(goods){
 				goods = goods.jsonResult.data;
 				var table = null;
-				console.log(goods);
+				
 				//G_IMAGE, T3.G_TITLE, T3.G_DESC, T3.G_EDATE, T3.G_VALID
 				
 				goodsImageBe = [];
@@ -67,8 +63,9 @@ $(document).ready(function() {
 				goodsDescAf = [];
 				
 				goodsEdateBe = [];
-				goodsEdateMi = [];
 				goodsEdateAf = [];
+				
+				var i = 0;
 				
 				for(i=0;i<goods.length;i++){
 					goodsImageBe.push(goods[i].gImage);
@@ -92,37 +89,30 @@ $(document).ready(function() {
 							goodsDescAf.push(el);
 						}
 					});
-					//종료일
-					console.log(i);
-					var j = i;
-					console.log("j값 : "+(j+1));
-					console.log("goods길이 : "+goods.length);
-					if(j == goods.length-1){j}else{j=j+1};
-					console.log("j값 2 : "+j);
-					console.log("i imgae : "+goods[i].gImage);
-					console.log("j imgae : "+goods[j].gImage);
 					
-					if(goods[i].gImage == goods[j].gImage){
-						goodsEdateBe = goods[i].gEdate;
-						
-						$.each(goodsEdateBe, function(i, el){
-							if($.inArray(el, goodsEdateMi) === -1){
-								goodsEdateMi.push(el);
-							}
-						});
-						goodsEdateAf.push();
-					};
+					//종료일
+					var j = i+1;
+					if(j<goods.length){
+						if(goods[i].gImage == goods[j].gImage){
+							goodsEdateBe = goods[i].gEdate;
+						}else{
+							goodsEdateAf.push(goodsEdateBe);
+						}
+					}else{
+						goodsEdateAf.push(goodsEdateBe);
+					}
 				};
 				
-				for(i=0;i<goodsImageAf.length;i++){
+				
+				for(i = 0;i<goodsImageAf.length;i++){
 					console.log(goodsImageAf[i]);
 					console.log(goodsTitleAf[i]);
 					console.log(goodsDescAf[i]);
+					console.log(goodsEdateAf[i]);
 				}
 				
-				for(var i = 0; i<goodsImageAf.length;i++){
+				for(i = 0; i<goodsImageAf.length;i++){
 					table = document.createElement('table');
-					
 					var trtd = '';
 					trtd += "<tr>";
 					trtd += "<td>"+goodsImageAf[i]+"</td>";
@@ -131,7 +121,9 @@ $(document).ready(function() {
 					trtd += "<td>"+goodsEdateAf[i]+"</td>";
 					trtd += "<tr>";
 					table.innerHTML += trtd;
+					if(table!=null){
 					combineList.appendChild(table);
+					}
 				}
 			}, error:function(){	
 				alert('시스템이 바쁩니다.\n나중에 다시 시도해 주세요!!');  
