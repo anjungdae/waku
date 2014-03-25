@@ -12,6 +12,8 @@ public class Goods {
 	boolean gValid;
 	
 	int iNo;
+	String iClass;
+	String iImage;
 	int iReq;
 	
 	public int getgNo() {
@@ -69,6 +71,20 @@ public class Goods {
 	}
 	public Goods setiNo(int iNo) {
 		this.iNo = iNo;
+		return this;
+	}
+	public String getiClass() {
+		return iClass;
+	}
+	public Goods setiClass(String iClass) {
+		this.iClass = iClass;
+		return this;
+	}
+	public String getiImage() {
+		return iImage;
+	}
+	public Goods setiImage(String iImage) {
+		this.iImage = iImage;
 		return this;
 	}
 	public int getiReq() {

@@ -49,6 +49,7 @@ public class GoodsControl {
 			
 			//문자리스트의 크기를 구함
 			int selectCount = arrayiNoCount.size();
+			System.out.println(selectCount);
 			
 			Map<String, Object> sqlMapNumber = new HashMap<String, Object>();
 			

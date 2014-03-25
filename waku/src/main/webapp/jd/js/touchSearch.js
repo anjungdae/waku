@@ -1,4 +1,7 @@
-$( document ).ready(function() {
+var myItemNoAgain=[];
+var myItemStockAgain=[];
+
+$(document).ready(function() {
 
 	to();
 
@@ -23,6 +26,11 @@ $( document ).ready(function() {
 		$.ajax({type:"GET",url:"myItem/keepRead.do?uNo="+uNo,async:false,success:function(myItems){
 			var myItem = myItems.jsonResult.data;
 
+			for (i = 0; i < myItem.length; i++) {
+				myItemNoAgain.push(myItem[i].iNo);
+				myItemStockAgain.push(myItem[i].iStock);
+			};
+			
 			var tList = document.getElementById("touchList");
 
 			var tTemp = '';
@@ -30,8 +38,8 @@ $( document ).ready(function() {
 			var myItemName = [];
 			var myItemImage =[];
 			var myItemStock =[];
-			var i = '';
 			
+			var i = '';
 			
 			for (i = 0; i < myItem.length; i++) {
 				if(myItem[i].iClass == "엠블럼"){
