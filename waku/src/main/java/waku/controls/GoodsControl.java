@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import waku.dao.GoodsDao;
 import waku.vo.JsonResult;
-
+123
 @Controller
 @RequestMapping("/goods")
 public class GoodsControl {
