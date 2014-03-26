@@ -1,4 +1,4 @@
-var myItemNoAgain=[];
+var myItemImageAgain=[];
 var myItemStockAgain=[];
 
 $(document).ready(function() {
@@ -27,7 +27,7 @@ $(document).ready(function() {
 			var myItem = myItems.jsonResult.data;
 
 			for (i = 0; i < myItem.length; i++) {
-				myItemNoAgain.push(myItem[i].iNo);
+				myItemImageAgain.push(myItem[i].iImage);
 				myItemStockAgain.push(myItem[i].iStock);
 			};
 			
@@ -55,9 +55,7 @@ $(document).ready(function() {
 			tTemp += "<h6><span id = 'itemClass' class='sortName'>"+ myItemClass + "</span></h6>";
 			tTemp += "<ul id = 'itemName'>";
 					for(var j = 0; j < myItemName.length; j++){
-						if(myItemStock[j] != 0){
-						tTemp += "<li id='" + myItemImage[j].substring(0,myItemImage[j].length-4) + "' class='itemNameLi'><img src='sideicon/" + myItemImage[j] + "'>" + myItemName[j] + "</li>";
-						};
+						tTemp += "<li id='" + myItemImage[j].substring(0,myItemImage[j].length-4) + "' class='itemNameLi'><img src='sideicon/" + myItemImage[j] + "'><br>" + myItemName[j] + "</li>";
 					};
 			tTemp += "</ul>"
 			tTemp += "</div>"
@@ -97,7 +95,7 @@ $(document).ready(function() {
 				tTemp += "<h6><span id = 'itemClass' class='sortName'>"+ myItemClass + "</span></h6>";
 				tTemp += "<ul id = 'itemName'>";
 						for(var k = 0; k < myItemName.length; k++){
-							tTemp += "<li id='" + myItemImage[k].substring(0,myItemImage[k].length-4) + "' class='itemNameLi'><img src='sideicon/" + myItemImage[k] + "'>" + myItemName[k] + "</li>";
+							tTemp += "<li id='" + myItemImage[k].substring(0,myItemImage[k].length-4) + "' class='itemNameLi'><img src='sideicon/" + myItemImage[k] + "'><br>" + myItemName[k] + "</li>";
 						};
 				tTemp += "</ul>";
 				tTemp += "</div>";

@@ -6,7 +6,6 @@ body {
   padding:0;
   background-color:#B6BCC9;
   font-family:'Muli';
-  position: relative;
 }
 
 * {outline:none}
@@ -18,7 +17,7 @@ h1 {
   margin: 20px 25px;
 }
 
-a{
+a {
   text-decoration:none;
   color:#3476CA;
   &:hover {
@@ -29,12 +28,12 @@ a{
 
 /*  컨테이너*/
 .container {
-  position:relative;
+  position:fixed;
   width:390px;
   height:218px;
   left:50%;
   top:50%;
-  margin-top:5%;
+  margin-top:-119px;
   margin-left:-200px;
   background-color:#FFF;
   border-radius:6px;
@@ -43,84 +42,84 @@ a{
 }
 
 .slider-turn nav {
-    padding-top:3%;
     width:370px;
     font-size: 16px;
     display:inline;
     color: #ffff;
     font-weight: 400;
-    height: 140px;
+    height: 120px;
     float:left;
     margin:0;
-/*     border: solid 1px green; */
+
 }
 
 
+
+
+
+
 /*속성에 관하여  */
-#gImage{width:30%;height:80%;
+#couponImg{width:30%;height:100%;
 position:relative;
 left: 0%;
 float:left;
 }
 
 
-#gTitle{
-	color:#989898;
+#p{text-indent: 10%;
+color:#FFFFFF;}
+#cp{
+	line-height:200%;
 	text-indent: 2%;
-	font-size: 90%;}
-	
-#gEdate{
+	font-size: 140%;
+	color:#3E3E3E;}
+#content{
+	text-indent: 2%;
+	line-height:200%;
+	color:#505050;
+	}
+#period{
 	color:#989898;
 	text-indent: 2%;
 	font-size: 80%;
 }	
+#couponnum{
+	color:#989898;
+	text-indent: 2%;
+	font-size: 80%;
+	
+}	
 
 
-#barcodeImg{width:70%;height:70%;
+#barcodeImg{width:70%;height:100%;
 position:relative;
 left: 10%;
 right: 20%;
 }
 
-#cCode{
-color:#989898;
-	text-indent: 2%;
-	font-size: 80%;
+
+
+
+
+/*버튼에 관하여 */
+.bottom{
+width:200px;
+vertical-align:bottom; 	
 }
-
-
-	
-}	
-#cSerial{
-color:#989898;
-	text-indent: 2%;
-	font-size: 80%;	
-}	
-#cGdate{
-	color:#989898;
-	text-indent: 2%;
-	font-size: 80%;
-}	
-#uPay{
-color:#989898;
-	text-indent: 2%;
-	font-size: 80%;	
-}	
 
 
 /*취소버튼*/
 #cancel{
-	width: 5px;
-	height: 5px;
+	width: 15px;
+	height: 15px;
 	position: absolute; 
-   left: 10%; 
-    top: 8%; 
+    left: 94%; 
     opacity:0.0;    
 }
 
 
 /* 삭제버튼 */
-.delete {
+.close {
  position: absolute; 
  bottom: 0px; 
 right: 80%; 
@@ -144,11 +143,11 @@ left: 0px;
   line-height: 250%;
   
 	}
-.delete:hover {
+.close:hover {
   background-color:#6BA5D6;
   transition:all .3s;
 }
-.delete:active {
+.close:active {
   background-color:#5F8AAF;
 }
 
@@ -172,8 +171,8 @@ right: 0px;
   cursor:pointer;
   transition:all .3s;
   width:50%;
-  height: 17%; 
-  left:50%;
+  height: 17%;
+left:50%;
   text-align: center;
   line-height: 250%;
 
@@ -187,19 +186,15 @@ right: 0px;
 }
 
 
-/* 축으로하는 박스*/
+/* 슬라이드박스 */
 .slider-container {	
-  padding-top:1%;
+  padding-top:5%;
   width:350px;
   margin:0 25px;
-/*  overflow:hidden;  */
-   border: solid 2px green;
+  overflow:hidden; 
 }
-
-/*돌아가는 너비*/
 .slider-turn{
-margin-left:0px;
-width:740px;
-border: solid 2px red;
+	
+  width:1056px;
 
 }

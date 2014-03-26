@@ -7,7 +7,6 @@ $(document).ready(function() {
 
 	$.ajax({type:"GET",url:"element/list.do",async:false,success:function(elements){
 		element = elements.jsonResult.data;
-		console.log(element);
 	}, error:function(){	
 		alert('시스템이 바쁩니다.\n나중에 다시 시도해 주세요!!');  
 	}
@@ -17,7 +16,6 @@ $(document).ready(function() {
 
 	$.ajax({type:"GET",url:"myItem/keepRead.do?uNo="+uNo,async:false,success:function(myItems){
 		myItem = myItems.jsonResult.data;
-		console.log(myItem);
 	}, error:function(){	
 		alert('시스템이 바쁩니다.\n나중에 다시 시도해 주세요!!');  
 	}
@@ -33,7 +31,7 @@ $(document).ready(function() {
 
 	var iNo = [];
 	
-	var myItemNo =[];
+	var myItemImage =[];
 	var myItemStock =[];
 	
 	function nameGrant(itemName,itemNumber){
@@ -45,18 +43,6 @@ $(document).ready(function() {
 				iNo = [];
 				iNo.push(itemNumber);
 			}
-			console.log(myItemNoAgain);
-			console.log(itemName);
-			
-			for(var l = 0; l<myItemNoAgain.length; l++){
-				if(myItemNoAgain[l]==itemNumber){
-					myItemNo.push(myItemNoAgain[l]);
-					
-				}
-			}
-			
-			console.log(myItemNo);
-			console.log(myItemStock);
 			
 			$.ajax({type:"GET",url:"goods/read.do",data:{
 				iNo:iNo
@@ -66,10 +52,6 @@ $(document).ready(function() {
 				
 				goods = goods.jsonResult.data;
 				var table = null;
-
-				console.log(goods);
-
-				//G_IMAGE, T3.G_TITLE, T3.G_DESC, T3.G_EDATE, T3.G_VALID
 
 				goodsImageBe = [];
 				goodsImageAf = [];
@@ -123,11 +105,15 @@ $(document).ready(function() {
 //					}else{
 //						goodsEdateAf.push(goodsEdateBe);
 //					}
+			
 					goodsEdateAf = [];
 					
 					for(i=0;i<goodsImageAf.length;i++){
 						table = document.createElement('table');
+						table.setAttribute("id","basicTable"+[i]);
 						table.setAttribute("class","basicTable");
+						table.setAttribute("cellspacing","0");
+						table.setAttribute("cellpadding","0");
 						var trtd = '';
 						
 						goodsItemImage =[];
@@ -136,6 +122,12 @@ $(document).ready(function() {
 							if(goods[j].gImage == goodsImageAf[i]){
 								goodsEdateAf = goods[i].gEdate;
 								if(goods[j].iClass =="엠블럼"){
+									for(var l = 0; l<myItemImageAgain.length; l++){
+										if(myItemImageAgain[l]==goods[j].iImage){
+											myItemImage.push(myItemImageAgain[l]);
+											myItemStock.push(myItemStockAgain[l]);
+										}
+									}
 									goodsItemImage.push(goods[j].iImage);
 									goodsItemReq.push(goods[j].iReq);
 									}
@@ -146,6 +138,12 @@ $(document).ready(function() {
 							if(goods[j].gImage == goodsImageAf[i]){
 								goodsEdateAf = goods[i].gEdate;
 								if(goods[j].iClass !="엠블럼"){
+									for(var l = 0; l<myItemImageAgain.length; l++){
+										if(myItemImageAgain[l]==goods[j].iImage){
+											myItemImage.push(myItemImageAgain[l]);
+											myItemStock.push(myItemStockAgain[l]);
+										}
+									}
 									goodsItemImage.push(goods[j].iImage);
 									goodsItemReq.push(goods[j].iReq);
 									}
@@ -153,21 +151,40 @@ $(document).ready(function() {
 						}
 						
 						trtd += "<tr>";
-						trtd += "<td class='basicTd'>"+goodsImageAf[i]+"</td>";
-						trtd += "<td class='basicTd'>"+goodsTitleAf[i]+"</td>";
-						trtd += "<td class='basicTd'>"+goodsDescAf[i]+"</td>";
-						trtd += "<td class='basicTd'>"+goodsEdateAf+"</td>";
-						trtd += "</tr>";
-						trtd += "<tr>";
-						for(var k = 0; k<goodsItemImage.length;k++){
-							trtd += "<td class='basicTd'><img src = 'sideicon/"+goodsItemImage[k]+"'></td>";
-						}
+						trtd += "<td class='basicTdImage' rowspan='6'><img src = 'goods/"+goodsImageAf[i]+"' class='goodImage'></td>";
 						trtd += "</tr>";
 						
-						trtd += "<tr style='position:absolute;'>";
+						trtd += "<tr>";
+						trtd += "<td class='basicTd' colspan='4'>"+goodsTitleAf[i]+"</td>";
+						trtd += "</tr>";
+						
+						trtd += "<tr>";
+						trtd += "<td class='basicTd' colspan='4'>"+goodsEdateAf+"</td>";
+						trtd += "</tr>";
+						
+						trtd += "<tr>";
+						trtd += "<td class='basicTd' colspan='4'>"+goodsDescAf[i]+"</td>";
+						trtd += "</tr>";
+						
+						trtd += "<tr>";
 						for(var k = 0; k<goodsItemImage.length;k++){
-							trtd += "<td id='itemReq' class='basicTd'>"+goodsItemReq[k]+"</td>";
+							if(goodsItemReq[k]>myItemStock[k]){
+								trtd += "<td id='itemImageLose' class='basicTd'><img src = 'sideicon/"+goodsItemImage[k]+"' style='opacity: 0.2;'>" +
+										"<br><span id='itemReqLose' class='basicTd'>"+goodsItemReq[k]+"</span></td>";
+							} else if(goodsItemReq[k]<=myItemStock[k]){
+								trtd += "<td class='basicTd'><img src = 'sideicon/"+goodsItemImage[k]+"'>" +
+										"<br><span id='itemReq' class='basicTd'>"+goodsItemReq[k]+"</span></td>";
+							};
+							
+						};
+						if(goodsItemImage.length<4){
+							trtd += "<td class='basicTd'></td>";
 						}
+
+						trtd += "</tr>";
+						
+						trtd += "<tr>";
+						trtd += "<td style='position:absolute;bottom:-2px;left:50%;margin-left:-15%;' colspan='4'><input style='text-align:center;width:200px;' type='button' value='조합'></td>";
 						trtd += "</tr>";
 						
 						table.innerHTML += trtd;
@@ -175,7 +192,11 @@ $(document).ready(function() {
 					};
 					
 					//
-					
+					var time = 0;
+					for(var m = 0; m<goodsImageAf.length;m++){
+						$("#basicTable"+ m).animate({ "top": "0px" }, time +=200 );
+						console.log(time);
+					};
 			},error:function(){	
 				alert('시스템이 바쁩니다.\n나중에 다시 시도해 주세요!!');  
 			}
@@ -183,7 +204,7 @@ $(document).ready(function() {
 			//
 		});
 	}
-
+	
 //	$.ajax({type:"GET",url:"element/read.do",async:false,success:function(elements){
 //	var element = elements.jsonResult.data;
 
