@@ -11,8 +11,12 @@ public class Goods {
 	Date gEdate;
 	boolean gValid;
 	
-
 	Company company;
+	
+	int iNo;
+	String iClass;
+	String iImage;
+	int iReq;
 	
 	public int getgNo() {
 		return gNo;
@@ -63,15 +67,41 @@ public class Goods {
 		this.gValid = gValid;
 		return this;
 	}
-
 	
 	public Company getCompany() {
 		return company;
 	}
-	public Goods setComapny(Company company) {
+	public Goods setCompany(Company company) {
 		this.company = company;
 		return this;
 	}
 	
-	
+	public int getiNo() {
+		return iNo;
+	}
+	public Goods setiNo(int iNo) {
+		this.iNo = iNo;
+		return this;
+	}
+	public String getiClass() {
+		return iClass;
+	}
+	public Goods setiClass(String iClass) {
+		this.iClass = iClass;
+		return this;
+	}
+	public String getiImage() {
+		return iImage;
+	}
+	public Goods setiImage(String iImage) {
+		this.iImage = iImage;
+		return this;
+	}
+	public int getiReq() {
+		return iReq;
+	}
+	public Goods setiReq(int iReq) {
+		this.iReq = iReq;
+		return this;
+	}
 }

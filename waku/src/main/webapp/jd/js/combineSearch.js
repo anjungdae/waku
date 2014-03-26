@@ -44,6 +44,7 @@ $(document).ready(function() {
 				iNo.push(itemNumber);
 			}
 			
+			console.log(iNo);
 			$.ajax({type:"GET",url:"goods/read.do",data:{
 				iNo:iNo
 			},async:false,success:function(goods){
@@ -53,6 +54,8 @@ $(document).ready(function() {
 				goods = goods.jsonResult.data;
 				var table = null;
 
+				console.log(goods);
+				
 				goodsImageBe = [];
 				goodsImageAf = [];
 

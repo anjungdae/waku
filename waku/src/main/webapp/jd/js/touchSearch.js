@@ -8,17 +8,6 @@ $(document).ready(function() {
 	function to(){
 		var uNo = 1;
 
-//		<div data-role='collapsible'>
-//		<h6>
-//		<span class='sortName'>과일</span>
-//		</h6>
-//		<ul>
-//		<li>사과</li>
-//		<li>오렌지</li>
-//		<li>자몽</li>
-//		</ul>
-//		</div>
-
 		iNo=1;
 
 		//var baseUrl = "http://192.168.0.12:9999/waku/jd/pacecounter/";
