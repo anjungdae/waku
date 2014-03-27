@@ -7,7 +7,6 @@ $(document).ready(function() {
 
 	$.ajax({type:"GET",url:"element/list.do",async:false,success:function(elements){
 		element = elements.jsonResult.data;
-		console.log(element);
 	}, error:function(){	
 		alert('시스템이 바쁩니다.\n나중에 다시 시도해 주세요!!');  
 	}
@@ -17,7 +16,6 @@ $(document).ready(function() {
 
 	$.ajax({type:"GET",url:"myItem/keepRead.do?uNo="+uNo,async:false,success:function(myItems){
 		myItem = myItems.jsonResult.data;
-		console.log(myItem);
 	}, error:function(){	
 		alert('시스템이 바쁩니다.\n나중에 다시 시도해 주세요!!');  
 	}
@@ -31,49 +29,55 @@ $(document).ready(function() {
 		nameGrant(itemName,itemNumber);
 	}
 
-	var elementArray;
-
 	var iNo = [];
 	
+	var myItemImage =[];
+	var myItemStock =[];
 	
 	function nameGrant(itemName,itemNumber){
 		$("#" + itemName).bind("tap",function(){
-			console.log(itemNumber);
-		
+			
 			if(iNo.length<4){
-			iNo.push(itemNumber);
+				iNo.push(itemNumber);
 			} else {
-			iNo = [];
-			iNo.push(itemNumber);
+				iNo = [];
+				iNo.push(itemNumber);
 			}
 			
 			console.log(iNo);
-			
 			$.ajax({type:"GET",url:"goods/read.do",data:{
 				iNo:iNo
 			},async:false,success:function(goods){
+				
+				$(".basicTable").remove();
+				
 				goods = goods.jsonResult.data;
 				var table = null;
+
 				console.log(goods);
-				//G_IMAGE, T3.G_TITLE, T3.G_DESC, T3.G_EDATE, T3.G_VALID
 				
 				goodsImageBe = [];
 				goodsImageAf = [];
-				
+
 				goodsTitleBe = [];
 				goodsTitleAf = [];
-				
+
 				goodsDescBe = [];
 				goodsDescAf = [];
-				
-				goodsEdateBe = [];
-				goodsEdateMi = [];
+
 				goodsEdateAf = [];
+
+				var i = 0;
 				
-				for(i=0;i<goods.length;i++){
-					goodsImageBe.push(goods[i].gImage);
-					goodsTitleBe.push(goods[i].gTitle);
-					goodsDescBe.push(goods[i].gDesc);
+				var goodsItemNo =[];
+				var goodsItemReq = [];
+				
+					for(i=0;i<goods.length;i++){
+						goodsImageBe.push(goods[i].gImage);
+						goodsTitleBe.push(goods[i].gTitle);
+						goodsDescBe.push(goods[i].gDesc);
+					};
+					
 					//이미지
 					$.each(goodsImageBe, function(i, el){
 						if($.inArray(el, goodsImageAf) === -1){
@@ -92,54 +96,118 @@ $(document).ready(function() {
 							goodsDescAf.push(el);
 						}
 					});
+					
 					//종료일
-					console.log(i);
-					var j = i;
-					console.log("j값 : "+(j+1));
-					console.log("goods길이 : "+goods.length);
-					if(j == goods.length-1){j}else{j=j+1};
-					console.log("j값 2 : "+j);
-					console.log("i imgae : "+goods[i].gImage);
-					console.log("j imgae : "+goods[j].gImage);
+//					var j = i+1;
+//					if(j<goods.length){
+//						if(goods[i].gImage == goods[j].gImage){
+//							
+//						}else{
+//							goodsEdateAf.push(goodsEdateBe);
+//						}
+//					}else{
+//						goodsEdateAf.push(goodsEdateBe);
+//					}
+			
+					goodsEdateAf = [];
 					
-					if(goods[i].gImage == goods[j].gImage){
-						goodsEdateBe = goods[i].gEdate;
+					for(i=0;i<goodsImageAf.length;i++){
+						table = document.createElement('table');
+						table.setAttribute("id","basicTable"+[i]);
+						table.setAttribute("class","basicTable");
+						table.setAttribute("cellspacing","0");
+						table.setAttribute("cellpadding","0");
+						var trtd = '';
 						
-						$.each(goodsEdateBe, function(i, el){
-							if($.inArray(el, goodsEdateMi) === -1){
-								goodsEdateMi.push(el);
+						goodsItemImage =[];
+						goodsItemReq = [];
+						for (var j = 0; j < goods.length; j++) {
+							if(goods[j].gImage == goodsImageAf[i]){
+								goodsEdateAf = goods[i].gEdate;
+								if(goods[j].iClass =="엠블럼"){
+									for(var l = 0; l<myItemImageAgain.length; l++){
+										if(myItemImageAgain[l]==goods[j].iImage){
+											myItemImage.push(myItemImageAgain[l]);
+											myItemStock.push(myItemStockAgain[l]);
+										}
+									}
+									goodsItemImage.push(goods[j].iImage);
+									goodsItemReq.push(goods[j].iReq);
+									}
 							}
-						});
-						goodsEdateAf.push();
+						}
+						
+						for (var j = 0; j < goods.length; j++) {
+							if(goods[j].gImage == goodsImageAf[i]){
+								goodsEdateAf = goods[i].gEdate;
+								if(goods[j].iClass !="엠블럼"){
+									for(var l = 0; l<myItemImageAgain.length; l++){
+										if(myItemImageAgain[l]==goods[j].iImage){
+											myItemImage.push(myItemImageAgain[l]);
+											myItemStock.push(myItemStockAgain[l]);
+										}
+									}
+									goodsItemImage.push(goods[j].iImage);
+									goodsItemReq.push(goods[j].iReq);
+									}
+							}
+						}
+						
+						trtd += "<tr>";
+						trtd += "<td class='basicTdImage' rowspan='6'><img src = 'goods/"+goodsImageAf[i]+"' class='goodImage'></td>";
+						trtd += "</tr>";
+						
+						trtd += "<tr>";
+						trtd += "<td class='basicTd' colspan='4'>"+goodsTitleAf[i]+"</td>";
+						trtd += "</tr>";
+						
+						trtd += "<tr>";
+						trtd += "<td class='basicTd' colspan='4'>"+goodsEdateAf+"</td>";
+						trtd += "</tr>";
+						
+						trtd += "<tr>";
+						trtd += "<td class='basicTd' colspan='4'>"+goodsDescAf[i]+"</td>";
+						trtd += "</tr>";
+						
+						trtd += "<tr>";
+						for(var k = 0; k<goodsItemImage.length;k++){
+							if(goodsItemReq[k]>myItemStock[k]){
+								trtd += "<td id='itemImageLose' class='basicTd'><img src = 'sideicon/"+goodsItemImage[k]+"' style='opacity: 0.2;'>" +
+										"<br><span id='itemReqLose' class='basicTd'>"+goodsItemReq[k]+"</span></td>";
+							} else if(goodsItemReq[k]<=myItemStock[k]){
+								trtd += "<td class='basicTd'><img src = 'sideicon/"+goodsItemImage[k]+"'>" +
+										"<br><span id='itemReq' class='basicTd'>"+goodsItemReq[k]+"</span></td>";
+							};
+							
+						};
+						if(goodsItemImage.length<4){
+							trtd += "<td class='basicTd'></td>";
+						}
+
+						trtd += "</tr>";
+						
+						trtd += "<tr>";
+						trtd += "<td style='position:absolute;bottom:-2px;left:50%;margin-left:-15%;' colspan='4'><input style='text-align:center;width:200px;' type='button' value='조합'></td>";
+						trtd += "</tr>";
+						
+						table.innerHTML += trtd;
+						combineList.appendChild(table);
 					};
-				};
-				
-				for(i=0;i<goodsImageAf.length;i++){
-					console.log(goodsImageAf[i]);
-					console.log(goodsTitleAf[i]);
-					console.log(goodsDescAf[i]);
-				}
-				
-				for(var i = 0; i<goodsImageAf.length;i++){
-					table = document.createElement('table');
 					
-					var trtd = '';
-					trtd += "<tr>";
-					trtd += "<td>"+goodsImageAf[i]+"</td>";
-					trtd += "<td>"+goodsTitleAf[i]+"</td>";
-					trtd += "<td>"+goodsDescAf[i]+"</td>";
-					trtd += "<td>"+goodsEdateAf[i]+"</td>";
-					trtd += "<tr>";
-					table.innerHTML += trtd;
-					combineList.appendChild(table);
-				}
-			}, error:function(){	
+					//
+					var time = 0;
+					for(var m = 0; m<goodsImageAf.length;m++){
+						$("#basicTable"+ m).animate({ "top": "0px" }, time +=200 );
+						console.log(time);
+					};
+			},error:function(){	
 				alert('시스템이 바쁩니다.\n나중에 다시 시도해 주세요!!');  
 			}
 			});
+			//
 		});
 	}
-
+	
 //	$.ajax({type:"GET",url:"element/read.do",async:false,success:function(elements){
 //	var element = elements.jsonResult.data;
 

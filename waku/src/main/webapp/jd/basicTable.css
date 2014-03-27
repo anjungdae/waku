@@ -1,0 +1,62 @@
+@CHARSET "UTF-8";
+
+.basicTable{
+	position:relative;
+	border-radius: 10px 0px 0px 10px;
+	top:6000px;
+	border:5px solid skyblue;
+	padding:0px;
+  vmargin:"0";
+	margin:10px;
+	width:95%;
+}
+
+.basicTd{
+	font: 8pt Sans-serif bold;
+	background: #FAEBD7;
+  width:19%;
+}
+
+.basicTdImage{
+	border-radius: 5px 0px 0px 5px;
+	background: linear-gradient(to bottom, #258dc8 0%,#2facf9 100%);
+	text-align: center;
+	width:25%;
+	border-right: 5px solid #F4A460;
+}
+
+.goodImage{
+  width:65px;
+  height:65px;
+  border:2px solid #25ffff;
+}
+
+#itemReq{
+	position:relative;
+	top:-20px;
+	left:30px;
+	font: 11pt Sans-serif bold;
+	color:#0ce884;
+	text-shadow:-2px 0 #3fa5e0, 0 2px #3fa5e0, 2px 0 #3fa5e0, 0 -2px #3fa5e0;
+}
+
+#itemReqLose{
+	position:relative;
+  top:-15px;
+  left:30px;
+  font: 11pt Sans-serif bold;
+  color:red;
+  text-shadow:-2px 0 #3fa5e0, 0 2px #3fa5e0, 2px 0 #3fa5e0, 0 -2px #3fa5e0;
+}
+
+#itemImageLose{
+}
+
+tr{
+	width: 100%;
+	padding:0px;
+}
+
+td{
+	padding:0px;
+}

@@ -35,7 +35,13 @@
     where G_NO=#{value}
   </select>
   
-
+  <update id="update" parameterType="int">
+    update BARCODE set 
+      C_VALID=0
+    where C_SERIAL=#{cSerial}
+  </update>
+  
+  
 </mapper>
 
 
