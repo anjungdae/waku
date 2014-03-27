@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(window).load(function() {
 
 	var uNo = 1;
 
@@ -153,41 +153,42 @@ $(document).ready(function() {
 							}
 						}
 						
+						var flag =[];
+						
 						trtd += "<tr>";
-						trtd += "<td class='basicTdImage' rowspan='6'><img src = 'goods/"+goodsImageAf[i]+"' class='goodImage'></td>";
+						trtd += "<td class='basicTdImage' rowspan='5'><img src = 'goods/"+goodsImageAf[i]+"' class='goodImage'></td>";
 						trtd += "</tr>";
 						
 						trtd += "<tr>";
-						trtd += "<td class='basicTd' colspan='4'>"+goodsTitleAf[i]+"</td>";
-						trtd += "</tr>";
-						
-						trtd += "<tr>";
-						trtd += "<td class='basicTd' colspan='4'>"+goodsEdateAf+"</td>";
+						trtd += "<td class='basicTd' colspan='2'>"+goodsTitleAf[i]+"</td>";
+						trtd += "<td class='basicTd' colspan='2' style='text-align:right;'>"+goodsEdateAf+"</td>";
 						trtd += "</tr>";
 						
 						trtd += "<tr>";
 						trtd += "<td class='basicTd' colspan='4'>"+goodsDescAf[i]+"</td>";
 						trtd += "</tr>";
-						
+
 						trtd += "<tr>";
 						for(var k = 0; k<goodsItemImage.length;k++){
 							if(goodsItemReq[k]>myItemStock[k]){
-								trtd += "<td id='itemImageLose' class='basicTd'><img src = 'sideicon/"+goodsItemImage[k]+"' style='opacity: 0.2;'>" +
+								trtd += "<td id='itemImageLose' class='basicTd'><img src = 'sideicon/"+goodsItemImage[k]+"' id='indexIcon' style='opacity: 0.2;'>" +
 										"<br><span id='itemReqLose' class='basicTd'>"+goodsItemReq[k]+"</span></td>";
+								flag.push(false);
 							} else if(goodsItemReq[k]<=myItemStock[k]){
-								trtd += "<td class='basicTd'><img src = 'sideicon/"+goodsItemImage[k]+"'>" +
+								trtd += "<td class='basicTd'><img src = 'sideicon/"+goodsItemImage[k]+"' id='indexIcon'>" +
 										"<br><span id='itemReq' class='basicTd'>"+goodsItemReq[k]+"</span></td>";
+								flag.push(true);
 							};
-							
 						};
 						if(goodsItemImage.length<4){
 							trtd += "<td class='basicTd'></td>";
 						}
-
 						trtd += "</tr>";
 						
+						console.log(flag);
+						
 						trtd += "<tr>";
-						trtd += "<td style='position:absolute;bottom:-2px;left:50%;margin-left:-15%;' colspan='4'><input style='text-align:center;width:200px;' type='button' value='조합'></td>";
+						trtd += "<td id='combineButton' colspan='4'>조합</td>";
 						trtd += "</tr>";
 						
 						table.innerHTML += trtd;

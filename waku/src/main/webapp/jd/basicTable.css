@@ -1,5 +1,14 @@
 @CHARSET "UTF-8";
 
+tr{
+  width: 100%;
+  padding:0px;
+}
+
+td{
+  padding:0px;
+}
+
 .basicTable{
 	position:relative;
 	border-radius: 10px 0px 0px 10px;
@@ -9,12 +18,18 @@
   vmargin:"0";
 	margin:10px;
 	width:95%;
+	height:70px;
 }
 
 .basicTd{
 	font: 8pt Sans-serif bold;
-	background: #FAEBD7;
+	background: initial;
   width:19%;
+}
+
+#indexIcon{
+  width:35px;
+  height:35px;
 }
 
 .basicTdImage{
@@ -42,7 +57,7 @@
 
 #itemReqLose{
 	position:relative;
-  top:-15px;
+  top:-20px;
   left:30px;
   font: 11pt Sans-serif bold;
   color:red;
@@ -50,13 +65,18 @@
 }
 
 #itemImageLose{
+	
 }
 
-tr{
-	width: 100%;
-	padding:0px;
-}
-
-td{
-	padding:0px;
+#combineButton{
+	position:absolute;
+  bottom:-3px;
+  
+	border-radius: 5px 5px 0px 0px;
+	background:greenyellow;
+	width:277px;
+	
+	left:50%;
+	margin-left:-25%;
+	text-align:center;
 }

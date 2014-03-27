@@ -5,7 +5,7 @@ body {
 	margin:0;
 	padding:0;
 	bgcolor:white;
-	font-size: small;
+	font:bold 7px fantasy;
 }
 
 li {
@@ -24,9 +24,15 @@ li {
   background:linear-gradient(-30deg, #DDD, #EEE);
 }
 
+#slidepop{
+	color:white;
+  font-family: sans-serif;
+  background : #2FACE8;
+}
+
 #sideList {
   	border:#DDD;
-    background : rgba(255, 255, 255, .85);
+    background :rgba(255,255,255, 0.7);
     width: 20%;
     top: 8%;
 }
@@ -35,27 +41,35 @@ li {
 	height:25px;
 }
 
+.ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a .ui-panel-wrapper{
+	background:#f0f9ff;
+}
+
 .ui-panel-inner{
 	padding-top:0px;
 }
 
 div #pcounter {
-	border:#DDD;
-	background : rgba(255, 255, 255, .0);
+	color:white;
+  font-family: sans-serif;
+  background : #2FACE8;
 }
 
 div #inven {
-	border:#DDD;
-  border-left:1px black solid;
+	color:white;
+	font-family: sans-serif;
+	background : #2FACE8;
+	border:0px;
+  /* border-left:1px black solid;
   padding-left:20px;
   border-right:1px black solid;
-  padding-right:20px;
-  background : rgba(255, 255, 255, .0);
+  padding-right:20px; */
 }
 
 div #colist {
-	border:#DDD;
-	background : rgba(255, 255, 255, .0);
+	color:white;
+  font-family: sans-serif;
+	background : #2FACE8;
 }
 
 .ui-btn,.ui-btn-inline {
@@ -63,6 +77,7 @@ div #colist {
 }
 
 .ui-btn{
+	border:0px;
 	width:320px;
 	padding:3px;
 }
