@@ -68,15 +68,15 @@ td{
 	
 }
 
-#combineButton{
+.combineButton{
 	position:absolute;
   bottom:-3px;
   
-	border-radius: 5px 5px 0px 0px;
-	background:greenyellow;
-	width:277px;
-	
-	left:50%;
-	margin-left:-25%;
-	text-align:center;
+  border-radius: 5px 5px 0px 0px;
+  background:greenyellow;
+  width:277px;
+  
+  left:50%;
+  margin-left:-25%;
+  text-align:center;
 }

@@ -44,17 +44,17 @@ $(window).load(function() {
 				iNo.push(itemNumber);
 			}
 			
-			console.log(iNo);
+			var orderFlag =[];
+			
 			$.ajax({type:"GET",url:"goods/read.do",data:{
 				iNo:iNo
 			},async:false,success:function(goods){
 				
 				$(".basicTable").remove();
-				
+					
 				goods = goods.jsonResult.data;
+			
 				var table = null;
-
-				console.log(goods);
 				
 				goodsImageBe = [];
 				goodsImageAf = [];
@@ -66,6 +66,7 @@ $(window).load(function() {
 				goodsDescAf = [];
 
 				goodsEdateAf = [];
+				goodsNoAf = [];
 
 				var i = 0;
 				
@@ -110,6 +111,7 @@ $(window).load(function() {
 //					}
 			
 					goodsEdateAf = [];
+					goodsNoAf = [];
 					
 					for(i=0;i<goodsImageAf.length;i++){
 						table = document.createElement('table');
@@ -119,11 +121,14 @@ $(window).load(function() {
 						table.setAttribute("cellpadding","0");
 						var trtd = '';
 						
+						console.log(goods);
+						
 						goodsItemImage =[];
 						goodsItemReq = [];
 						for (var j = 0; j < goods.length; j++) {
 							if(goods[j].gImage == goodsImageAf[i]){
-								goodsEdateAf = goods[i].gEdate;
+								goodsEdateAf = goods[j].gEdate;
+								goodsNoAf = goods[j].gNo;
 								if(goods[j].iClass =="엠블럼"){
 									for(var l = 0; l<myItemImageAgain.length; l++){
 										if(myItemImageAgain[l]==goods[j].iImage){
@@ -139,7 +144,8 @@ $(window).load(function() {
 						
 						for (var j = 0; j < goods.length; j++) {
 							if(goods[j].gImage == goodsImageAf[i]){
-								goodsEdateAf = goods[i].gEdate;
+								goodsEdateAf = goods[j].gEdate;
+								goodsNoAf = goods[j].gNo;
 								if(goods[j].iClass !="엠블럼"){
 									for(var l = 0; l<myItemImageAgain.length; l++){
 										if(myItemImageAgain[l]==goods[j].iImage){
@@ -185,10 +191,10 @@ $(window).load(function() {
 						}
 						trtd += "</tr>";
 						
-						console.log(flag);
+						console.log(goodsNoAf);
 						
 						trtd += "<tr>";
-						trtd += "<td id='combineButton' colspan='4'>조합</td>";
+						trtd += "<td id='combineButton"+ i +"' class='combineButton' colspan='4'>조합</td>";
 						trtd += "</tr>";
 						
 						table.innerHTML += trtd;
@@ -199,7 +205,18 @@ $(window).load(function() {
 					var time = 0;
 					for(var m = 0; m<goodsImageAf.length;m++){
 						$("#basicTable"+ m).animate({ "top": "0px" }, time +=200 );
-						console.log(time);
+					};
+					
+					for(var m = 0; m<goodsImageAf.length;m++){
+						$("#combineButton"+m).click(function() {
+							var gNo = 
+							$.ajax({type:"GET",url:"barCode/read.do?gNo="+gNo,async:false,success:function(barCodes){
+								console.log(barCodes);
+							}, error:function(){	
+								alert('시스템이 바쁩니다.\n나중에 다시 시도해 주세요!!');  
+							}
+							});
+						});
 					};
 			},error:function(){	
 				alert('시스템이 바쁩니다.\n나중에 다시 시도해 주세요!!');  
@@ -208,7 +225,6 @@ $(window).load(function() {
 			//
 		});
 	}
-	
 //	$.ajax({type:"GET",url:"element/read.do",async:false,success:function(elements){
 //	var element = elements.jsonResult.data;
 

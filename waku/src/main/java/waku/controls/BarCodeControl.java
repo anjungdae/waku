@@ -12,7 +12,7 @@ import waku.dao.BarCodeDao;
 import waku.vo.JsonResult;
 
 @Controller
-@RequestMapping("/barcode")
+@RequestMapping("/jd/pacecounter")
 public class BarCodeControl {
 Logger log = Logger.getLogger(MyItemControl.class);
 	
@@ -22,10 +22,20 @@ Logger log = Logger.getLogger(MyItemControl.class);
 	@Autowired(required=false)
 	BarCodeDao barcodeDao;
 	
-	@RequestMapping(value="/list.do", produces="application/json")
+	@RequestMapping(value="barCode/list.do", produces="application/json")
 	public Object ajaxList() throws Exception {
 		try{
 			JsonResult jr = new JsonResult().setResultStatus(JsonResult.SUCCESS).setData(barcodeDao.selectList());
+			return jr;
+		}catch(Throwable ex){
+			return new JsonResult().setResultStatus(JsonResult.FAIL).setError(ex.getMessage());
+		}
+	}
+	
+	@RequestMapping(value="barCode/read.do", produces="application/json")
+	public Object ajaxRead(int gNo) throws Exception {
+		try{
+			JsonResult jr = new JsonResult().setResultStatus(JsonResult.SUCCESS).setData(barcodeDao.selectRead(gNo));
 			return jr;
 		}catch(Throwable ex){
 			return new JsonResult().setResultStatus(JsonResult.FAIL).setError(ex.getMessage());

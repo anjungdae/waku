@@ -7,7 +7,10 @@
     <id     property="cSerial"       column="C_SERIAL"/>
     <result property="gNo"     column="G_NO"/>
     <result property="cCode"    column="C_CODE"/>
-      <association property="goods" javaType="goods">
+    <result property="cValid"    column="C_VALID"/>
+    
+    
+   <!--  <association property="goods" javaType="goods">
       <result property="gNo"    column="G_NO"/>
       <result property="cNo"  column="C_NO"/>
       <result property="gImage"  column="G_IMAGE"/>
@@ -15,13 +18,19 @@
       <result property="gDesc"  column="G_DESC"/>
       <result property="gEdate"  column="G_EDATE"/>
       <result property="gValid"  column="G_VALID"/>
-    </association>
+    </association> -->
   </resultMap>
 	
 	<select id="selectList" resultMap="barcodeResultMap">
-		select C_SERIAL,G_NO,C_CODE
+		select C_SERIAL,G_NO,C_CODE,C_VALID
 		from BARCODE
 	</select>
+	
+	<select id="selectRead" parameterType="int" resultMap="barcodeResultMap">
+    select C_SERIAL,G_NO,C_CODE,C_VALID
+    from BARCODE
+    WHERE G_NO=#{gNo}
+  </select>
   
   <delete id="delete" parameterType="int">
     delete from BARCODE where C_SERIAL=#{value}
