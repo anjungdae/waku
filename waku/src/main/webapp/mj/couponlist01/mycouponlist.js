@@ -15,12 +15,20 @@ function loadCoupon() {
 		async: false,
 		url : "/waku/mycoupon/ByBarcode.do?uNo="+uNo,
 		success : function(coupons) {
-			var coupon = coupons.jsonResult.data;
 			
+			var coupon = coupons.jsonResult.data;
 			console.log(coupon);
 			
 			$.each(coupon, function(i, item){
 				console.log(item);
+
+				$.ajax({
+					async: false,
+					url : "/waku/barcode/update.do?cSerial="+coupon[i].cSerial,
+					success : function(coupons) {
+						console.log("소유쿠폰에 대해 cValid상태flase")
+					  }
+					});
 				
 				var temp = '';
 				temp += "<div id='container" + i + "' class = 'container'>";
@@ -59,7 +67,7 @@ function loadCoupon() {
                
 				temp += "<div id = 'uPay'>" +"지불걸음 수"+  coupon[i].uPay + '</div>';
 				temp += "<div id = 'cGdate'>" +"취득일"+  coupon[i].cGdate + '</div>';
-				//temp += "<div id = 'cSrial'>" +"시리얼넘버"+  coupon[i].cSerial + '</div>';
+				temp += "<div id = 'cSrial'>" +"시리얼넘버"+  coupon[i].cSerial + '</div>';
 				
 				//temp += "<div id = 'cState'>" +  coupon[i].cState + '</div>';
 				temp += '</nav>';

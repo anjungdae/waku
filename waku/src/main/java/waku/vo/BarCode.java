@@ -4,6 +4,7 @@ public class BarCode {
 	int cSerial;
 	int gNo;
 	String cCode;
+	boolean cValid;
 	Goods goods;
 	
 	public int getcSerial() {
@@ -33,6 +34,13 @@ public class BarCode {
 	public BarCode setGoods(Goods goods){
 		this.goods = goods;
 		return this;
+	}
+	public boolean iscValid() {
+		return cValid;
+	}
+	public BarCode setcValid(boolean cValid) {
+		this.cValid = cValid;
+		return this; 
 	}
 	
 	

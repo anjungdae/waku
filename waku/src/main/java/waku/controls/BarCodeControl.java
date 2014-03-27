@@ -53,5 +53,20 @@ Logger log = Logger.getLogger(MyItemControl.class);
 		}
 	}
 	
+	
+	@RequestMapping(value="/update.do", produces="application/json")
+	public Object ajaxcValid(int cSerial) throws Exception {
+		try{
+			barcodeDao.update(cSerial);
+			JsonResult jr = new JsonResult().setResultStatus(JsonResult.SUCCESS).setData(barcodeDao.update(cSerial));
+			return jr;
+			
+		}catch(Throwable ex){
+			return new JsonResult().setResultStatus(JsonResult.FAIL).setError(ex.getMessage());
+		}
+	
+	}
+	
+	
 
 }
