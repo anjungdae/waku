@@ -47,7 +47,7 @@ function loadCoupon() {
 	    	                	url : "/waku/goods/joinCompany.do?cNo="+num,
 	    	                	success : function(coupons) {
 	    	                		var company = coupons.jsonResult.data;
-	    	                		
+	    	                		console.log(company);
 	    	                		temp += "<div id ='cName'>" +  company[0].company.cName + '</div>';
 	    	                	}
 	            		    });
@@ -114,7 +114,8 @@ function loadCoupon() {
 				$("#delete"+i).click(function(){
 					 console.log(this);
 					    $("#container"+this.id.replace("delete","")).animate({'opacity':0},600);
-					    $("#container"+this.id.replace("delete","")).animate({'top':-1200}, {duration: 600,queue: false});
+					    $("#container"+this.id.replace("delete","")).animate({'top':-1200}, {duration: 600,queue: false,complete:function(){
+					    	$("#container"+ i).remove()}});					    	
 						console.log("이건 몇번째언어일까"+i);
 			//삭제버튼-데이터 삭제 
 					    //console.log("전역"+data); data전역 변수로 serial번호 받아오기. (var를 안써주면 전역으로 선언가능.)
