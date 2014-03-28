@@ -6,7 +6,7 @@ a.run=function(a){d.each(c,function(d,c){b[c]=h(e[c],g,a)})}}};var l={aqua:[0,25
 0,255,1],gold:[255,215,0,1],green:[0,128,0,1],indigo:[75,0,130,1],khaki:[240,230,140,1],lightblue:[173,216,230,1],lightcyan:[224,255,255,1],lightgreen:[144,238,144,1],lightgrey:[211,211,211,1],lightpink:[255,182,193,1],lightyellow:[255,255,224,1],lime:[0,255,0,1],magenta:[255,0,255,1],maroon:[128,0,0,1],navy:[0,0,128,1],olive:[128,128,0,1],orange:[255,165,0,1],pink:[255,192,203,1],purple:[128,0,128,1],violet:[128,0,128,1],red:[255,0,0,1],silver:[192,192,192,1],white:[255,255,255,1],yellow:[255,255,
 0,1],transparent:[255,255,255,0]}})(jQuery);
 
-var uNo=2;
+var uNo=1;
 var temp = '';
 
 function loadCoupon() {
@@ -22,13 +22,6 @@ function loadCoupon() {
 			$.each(coupon, function(i, item){
 				console.log(item);
 
-				$.ajax({
-					async: false,
-					url : "/waku/barcode/update.do?cSerial="+coupon[i].cSerial,
-					success : function(coupons) {
-						console.log("소유쿠폰에 대해 cValid상태flase")
-					  }
-					});
 				
 				var temp = '';
 				temp += "<div id='container" + i + "' class = 'container'>";
@@ -62,6 +55,61 @@ function loadCoupon() {
 	            		    
 	            		    temp += "<div id ='gTitle'>" +  barcode[0].goods.gTitle + '</div>';
 	            		    temp += "<div id ='gEdate'>"+"사용종료 일" +  barcode[0].goods.gEdate + '</div>';
+	                	  
+	            		    var now=new Date();
+	            		    console.log(now);
+	            		    
+	            		    var year = now.getFullYear();
+	            		    console.log(year);
+
+	            		    var month = now.getMonth() + 1      
+	            		    if((month+"").length < 2) { 
+	            		    month = "0" + month;
+	            		    }
+	            		    
+	            		    var date = now.getDate();           // 현재 날짜 가져오기
+	            		    
+	            		    if((date+"").length < 2) {       // 일이 한자리 수인 경우 앞에 0을 붙여주기 위해
+	            		    date = "0" + date;
+	            		    }
+	            		   
+	            		    var today = year +"" + month + "" + date; 
+	            		   console.log("오늘날짜"+today); 
+	            		    
+	            		   var InputEdata = barcode[0].goods.gEdate;  
+	            		   
+	            		   var stringdate=InputEdata.toString()
+	            		   var Inputdata = stringdate.split("-");
+	            
+	            		   var y =Inputdata[0];
+	            		   var m =Inputdata[1];
+	            		   var d =Inputdata[2];
+	            		   
+	            		   var inputDate=y +""+ m +""+ d;
+	            		   console.log("종료일"+inputDate);
+	            		   
+	            		   if(parseInt(today) == parseInt(inputDate)){  // int 형으로 변환하여 비교한다.
+	            			   console.log("쿠폰종료되었습니다.");
+
+	            			   console.log("#use"+i);
+//	            			   $("#container"+i).css({backgroundColor:'red'});  
+//	            			   console.log("#container"+i);
+//	            			   
+//	            			   $("#use"+i).off('click');
+	            			   // 아오!!! 해결해야돼!!!(지나치지말기)
+	            			   
+	            		
+	            			   console.log(styles);
+	            					    $("#container"+i);
+	            			   
+	            			   
+	            			   }
+	            		   
+
+	            		   
+	            		   
+	            		   
+	            		   
 	                	}
 	                });
                
@@ -82,6 +130,7 @@ function loadCoupon() {
                 		var coupon = coupons.jsonResult.data;
                 		console.log(coupon[0]);
             		    temp += "<div id ='gDesc'>" +  coupon[0].goods.gDesc + '</div>';
+            		    
                 	}
                 });
 				temp+="<a href='index.html'data-role='button' data-icon='delete' data-iconpos='notext' data-theme='b' data-inline='true' id='cancel"+i+"' class='ui-link ui-btn ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-inline ui-shadow ui-corner-all'  role='button' style='opacity: 1;'>";
