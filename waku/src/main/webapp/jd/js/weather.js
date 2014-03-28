@@ -87,9 +87,10 @@ function weather(latitude,longitude) {
         
         var weatherTemp = Math.round((data.main.temp-273)*10)/10.0;
         
-        console.log(weatherData);
         
-        $("img").attr("src","http://api.openweathermap.org/img/w/" + weatherIcon + ".png").appendTo( "#weatherIcon" );
+        var weatherFormIcon = document.getElementById("weatherFormIcon");
+        
+        $("#weatherIcon").attr("src","http://api.openweathermap.org/img/w/" + weatherIcon + ".png").appendTo( "#weatherIcon" );
         $("<a>"+ weatherMainKR + "&nbsp;" + weatherTemp + "&deg;</p>").appendTo("#weahterNotice");
     });
 };

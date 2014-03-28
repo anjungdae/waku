@@ -34,7 +34,7 @@ Logger log = Logger.getLogger(MyItemControl.class);
 		}
 	}
 	
-	@RequestMapping(value="myItem/keepRead.do", produces="application/json")
+	@RequestMapping(value="myItem/keepRead.do", produces="application/json")//
 	public Object ajaxKeepRead(int uNo) throws Exception {
 		try{
 			JsonResult jr = new JsonResult().setResultStatus(JsonResult.SUCCESS).setData(myItemDao.selectInven(uNo));

@@ -2,22 +2,12 @@ $(window).load(function() {
 
 	var uNo = 1;
 
-	var element;
-	var goods;
-
-	$.ajax({type:"GET",url:"element/list.do",async:false,success:function(elements){
-		element = elements.jsonResult.data;
-	}, error:function(){	
-		alert('시스템이 바쁩니다.\n나중에 다시 시도해 주세요!!');  
-	}
-	});
-
 	var myItem;
 
 	$.ajax({type:"GET",url:"myItem/keepRead.do?uNo="+uNo,async:false,success:function(myItems){
 		myItem = myItems.jsonResult.data;
 	}, error:function(){	
-		alert('시스템이 바쁩니다.\n나중에 다시 시도해 주세요!!');  
+		alert('데이터 처리중입니다. 잠시 뒤 다시 시도해주세요.');  
 	}
 	});
 
@@ -113,8 +103,6 @@ $(window).load(function() {
 					goodsEdateAf = [];
 					goodsNoAf = [];
 					
-					console.log("-------------------------------------------------");
-					
 					var p = 0;
 					
 					for(i=0;i<goodsImageAf.length;i++){
@@ -137,14 +125,10 @@ $(window).load(function() {
 										if(myItemImageAgain[l]==goods[j].iImage){
 											myItemImage.push(myItemImageAgain[l]);
 											myItemStock.push(myItemStockAgain[l]);
-											console.log("myItemImage = "+myItemImage);
-											console.log("myItemStock = "+myItemStock);
 										}
 									}
 									goodsItemImage.push(goods[j].iImage);
 									goodsItemReq.push(goods[j].iReq);
-									console.log("goodsItemImage = "+goodsItemImage);
-									console.log("goodsItemReq = "+goodsItemReq);
 									}
 							}
 						}
@@ -158,19 +142,13 @@ $(window).load(function() {
 										if(myItemImageAgain[l]==goods[j].iImage){
 											myItemImage.push(myItemImageAgain[l]);
 											myItemStock.push(myItemStockAgain[l]);
-											console.log("myItemImage = "+myItemImage);
-											console.log("myItemStock = "+myItemStock);
 										}
 									}
 									goodsItemImage.push(goods[j].iImage);
 									goodsItemReq.push(goods[j].iReq);
-									console.log("goodsItemImage = "+goodsItemImage);
-									console.log("goodsItemReq = "+goodsItemReq);
 									}
 							}
 						}
-						
-						console.log("-------------------------------------------------");
 						
 						var flag =[];
 						
@@ -190,9 +168,6 @@ $(window).load(function() {
 						trtd += "<tr>";
 						
 						for(var k = 0; k<goodsItemImage.length;k++){
-							
-							console.log(p);
-							
 							if(goodsItemReq[k]>myItemStock[p]){
 								trtd += "<td id='itemImageLose' class='basicTd'><img src = 'sideicon/"+goodsItemImage[k]+"' id='indexIcon' style='opacity: 0.2;'>" +
 										"<br><span id='itemReqLose' class='basicTd'>"+goodsItemReq[k]+"</span></td>";
@@ -206,7 +181,6 @@ $(window).load(function() {
 							p = p + 1;
 						};
 						
-						console.log("-------------------------------------------------");
 						orderFlag.push(flag);
 						
 						if(goodsItemImage.length<4){
@@ -248,17 +222,16 @@ $(window).load(function() {
 							
 							if(another == true){
 								var gNo = document.getElementById("combineButton"+m).getAttribute("data-no");
-							
+								//개수 줄어들기 적용하기
 								$.ajax({type:"GET",url:"barCode/read.do?gNo="+gNo,async:false,success:function(barCodes){
-									var barCodes = barCodes.jsonResult.data;
-									console.log(barCodes);
-									if(barCodes != null){
-										alert(barCodes.cCode);
-									} else if(barCodes == null){
+									var barCode = barCodes.jsonResult.data;								
+									if(barCode != null){
+										alert(barCode.cCode);
+									} else if(barCode == null){
 										alert("바코드가 모두 소진 되었습니다");
 									}
 								}, error:function(){	
-									alert('시스템이 바쁩니다.\n나중에 다시 시도해 주세요!!');  
+									alert('데이터 처리중입니다. 잠시 뒤 다시 시도해주세요.');  
 								}
 								});
 							} else {
@@ -267,7 +240,7 @@ $(window).load(function() {
 						});
 					};
 			},error:function(){	
-				alert('시스템이 바쁩니다.\n나중에 다시 시도해 주세요!!');  
+				alert('데이터 처리중입니다. 잠시 뒤 다시 시도해주세요.');  
 			}
 			});
 			//
