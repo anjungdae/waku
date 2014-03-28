@@ -44,17 +44,17 @@ $(window).load(function() {
 				iNo.push(itemNumber);
 			}
 			
-			console.log(iNo);
+			var orderFlag =[];
+			
 			$.ajax({type:"GET",url:"goods/read.do",data:{
 				iNo:iNo
 			},async:false,success:function(goods){
 				
 				$(".basicTable").remove();
-				
+					
 				goods = goods.jsonResult.data;
+			
 				var table = null;
-
-				console.log(goods);
 				
 				goodsImageBe = [];
 				goodsImageAf = [];
@@ -66,6 +66,7 @@ $(window).load(function() {
 				goodsDescAf = [];
 
 				goodsEdateAf = [];
+				goodsNoAf = [];
 
 				var i = 0;
 				
@@ -110,6 +111,11 @@ $(window).load(function() {
 //					}
 			
 					goodsEdateAf = [];
+					goodsNoAf = [];
+					
+					console.log("-------------------------------------------------");
+					
+					var p = 0;
 					
 					for(i=0;i<goodsImageAf.length;i++){
 						table = document.createElement('table');
@@ -121,37 +127,50 @@ $(window).load(function() {
 						
 						goodsItemImage =[];
 						goodsItemReq = [];
+
 						for (var j = 0; j < goods.length; j++) {
 							if(goods[j].gImage == goodsImageAf[i]){
-								goodsEdateAf = goods[i].gEdate;
+								goodsEdateAf = goods[j].gEdate;
+								goodsNoAf = goods[j].gNo;
 								if(goods[j].iClass =="엠블럼"){
 									for(var l = 0; l<myItemImageAgain.length; l++){
 										if(myItemImageAgain[l]==goods[j].iImage){
 											myItemImage.push(myItemImageAgain[l]);
 											myItemStock.push(myItemStockAgain[l]);
+											console.log("myItemImage = "+myItemImage);
+											console.log("myItemStock = "+myItemStock);
 										}
 									}
 									goodsItemImage.push(goods[j].iImage);
 									goodsItemReq.push(goods[j].iReq);
+									console.log("goodsItemImage = "+goodsItemImage);
+									console.log("goodsItemReq = "+goodsItemReq);
 									}
 							}
 						}
 						
 						for (var j = 0; j < goods.length; j++) {
 							if(goods[j].gImage == goodsImageAf[i]){
-								goodsEdateAf = goods[i].gEdate;
+								goodsEdateAf = goods[j].gEdate;
+								goodsNoAf = goods[j].gNo;
 								if(goods[j].iClass !="엠블럼"){
 									for(var l = 0; l<myItemImageAgain.length; l++){
 										if(myItemImageAgain[l]==goods[j].iImage){
 											myItemImage.push(myItemImageAgain[l]);
 											myItemStock.push(myItemStockAgain[l]);
+											console.log("myItemImage = "+myItemImage);
+											console.log("myItemStock = "+myItemStock);
 										}
 									}
 									goodsItemImage.push(goods[j].iImage);
 									goodsItemReq.push(goods[j].iReq);
+									console.log("goodsItemImage = "+goodsItemImage);
+									console.log("goodsItemReq = "+goodsItemReq);
 									}
 							}
 						}
+						
+						console.log("-------------------------------------------------");
 						
 						var flag =[];
 						
@@ -169,26 +188,34 @@ $(window).load(function() {
 						trtd += "</tr>";
 
 						trtd += "<tr>";
+						
 						for(var k = 0; k<goodsItemImage.length;k++){
-							if(goodsItemReq[k]>myItemStock[k]){
+							
+							console.log(p);
+							
+							if(goodsItemReq[k]>myItemStock[p]){
 								trtd += "<td id='itemImageLose' class='basicTd'><img src = 'sideicon/"+goodsItemImage[k]+"' id='indexIcon' style='opacity: 0.2;'>" +
 										"<br><span id='itemReqLose' class='basicTd'>"+goodsItemReq[k]+"</span></td>";
 								flag.push(false);
-							} else if(goodsItemReq[k]<=myItemStock[k]){
+							} else if(goodsItemReq[k]<=myItemStock[p]){
 								trtd += "<td class='basicTd'><img src = 'sideicon/"+goodsItemImage[k]+"' id='indexIcon'>" +
 										"<br><span id='itemReq' class='basicTd'>"+goodsItemReq[k]+"</span></td>";
 								flag.push(true);
 							};
+							
+							p = p + 1;
 						};
+						
+						console.log("-------------------------------------------------");
+						orderFlag.push(flag);
+						
 						if(goodsItemImage.length<4){
 							trtd += "<td class='basicTd'></td>";
 						}
 						trtd += "</tr>";
 						
-						console.log(flag);
-						
 						trtd += "<tr>";
-						trtd += "<td id='combineButton' colspan='4'>조합</td>";
+						trtd += "<td id='combineButton"+ i +"' class='combineButton' data-no='" + goodsNoAf + "'colspan='4'>조합</td>";
 						trtd += "</tr>";
 						
 						table.innerHTML += trtd;
@@ -196,10 +223,48 @@ $(window).load(function() {
 					};
 					
 					//
-					var time = 0;
+					var timelag = 0;
 					for(var m = 0; m<goodsImageAf.length;m++){
-						$("#basicTable"+ m).animate({ "top": "0px" }, time +=200 );
-						console.log(time);
+						$("#basicTable"+ m).animate({ "top": "0px" }, timelag +=200 );
+					};
+					
+					for(var m = 0; m<goodsImageAf.length;m++){
+						combineButtonInject(m);
+					};
+					
+					function combineButtonInject(m){
+						$("#combineButton"+m).click(function() {
+							
+							var another;
+							
+							for(var oF in orderFlag[m]){
+								if(orderFlag[m][oF] == true){
+									another = true;
+								} else if(orderFlag[m][oF] == false){
+									another = false;
+									continue;
+								}
+							}
+							
+							if(another == true){
+								var gNo = document.getElementById("combineButton"+m).getAttribute("data-no");
+							
+								$.ajax({type:"GET",url:"barCode/read.do?gNo="+gNo,async:false,success:function(barCodes){
+									var barCodes = barCodes.jsonResult.data;
+									console.log(barCodes);
+									if(barCodes != null){
+										alert(barCodes.cCode);
+									} else if(barCodes == null){
+										alert("바코드가 모두 소진 되었습니다");
+									}
+								}, error:function(){	
+									alert('시스템이 바쁩니다.\n나중에 다시 시도해 주세요!!');  
+								}
+								});
+							} else {
+								alert('내 아이템 수량을 확인해 주세요!');
+							}
+						});
 					};
 			},error:function(){	
 				alert('시스템이 바쁩니다.\n나중에 다시 시도해 주세요!!');  
@@ -208,7 +273,6 @@ $(window).load(function() {
 			//
 		});
 	}
-	
 //	$.ajax({type:"GET",url:"element/read.do",async:false,success:function(elements){
 //	var element = elements.jsonResult.data;
 
