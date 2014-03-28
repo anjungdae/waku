@@ -1,6 +1,8 @@
 package waku.controls;
 
 
+import java.util.List;
+
 import javax.servlet.ServletContext;
 
 import org.apache.log4j.Logger;
@@ -9,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import waku.dao.BarCodeDao;
+import waku.dao.GoodsDao;
+import waku.vo.BarCode;
 import waku.vo.JsonResult;
 
 @Controller
@@ -21,6 +25,9 @@ Logger log = Logger.getLogger(MyItemControl.class);
 	
 	@Autowired(required=false)
 	BarCodeDao barcodeDao;
+	
+	@Autowired(required=false)
+	GoodsDao goodsDao;
 	
 	@RequestMapping(value="barCode/list.do", produces="application/json")
 	public Object ajaxList() throws Exception {
@@ -35,7 +42,21 @@ Logger log = Logger.getLogger(MyItemControl.class);
 	@RequestMapping(value="barCode/read.do", produces="application/json")
 	public Object ajaxRead(int gNo) throws Exception {
 		try{
-			JsonResult jr = new JsonResult().setResultStatus(JsonResult.SUCCESS).setData(barcodeDao.selectRead(gNo));
+			List<BarCode> bacodeList = barcodeDao.selectRead(gNo);
+						
+			BarCode bacodeListGet = null;
+			
+			if(bacodeList.size() != 0){
+				bacodeListGet  = bacodeList.get(0);
+			} else if (bacodeList.size() == 0){
+				goodsDao.soldOutGno(gNo);
+			}
+			
+			int changeValid = bacodeList.get(0).getcSerial();
+			
+			barcodeDao.updateValid(changeValid);
+			
+			JsonResult jr = new JsonResult().setResultStatus(JsonResult.SUCCESS).setData(bacodeListGet);
 			return jr;
 		}catch(Throwable ex){
 			return new JsonResult().setResultStatus(JsonResult.FAIL).setError(ex.getMessage());
@@ -62,21 +83,4 @@ Logger log = Logger.getLogger(MyItemControl.class);
 			return new JsonResult().setResultStatus(JsonResult.FAIL).setError(ex.getMessage());
 		}
 	}
-	
-	
-	@RequestMapping(value="/update.do", produces="application/json")
-	public Object ajaxcValid(int cSerial) throws Exception {
-		try{
-			barcodeDao.update(cSerial);
-			JsonResult jr = new JsonResult().setResultStatus(JsonResult.SUCCESS).setData(barcodeDao.update(cSerial));
-			return jr;
-			
-		}catch(Throwable ex){
-			return new JsonResult().setResultStatus(JsonResult.FAIL).setError(ex.getMessage());
-		}
-	
-	}
-	
-	
-
 }

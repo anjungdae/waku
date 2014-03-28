@@ -7,6 +7,7 @@ public class BarCode {
 	boolean cValid;
 	Goods goods;
 	
+	
 	public int getcSerial() {
 		return cSerial;
 	}
@@ -35,7 +36,7 @@ public class BarCode {
 		this.goods = goods;
 		return this;
 	}
-	public boolean iscValid() {
+	public boolean getcValid() {
 		return cValid;
 	}
 	public BarCode setcValid(boolean cValid) {
