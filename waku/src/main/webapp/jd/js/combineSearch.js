@@ -26,7 +26,7 @@ $(window).load(function() {
 	
 	function nameGrant(itemName,itemNumber){
 		$("#" + itemName).bind("tap",function(){
-			
+			console.log(itemNumber);
 			if(iNo.length<4){
 				iNo.push(itemNumber);
 			} else {
@@ -35,6 +35,9 @@ $(window).load(function() {
 			}
 			
 			var orderFlag =[];
+			var goodsTotalIno = [];
+			var goodsTotalReq = [];
+			var myItemTotalStock = [];
 			
 			$.ajax({type:"GET",url:"goods/read.do",data:{
 				iNo:iNo
@@ -43,7 +46,7 @@ $(window).load(function() {
 				$(".basicTable").remove();
 					
 				goods = goods.jsonResult.data;
-			
+				
 				var table = null;
 				
 				goodsImageBe = [];
@@ -113,6 +116,7 @@ $(window).load(function() {
 						table.setAttribute("cellpadding","0");
 						var trtd = '';
 						
+						goodsItemReq = [];
 						goodsItemImage =[];
 						goodsItemReq = [];
 
@@ -127,6 +131,7 @@ $(window).load(function() {
 											myItemStock.push(myItemStockAgain[l]);
 										}
 									}
+									goodsItemNo.push(goods[j].iNo);
 									goodsItemImage.push(goods[j].iImage);
 									goodsItemReq.push(goods[j].iReq);
 									}
@@ -144,6 +149,7 @@ $(window).load(function() {
 											myItemStock.push(myItemStockAgain[l]);
 										}
 									}
+									goodsItemNo.push(goods[j].iNo);
 									goodsItemImage.push(goods[j].iImage);
 									goodsItemReq.push(goods[j].iReq);
 									}
@@ -151,6 +157,9 @@ $(window).load(function() {
 						}
 						
 						var flag =[];
+						var tempGoodsIno = [];
+						var tempGoodsReq = [];
+						var tempMyItemStock = [];
 						
 						trtd += "<tr>";
 						trtd += "<td class='basicTdImage' rowspan='5'><img src = 'goods/"+goodsImageAf[i]+"' class='goodImage'></td>";
@@ -171,10 +180,16 @@ $(window).load(function() {
 							if(goodsItemReq[k]>myItemStock[p]){
 								trtd += "<td id='itemImageLose' class='basicTd'><img src = 'sideicon/"+goodsItemImage[k]+"' id='indexIcon' style='opacity: 0.2;'>" +
 										"<br><span id='itemReqLose' class='basicTd'>"+goodsItemReq[k]+"</span></td>";
+								tempGoodsIno.push(goodsItemNo[k]);
+								tempGoodsReq.push(goodsItemReq[k]);
+								tempMyItemStock.push(myItemStock[p]);
 								flag.push(false);
 							} else if(goodsItemReq[k]<=myItemStock[p]){
 								trtd += "<td class='basicTd'><img src = 'sideicon/"+goodsItemImage[k]+"' id='indexIcon'>" +
 										"<br><span id='itemReq' class='basicTd'>"+goodsItemReq[k]+"</span></td>";
+								tempGoodsIno.push(goodsItemNo[k]);
+								tempGoodsReq.push(goodsItemReq[k]);
+								tempMyItemStock.push(myItemStock[p]);
 								flag.push(true);
 							};
 							
@@ -182,6 +197,9 @@ $(window).load(function() {
 						};
 						
 						orderFlag.push(flag);
+						goodsTotalIno.push(tempGoodsIno);
+						goodsTotalReq.push(tempGoodsReq);
+						myItemTotalStock.push(tempMyItemStock);
 						
 						if(goodsItemImage.length<4){
 							trtd += "<td class='basicTd'></td>";
@@ -216,17 +234,36 @@ $(window).load(function() {
 									another = true;
 								} else if(orderFlag[m][oF] == false){
 									another = false;
-									continue;
+									break;
 								}
 							}
 							
 							if(another == true){
 								var gNo = document.getElementById("combineButton"+m).getAttribute("data-no");
-								//개수 줄어들기 적용하기
+								for(var n = 0; n<goodsTotalReq[m].length; n++){
+									
+									var goodsIno = goodsTotalIno[m][n];
+									var minusStock = myItemTotalStock[m][n] - goodsTotalReq[m][n];
+									
+									$.ajax({type:"POST",url:"myItem/update.do",data:{
+									      uNo:uNo,
+									      iNo:goodsIno,
+									      iStock:minusStock
+									    },async:false,success:function(){
+									}, error:function(){	
+										alert('데이터 처리중입니다. 잠시 뒤 다시 시도해주세요.');  
+									}
+									});
+								}
+								
 								$.ajax({type:"GET",url:"barCode/read.do?gNo="+gNo,async:false,success:function(barCodes){
 									var barCode = barCodes.jsonResult.data;								
 									if(barCode != null){
-										alert(barCode.cCode);
+										var pop = barCode.cCode;	//팝업창에 출력될 페이지 URL
+										var popOption = "width=370, height=360, toolbar=no, directories=no, " +
+												"menubar=no, menubar=no, location=no, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+											window.open(pop,"",popOption);
+										location.replace('touchtouch.html');
 									} else if(barCode == null){
 										alert("바코드가 모두 소진 되었습니다");
 									}

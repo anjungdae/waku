@@ -25,13 +25,6 @@
     ORDER BY M2.I_CLASS
   </select>
   
-  <select id="selectOne" parameterType="map" resultMap="myItemResultMap">
-    select U_NO,I_NO,I_STOCK
-    from MYITEM
-    where U_NO=#{uNo}
-    and I_NO=#{iNo}
-  </select>
-  
   <insert id="insert" parameterType="myItem">
     INSERT INTO MYITEM(U_NO,I_NO,I_STOCK) 
     VALUES(#{uNo},#{iNo},#{iStock})
