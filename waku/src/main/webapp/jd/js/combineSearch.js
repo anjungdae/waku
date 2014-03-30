@@ -259,11 +259,24 @@ $(window).load(function() {
 								$.ajax({type:"GET",url:"barCode/read.do?gNo="+gNo,async:false,success:function(barCodes){
 									var barCode = barCodes.jsonResult.data;								
 									if(barCode != null){
-										var pop = barCode.cCode;	//팝업창에 출력될 페이지 URL
-										var popOption = "width=370, height=360, toolbar=no, directories=no, " +
-												"menubar=no, menubar=no, location=no, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
-											window.open(pop,"",popOption);
-										location.replace('touchtouch.html');
+										
+										var popup = document.getElementById("popup");
+										var pt = '';
+										
+										pt = barCode.cCode;
+										
+										popup.innerHTML = pt;
+										
+										var winH = $(window).height();
+										var winW = $(window).width();
+								              
+										//Set the popup window to center
+										$('#popup').css('top',  winH/2-$('#popup').height());
+										$('#popup').css('left', (winW/2-$('#popup').width()/2)-20);
+										
+										$('#popup').fadeIn();
+										
+										//location.replace('touchtouch.html');
 									} else if(barCode == null){
 										alert("바코드가 모두 소진 되었습니다");
 									}
