@@ -2,22 +2,12 @@ $(window).load(function() {
 
 	var uNo = 1;
 
-	var element;
-	var goods;
-
-	$.ajax({type:"GET",url:"element/list.do",async:false,success:function(elements){
-		element = elements.jsonResult.data;
-	}, error:function(){	
-		alert('시스템이 바쁩니다.\n나중에 다시 시도해 주세요!!');  
-	}
-	});
-
 	var myItem;
 
 	$.ajax({type:"GET",url:"myItem/keepRead.do?uNo="+uNo,async:false,success:function(myItems){
 		myItem = myItems.jsonResult.data;
 	}, error:function(){	
-		alert('시스템이 바쁩니다.\n나중에 다시 시도해 주세요!!');  
+		alert('데이터 처리중입니다. 잠시 뒤 다시 시도해주세요.');  
 	}
 	});
 
@@ -36,7 +26,7 @@ $(window).load(function() {
 	
 	function nameGrant(itemName,itemNumber){
 		$("#" + itemName).bind("tap",function(){
-			
+			console.log(itemNumber);
 			if(iNo.length<4){
 				iNo.push(itemNumber);
 			} else {
@@ -45,6 +35,9 @@ $(window).load(function() {
 			}
 			
 			var orderFlag =[];
+			var goodsTotalIno = [];
+			var goodsTotalReq = [];
+			var myItemTotalStock = [];
 			
 			$.ajax({type:"GET",url:"goods/read.do",data:{
 				iNo:iNo
@@ -53,7 +46,7 @@ $(window).load(function() {
 				$(".basicTable").remove();
 					
 				goods = goods.jsonResult.data;
-			
+				
 				var table = null;
 				
 				goodsImageBe = [];
@@ -113,8 +106,6 @@ $(window).load(function() {
 					goodsEdateAf = [];
 					goodsNoAf = [];
 					
-					console.log("-------------------------------------------------");
-					
 					var p = 0;
 					
 					for(i=0;i<goodsImageAf.length;i++){
@@ -125,6 +116,7 @@ $(window).load(function() {
 						table.setAttribute("cellpadding","0");
 						var trtd = '';
 						
+						goodsItemReq = [];
 						goodsItemImage =[];
 						goodsItemReq = [];
 
@@ -137,14 +129,11 @@ $(window).load(function() {
 										if(myItemImageAgain[l]==goods[j].iImage){
 											myItemImage.push(myItemImageAgain[l]);
 											myItemStock.push(myItemStockAgain[l]);
-											console.log("myItemImage = "+myItemImage);
-											console.log("myItemStock = "+myItemStock);
 										}
 									}
+									goodsItemNo.push(goods[j].iNo);
 									goodsItemImage.push(goods[j].iImage);
 									goodsItemReq.push(goods[j].iReq);
-									console.log("goodsItemImage = "+goodsItemImage);
-									console.log("goodsItemReq = "+goodsItemReq);
 									}
 							}
 						}
@@ -158,21 +147,19 @@ $(window).load(function() {
 										if(myItemImageAgain[l]==goods[j].iImage){
 											myItemImage.push(myItemImageAgain[l]);
 											myItemStock.push(myItemStockAgain[l]);
-											console.log("myItemImage = "+myItemImage);
-											console.log("myItemStock = "+myItemStock);
 										}
 									}
+									goodsItemNo.push(goods[j].iNo);
 									goodsItemImage.push(goods[j].iImage);
 									goodsItemReq.push(goods[j].iReq);
-									console.log("goodsItemImage = "+goodsItemImage);
-									console.log("goodsItemReq = "+goodsItemReq);
 									}
 							}
 						}
 						
-						console.log("-------------------------------------------------");
-						
 						var flag =[];
+						var tempGoodsIno = [];
+						var tempGoodsReq = [];
+						var tempMyItemStock = [];
 						
 						trtd += "<tr>";
 						trtd += "<td class='basicTdImage' rowspan='5'><img src = 'goods/"+goodsImageAf[i]+"' class='goodImage'></td>";
@@ -190,24 +177,29 @@ $(window).load(function() {
 						trtd += "<tr>";
 						
 						for(var k = 0; k<goodsItemImage.length;k++){
-							
-							console.log(p);
-							
 							if(goodsItemReq[k]>myItemStock[p]){
 								trtd += "<td id='itemImageLose' class='basicTd'><img src = 'sideicon/"+goodsItemImage[k]+"' id='indexIcon' style='opacity: 0.2;'>" +
 										"<br><span id='itemReqLose' class='basicTd'>"+goodsItemReq[k]+"</span></td>";
+								tempGoodsIno.push(goodsItemNo[k]);
+								tempGoodsReq.push(goodsItemReq[k]);
+								tempMyItemStock.push(myItemStock[p]);
 								flag.push(false);
 							} else if(goodsItemReq[k]<=myItemStock[p]){
 								trtd += "<td class='basicTd'><img src = 'sideicon/"+goodsItemImage[k]+"' id='indexIcon'>" +
 										"<br><span id='itemReq' class='basicTd'>"+goodsItemReq[k]+"</span></td>";
+								tempGoodsIno.push(goodsItemNo[k]);
+								tempGoodsReq.push(goodsItemReq[k]);
+								tempMyItemStock.push(myItemStock[p]);
 								flag.push(true);
 							};
 							
 							p = p + 1;
 						};
 						
-						console.log("-------------------------------------------------");
 						orderFlag.push(flag);
+						goodsTotalIno.push(tempGoodsIno);
+						goodsTotalReq.push(tempGoodsReq);
+						myItemTotalStock.push(tempMyItemStock);
 						
 						if(goodsItemImage.length<4){
 							trtd += "<td class='basicTd'></td>";
@@ -242,23 +234,41 @@ $(window).load(function() {
 									another = true;
 								} else if(orderFlag[m][oF] == false){
 									another = false;
-									continue;
+									break;
 								}
 							}
 							
 							if(another == true){
 								var gNo = document.getElementById("combineButton"+m).getAttribute("data-no");
-							
+								for(var n = 0; n<goodsTotalReq[m].length; n++){
+									
+									var goodsIno = goodsTotalIno[m][n];
+									var minusStock = myItemTotalStock[m][n] - goodsTotalReq[m][n];
+									
+									$.ajax({type:"POST",url:"myItem/update.do",data:{
+									      uNo:uNo,
+									      iNo:goodsIno,
+									      iStock:minusStock
+									    },async:false,success:function(){
+									}, error:function(){	
+										alert('데이터 처리중입니다. 잠시 뒤 다시 시도해주세요.');  
+									}
+									});
+								}
+								
 								$.ajax({type:"GET",url:"barCode/read.do?gNo="+gNo,async:false,success:function(barCodes){
-									var barCodes = barCodes.jsonResult.data;
-									console.log(barCodes);
-									if(barCodes != null){
-										alert(barCodes.cCode);
-									} else if(barCodes == null){
+									var barCode = barCodes.jsonResult.data;								
+									if(barCode != null){
+										var pop = barCode.cCode;	//팝업창에 출력될 페이지 URL
+										var popOption = "width=370, height=360, toolbar=no, directories=no, " +
+												"menubar=no, menubar=no, location=no, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+											window.open(pop,"",popOption);
+										location.replace('touchtouch.html');
+									} else if(barCode == null){
 										alert("바코드가 모두 소진 되었습니다");
 									}
 								}, error:function(){	
-									alert('시스템이 바쁩니다.\n나중에 다시 시도해 주세요!!');  
+									alert('데이터 처리중입니다. 잠시 뒤 다시 시도해주세요.');  
 								}
 								});
 							} else {
@@ -267,7 +277,7 @@ $(window).load(function() {
 						});
 					};
 			},error:function(){	
-				alert('시스템이 바쁩니다.\n나중에 다시 시도해 주세요!!');  
+				alert('데이터 처리중입니다. 잠시 뒤 다시 시도해주세요.');  
 			}
 			});
 			//

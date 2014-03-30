@@ -1,0 +1,99 @@
+body {
+  margin:0;
+  padding:0;
+  background:#2ca1cc;
+  font-family: "Open Sans", sans-serif;
+  font-size:large;
+  color:#999;
+  vertical-align:baseline;
+  overflow-x:hidden;
+}
+p {
+	font-size:2em;
+	padding-bottom: 5%;
+  margin-bottom:5%;
+  color:#999;
+}
+a {
+  text-decoration:none;
+}
+h1, h2, h3 {
+  font-weight:bold;
+  color:#2a2a2a;
+}
+h1 {
+  padding-top: 7%;
+  margin:10%;
+  font-size: 3em;
+}
+.section {
+  margin:0;
+  bottom:0;
+  width:100%;
+  height:100%;
+  text-align:center;
+}
+.login-form{
+  background:#fff;
+  border-radius: 10px;
+  text-align:center;
+  width:80%;
+  margin: 15% 10%;
+}
+.form-wrapper {
+  margin: 0;
+  padding: 2% 0 7% 0;
+}
+.form-wrapper .inputbox {
+  border: 1px solid #eaedf2;
+  border-radius:5px;
+  height: 3%;
+  padding: 5% 0 5% 10%;
+  width: 70%;
+  outline:none;
+  margin:5% 10%;
+  font-family: inherit;
+}
+.form-wrapper .email {
+  font-size:2em;
+  background:#eaedf2 url(email.png) 3% 50% no-repeat;
+  background-size: 1em;
+}
+.form-wrapper .password {
+  font-size:2em;
+  background:#eaedf2 url(password.png) 3% 50% no-repeat;
+  background-size: 1em;
+}
+.form-wrapper .button {
+  background: none repeat scroll 0 0 #14B9D5;
+  border: none;
+  border-radius: 1%;
+  color: #FFFFFF;
+  font-family: inherit;
+  font-size: 2em;
+  font-weight: 700;
+  height: 20%;
+  padding: 4% 0;
+  width: 70%;
+  outline:none;
+  margin-left: 15%;
+  margin-top: 5%;
+  margin-bottom:2%;
+  font-family: inherit;
+  background-color:#2ca1cc;
+}
+.facebook-login {
+	width:70%;
+  background:url(facebook.png) no-repeat;
+  background-size:21em;
+  display:inline-block;
+  outline:medium none;
+  margin-left:5.5%;
+  padding:4% 0;
+}
+span {
+	position:relative;
+	left:8%;
+	font-size:1.7em;
+	color:#fff;
+}
