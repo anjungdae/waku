@@ -15,13 +15,13 @@
     <result     property="iImage"     column="I_IMAGE"/>
     <result     property="iReq"    column="I_REQ"/>
     
-    <!-- <association property="company" javaType="company">
+    <association property="company" javaType="company">
       <result property="cNo"    column="C_NO"/>
-      <result property="cName"  column="G_NAME"/>
+      <result property="cName"  column="C_NAME"/>
       <result property="cImage"  column="C_IMAGE"/>
       <result property="cPage"  column="C_PAGE"/>
       <result property="cAd"  column="C_AD"/>
-    </association> -->
+    </association>
   </resultMap>
 
 	<select id="goodsInformation" parameterType="map" resultMap="goodsResultMap">

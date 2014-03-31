@@ -24,26 +24,20 @@ document.addEventListener('deviceready', function() {
 //     window.location.reload();
 //   });
 // }
-function promptLogin() {
+function facebookLogin() {
     FB.login(null, {scope: 'email'});
   };
 function handleStatusChange(response) {
   //window.plugins.toast.showShortTop(response.status);
   if (response.status === 'connected') {
     //window.plugins.toast.showShortCenter('connected');
-    FB.api('/me', function(user) {
-      if (user) {
-        var image = document.getElementById('image');
-        image.src = 'http://graph.facebook.com/' + user.id + '/picture';
-        var name = document.getElementById('name');
-        name.innerHTML = user.name
-        var id = document.getElementById('id');
-        id.innerHTML = user.id;
-      }
-    });
+    window.location.replace("../main/main.html");
   } else if (response.status === 'not_authorized') {
     //window.plugins.toast.showShortCenter("not authorized");
   } else {
     //window.plugins.toast.showShortCenter("unknown");
   }
 };
+function emailLogin() {
+	window.location.replace("../main/main.html");
+}

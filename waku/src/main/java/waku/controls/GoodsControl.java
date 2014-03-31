@@ -17,7 +17,7 @@ import waku.dao.GoodsDao;
 import waku.vo.JsonResult;
 
 @Controller
-@RequestMapping("/jd/pacecounter")
+@RequestMapping("/goods")
 public class GoodsControl {
 
 	Logger log = Logger.getLogger(ItemControl.class);

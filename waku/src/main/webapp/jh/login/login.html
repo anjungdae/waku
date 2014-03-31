@@ -6,10 +6,14 @@
 <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
 <title>Login Page</title>
 <link rel="stylesheet" type="text/css" href="login.css" />
+<!-- cordova -->
 <script type="text/javascript" src="../cordova.js"></script>
+<!-- facebook -->
 <script src="../js/cdv-plugin-fb-connect.js"></script>
-<script src="../js/facebook-js-sdk.js"></script> 
+<script src="../js/facebook-js-sdk.js"></script>
+<!-- Toast --> 
 <script type="text/javascript" src="../js/Toast.js"></script>
+<!-- jquery -->
 <script type="text/javascript" src="../js/jquery-1.10.1.min.js"></script>
 <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
 <script type="text/javascript" src="FBlogin.js"></script>
@@ -24,11 +28,11 @@
       <form class="form-wrapper">
         <input id="" class="inputbox email" type="text" placeholder="Email id" />
         <input id="" class="inputbox password" type="password" placeholder="Password" />
-        <div id="" class="button">Login</div>
+        <div id="" class="button"><a onclick="emailLogin()"><span>Login</span></a></div>
       </form>
     </div>
-    <div class="social"><a onclick="promptLogin();" class="facebook-login"><span>facebook 로그인</span></a></div>
-    <p>Don't have an account? <br><a href="signup.html" target="self">Register Now &raquo;</a></p>
+    <div class="social"><a onclick="facebookLogin();" class="facebook-login"><span>facebook 로그인</span></a></div>
+    <p>Don't have an account? <br><a href="../signup/signup.html" target="self">Register Now &raquo;</a></p>
   </div>
 </div>
 <!--Forget Password Section-->
