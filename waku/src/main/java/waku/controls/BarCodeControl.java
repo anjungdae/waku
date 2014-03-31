@@ -43,7 +43,7 @@ Logger log = Logger.getLogger(MyItemControl.class);
 	public Object ajaxRead(int gNo) throws Exception {
 		try{
 			List<BarCode> bacodeList = barcodeDao.selectRead(gNo);
-						
+			
 			BarCode bacodeListGet = null;
 			
 			if(bacodeList.size() != 0){

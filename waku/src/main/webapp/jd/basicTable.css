@@ -9,11 +9,70 @@ td{
   padding:0px;
 }
 
+#messageNotice{
+	color:#3571B5;
+}
+
+#mask {
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	background:#000;
+	background-color: rgba(0, 0, 0, 0.5);
+	display:none;
+	z-index: 9000;
+}
+
+#barCodeOne{
+  position: relative;
+  font-family: courier;
+  top: 65%;
+}
+
+#popup .pop-container {
+  padding: 20px 15px;
+}
+
+#barCodeImageBox{
+	height: 75px;
+}
+
+#barCodeImage {
+  position: relative;
+  height: 80px;
+  width: 100%;
+}
+
+#barCodeOne {
+  font-family: courier;
+}
+
+#btn-r {
+	border-top: 1px solid #DDD; 
+	padding-top: 10px;
+}
+
+#couponBoxIn{
+	display:inline-block; height:25px; padding:0 14px 0; border:1px solid #304a8a; background-color:#3f5a9d; font-size:13px; color:#fff; line-height:25px;
+	position: relative;
+  left: -13%;
+  font-family: courier;
+}
+
+#exitClose{
+	display:inline-block; height:25px; padding:0 14px 0; border:1px solid #304a8a; background-color:#3f5a9d; font-size:13px; color:#fff; line-height:25px;
+	position: relative;
+  left: 2%;
+	font-family: courier;
+}
+
 .basicTable{
 	position:relative;
 	border-radius: 10px 0px 0px 10px;
 	top:6000px;
-	border:5px solid skyblue;
+	border:5px solid #2FACE8;
 	padding:0px;
   vmargin:"0";
 	margin:10px;
@@ -27,6 +86,10 @@ td{
   width:19%;
 }
 
+.titleEdate{
+	background: #F0E68C;
+}
+
 #indexIcon{
   width:35px;
   height:35px;
@@ -34,7 +97,7 @@ td{
 
 .basicTdImage{
 	border-radius: 5px 0px 0px 5px;
-	background: linear-gradient(to bottom, #258dc8 0%,#2facf9 100%);
+	background: #11CAE8;
 	text-align: center;
 	width:25%;
 	border-right: 5px solid #F4A460;
@@ -43,7 +106,7 @@ td{
 .goodImage{
   width:65px;
   height:65px;
-  border:2px solid #25ffff;
+  border:3px solid #2FACE8;
 }
 
 #itemReq{
@@ -69,14 +132,12 @@ td{
 }
 
 .combineButton{
-	position:absolute;
-  bottom:0px;
-  
+	position: absolute;
+  bottom: 0px;
   border-radius: 5px 5px 0px 0px;
-  background:greenyellow;
-  width:277px;
-  
-  left:50%;
-  margin-left:-25%;
-  text-align:center;
+  background: #ADFF2F;
+  height: 20%;
+  width: 75%;
+  text-align: center;
+  font: bold 14px sans-serif;
 }

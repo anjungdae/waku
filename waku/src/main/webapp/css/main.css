@@ -1,11 +1,32 @@
 @CHARSET "UTF-8";
 
+#popup {
+	position:fixed;
+	width:300px;
+	height:auto; 
+	background-color:#fff;
+	border: 5px solid #3571B5;
+	border-radius:5px;
+  text-align:center;
+  z-index:9999;
+  display:none;
+}
+
+#bgImage{
+	opacity: 0.5;
+	position:absolute;
+	width:50%;
+	height:auto;
+	top:40%;
+	left:30%;
+	font-size:xx-large;
+}
+
 body {
 	height:320px;
 	margin:0;
 	padding:0;
 	bgcolor:white;
-	font:bold 7px fantasy;
 }
 
 li {
@@ -119,4 +140,5 @@ div #colist {
 .itemNameLi{
   position:relative;
   top:50%;
+  font:bold 7px fantasy;
 }
