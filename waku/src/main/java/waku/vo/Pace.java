@@ -1,57 +1,22 @@
 package waku.vo;
 
-import java.sql.Date;
-
 public class Pace {
 	
-	int uno;
-	int wcount;
-	float wcal;
-	float wkm;
-	int wtimer;
-	Date wdate;
-		
-	public int getUserno() {
-		return uno;
+	int uNo;
+	int wCount;
+	
+	public int getuNo() {
+		return uNo;
 	}
-	public Pace setUserno(int userno) {
-		this.uno = userno;
+	public Pace setuNo(int uNo) {
+		this.uNo = uNo;
 		return this;
 	}
-	public int getWcount() {
-		return wcount;
+	public int getwCount() {
+		return wCount;
 	}
-	public Pace setWcount(int wcount) {
-		this.wcount = wcount;
+	public Pace setwCount(int wCount) {
+		this.wCount = wCount;
 		return this;
 	}
-	public float getWcal() {
-		return wcal;
-	}
-	public Pace setWcal(float wcal) {
-		this.wcal = wcal;
-		return this;
-	}
-	public float getWkm() {
-		return wkm;
-	}
-	public Pace setWkm(float wkm) {
-		this.wkm = wkm;
-		return this;
-	}
-	public int getWtimer() {
-		return wtimer;
-	}
-	public Pace setWtimer(int wtimer) {
-		this.wtimer = wtimer;
-		return this;
-	}
-	public Date getWdate() {
-		return wdate;
-	}
-	public Pace setWdate(Date wdate) {
-		this.wdate = wdate;
-		return this;
-	}
-
 }
