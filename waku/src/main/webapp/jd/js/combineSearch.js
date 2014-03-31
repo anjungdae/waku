@@ -228,6 +228,7 @@ $(window).load(function() {
 					
 					//
 					var timelag = 0;
+					
 					for(var m = 0; m<goodsImageAf.length;m++){
 						$("#basicTable"+ m).animate({ "top": "0px" }, timelag +=200 );
 					};

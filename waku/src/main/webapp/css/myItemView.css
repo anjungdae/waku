@@ -1,0 +1,18 @@
+@CHARSET "UTF-8";
+
+table {
+  display:inline-table;
+}
+
+.myItemTable{
+	border:5px solid #2FACE8;
+	background:#F8F8FF;
+	margin: 1%;
+	width:30%;
+	height: 8em;
+	display:none;
+}
+
+.myItemViewImgae{
+	
+}
