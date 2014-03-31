@@ -1,3 +1,7 @@
+html {
+	overflow:hidden;
+	height:100%;
+}
 body {
   margin:0;
   padding:0;
@@ -6,9 +10,15 @@ body {
   font-size:large;
   color:#999;
   vertical-align:baseline;
-  overflow-x:hidden;
+  overflow:hidden;
+  height: 100%;
 }
-
+p {
+	font-size:2em;
+	padding-bottom: 5%;
+  margin-bottom:0;
+  color:#999;
+}
 a {
   text-decoration:none;
 }
@@ -17,7 +27,7 @@ h1, h2, h3 {
   color:#2a2a2a;
 }
 h1 {
-	padding-top: 7%;
+  padding-top: 7%;
   margin:10%;
   font-size: 3em;
 }
@@ -28,12 +38,12 @@ h1 {
   height:100%;
   text-align:center;
 }
-.signup-form{
+.login-form{
   background:#fff;
   border-radius: 10px;
   text-align:center;
   width:80%;
-  margin: 15% 10%;
+  margin: 15% 10% 0 10%;
 }
 .form-wrapper {
   margin: 0;
@@ -50,13 +60,13 @@ h1 {
   font-family: inherit;
 }
 .form-wrapper .email {
-	font-size:2em;
-  background:#eaedf2 url(email.png) 3% 50% no-repeat;
+  font-size:2em;
+  background:#eaedf2 url(../img/email.png) 3% 50% no-repeat;
   background-size: 1em;
 }
 .form-wrapper .password {
-	font-size:2em;
-  background:#eaedf2 url(password.png) 3% 50% no-repeat;
+  font-size:2em;
+  background:#eaedf2 url(../img/password.png) 3% 50% no-repeat;
   background-size: 1em;
 }
 .form-wrapper .button {
@@ -72,8 +82,31 @@ h1 {
   width: 70%;
   outline:none;
   margin-left: 15%;
-  margin-top: 15%;
-  margin-bottom:5%;
+  margin-top: 5%;
+  margin-bottom:2%;
   font-family: inherit;
   background-color:#2ca1cc;
+}
+.facebook-login {
+	width:70%;
+  background:url(../img/facebook.png) no-repeat;
+  background-size:21em;
+  display:inline-block;
+  outline:medium none;
+  margin-left:5.5%;
+  padding:4% 0;
+}
+.form-wrapper .button span {
+	left: 0;
+	color:#fff;
+	font-size: 1em;
+}
+span {
+	position:relative;
+	left:8%;
+	font-size:1.7em;
+	color:#fff;
+}
+.ui-loader-default {
+  display: none;
 }

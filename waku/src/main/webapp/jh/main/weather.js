@@ -1,7 +1,6 @@
-(function weather() {
-	console.log("weather");
-	latitude = 37.4946019;
-  longitude = 127.0280055;
+function weather(latitude,longitude) {
+	//latitude = 37.4946019;
+  //longitude = 127.0280055;
     
     var weatherApi = "http://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude;
     
@@ -84,16 +83,11 @@
 
           default:weatherMainKR="unknown";
         };
-        
-        
         var weatherTemp = Math.round((data.main.temp-273)*10)/10.0;
-        
-        
         var weatherFormIcon = document.getElementById("weatherFormIcon");
-        
         $("#weatherIcon").attr("src","http://api.openweathermap.org/img/w/" + weatherIcon + ".png")
         .attr("height","50em")
         .appendTo(weatherFormIcon);
         $("<a>"+ weatherMainKR + "&nbsp;" + weatherTemp + "&deg;</p>").appendTo("#weahterNotice");
     });
-})();
+};
