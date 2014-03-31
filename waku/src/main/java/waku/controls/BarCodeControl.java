@@ -16,7 +16,7 @@ import waku.vo.BarCode;
 import waku.vo.JsonResult;
 
 @Controller
-@RequestMapping("/jd/pacecounter")
+@RequestMapping("/barcode")
 public class BarCodeControl {
 Logger log = Logger.getLogger(MyItemControl.class);
 	

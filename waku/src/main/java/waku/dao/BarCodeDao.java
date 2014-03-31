@@ -3,6 +3,8 @@ import java.util.List;
 
 import waku.vo.BarCode;
 
+
+
 public interface BarCodeDao {
 	public List<BarCode> selectList() throws Exception;
 	public List<BarCode> selectRead(int gNo) throws Exception;
