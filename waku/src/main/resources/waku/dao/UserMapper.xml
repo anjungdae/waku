@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="waku.dao.UserDao">
+  <resultMap type="user" id="userResultMap">
+    <id     property="uNo"       column="U_NO"/>
+    <result property="uEmail"     column="U_EMAIL"/>
+    <result property="uPassword"    column="U_PASSWORD"/>
+    <result property="uWtotal"    column="U_W_TOTAL"/>
+  </resultMap>  
+     
+  	
+<!-- 회원가입 -->
+   <insert id="insert" parameterType="user"> 
+    INSERT INTO USER(U_EMAIL,U_PASSWORD) 
+    VALUES(#{uEmail},#{uPassword})
+  </insert>
+      
+  
+	
+<!--회원가입시 이메일 중복체크하기/만약있으면'이미 가입되어있습니다'-->
+	<select id="chkByUser" parameterType="String" resultMap="userResultMap">
+ 
+  select * from USER
+  where U_EMAIL=#{uEmail} 
+  
+    </select>
+  
+<!--로그인하기-->	
+	<select id="login" parameterType="hashmap" resultMap="userResultMap">
+   select U_EMAIL,U_PASSWORD,U_W_TOTAL
+  from USER
+  where U_EMAIL=#{uEmail} and U_PASSWORD=#{uPassword}
+    </select>
+
+	
+<!-- 회원정보 리스트보기-->
+	<select id="selectList" resultMap="userResultMap">
+		select U_NO,U_EMAIL,U_PASSWORD,U_W_TOTAL
+		from USER
+	</select>
+		
+<!-- 회원선택 -->
+	<select id="selectuNo" resultMap="userResultMap">
+  select U_NO from USER
+    where U_EMAIL=#{uEmail}	
+    </select>
+	
+	
+		
+	
+	
+<!--회원삭제-->
+  <delete id="delete" parameterType="int">
+    delete from USER where U_NO=#{value}
+  </delete>
+  
+ </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
