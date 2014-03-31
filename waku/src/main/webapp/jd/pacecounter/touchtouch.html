@@ -5,7 +5,6 @@
 		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css">
 		<link rel="stylesheet" href="../../css/main.css">
 		<link rel="stylesheet" href="../basicTable.css">
-		<script src="http://code.jquery.com/jquery-latest.js"></script> 
 		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 		<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 		<script src="../js/touchSearch.js"></script>
@@ -29,6 +28,10 @@
 	    <div id = "combineList" style="background:#f0f9ff;">
 	    </div>
 	    
+	    <div id="mask">
 	    <div id="popup"></div>
+	    </div>
+	    
+	    <div onmousedown="return false" onclick="this.disabled=1;"><img id = "bgImage" src="waku.png"></div>
   </body>  
 </html>

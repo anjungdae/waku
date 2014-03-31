@@ -24,15 +24,27 @@ $(window).load(function() {
 	var myItemImage =[];
 	var myItemStock =[];
 	
+	var checkName='';
+	
 	function nameGrant(itemName,itemNumber){
 		$("#" + itemName).bind("tap",function(){
-			console.log(itemNumber);
-			if(iNo.length<4){
-				iNo.push(itemNumber);
+			
+			if(checkName!=itemName){
+				if(iNo.length<4){
+					iNo.push(itemNumber);
+				} else {
+					iNo = [];
+					iNo.push(itemNumber);
+				}
 			} else {
 				iNo = [];
 				iNo.push(itemNumber);
 			}
+			
+			checkName=itemName;
+									
+			$('.basicTable').fadeOut();
+			$('#bgImage').fadeOut();
 			
 			var orderFlag =[];
 			var goodsTotalIno = [];
@@ -116,7 +128,7 @@ $(window).load(function() {
 						table.setAttribute("cellpadding","0");
 						var trtd = '';
 						
-						goodsItemReq = [];
+						goodsItemNo = [];
 						goodsItemImage =[];
 						goodsItemReq = [];
 
@@ -166,8 +178,8 @@ $(window).load(function() {
 						trtd += "</tr>";
 						
 						trtd += "<tr>";
-						trtd += "<td class='basicTd' colspan='2'>"+goodsTitleAf[i]+"</td>";
-						trtd += "<td class='basicTd' colspan='2' style='text-align:right;'>"+goodsEdateAf+"</td>";
+						trtd += "<td class='basicTd titleEdate' colspan='2'>"+goodsTitleAf[i]+"</td>";
+						trtd += "<td class='basicTd titleEdate' colspan='2' style='text-align:right;'>"+goodsEdateAf+"</td>";
 						trtd += "</tr>";
 						
 						trtd += "<tr>";
@@ -257,35 +269,85 @@ $(window).load(function() {
 								}
 								
 								$.ajax({type:"GET",url:"barCode/read.do?gNo="+gNo,async:false,success:function(barCodes){
-									var barCode = barCodes.jsonResult.data;								
+									var barCode = barCodes.jsonResult.data;		
+									
 									if(barCode != null){
-										
 										var popup = document.getElementById("popup");
 										var pt = '';
 										
-										pt = barCode.cCode;
+										pt += "<div class='pop-container'>"
+										pt += "<div id='barCodeImageBox'><img id='barCodeImage' src='barCode0.PNG'></div>";
+										pt += "<div id='barCodeOne'>"+barCode.cCode+"</div>";
+										pt += "<div id='btn-r'>"
+										pt += "<span id='couponBoxIn'>내 쿠폰함으로</span><span id='exitClose'>닫기</span>"
+										pt += "</div>"
+										pt += "</div>"
 										
 										popup.innerHTML = pt;
+										
+										$('#mask').fadeIn();
 										
 										var winH = $(window).height();
 										var winW = $(window).width();
 								              
 										//Set the popup window to center
 										$('#popup').css('top',  winH/2-$('#popup').height());
-										$('#popup').css('left', (winW/2-$('#popup').width()/2)-20);
+										$('#popup').css('left', (winW/2-$('#popup').width()/2));
 										
 										$('#popup').fadeIn();
 										
-										//location.replace('touchtouch.html');
+										var mask = document.getElementById("mask");
+										
+										$('#couponBoxIn').click(function(event){
+											if(mask){
+												$('#mask').fadeOut();
+											}
+											event.preventDefault();
+											location.replace = '#';
+										});
+										
+										$('#exitClose').click(function(event){
+											if(mask){
+												$('#mask').fadeOut();
+											}
+											event.preventDefault();
+											location.href = 'touchtouch.html';
+										});
+										
+										$('#mask').click(function(e){  //배경을 클릭하면 레이어를 사라지게 하는 이벤트 핸들러
+											$('#mask').fadeOut();
+											e.preventDefault();
+											location.href = 'touchtouch.html';
+										});
+										
+										
 									} else if(barCode == null){
-										alert("바코드가 모두 소진 되었습니다");
+										for(var n = 0; n<goodsTotalReq[m].length; n++){
+											
+											var goodsIno = goodsTotalIno[m][n];
+											var defaultStock = myItemTotalStock[m][n];
+											
+											$.ajax({type:"POST",url:"myItem/update.do",data:{
+											      uNo:uNo,
+											      iNo:goodsIno,
+											      iStock:defaultStock
+											    },async:false,success:function(){
+											}, error:function(){	
+												alert('데이터 처리중입니다. 잠시 뒤 다시 시도해주세요.');  
+											}
+											});
+										}
+										
+										var soldOut = "바코드가 방금 모두 소진 되었네요..";
+										popupMessage(soldOut);
 									}
-								}, error:function(){	
+								}, error:function(){
 									alert('데이터 처리중입니다. 잠시 뒤 다시 시도해주세요.');  
 								}
 								});
 							} else {
-								alert('내 아이템 수량을 확인해 주세요!');
+								var shortAge = "내 아이템 수량을 확인해 주세요!";
+								popupMessage(shortAge);
 							}
 						});
 					};
@@ -304,3 +366,47 @@ $(window).load(function() {
 //	}
 //	});
 });
+
+function popupMessage(message){
+	var popup = document.getElementById("popup");
+	var pt = '';
+	
+	pt += "<div class='pop-container'>"
+		
+		switch (message) {
+		case "바코드가 모두 소진 되었습니다": pt += "<div><img src='shortAgeImage.png'></div>";break;
+		case "내 아이템 수량을 확인해 주세요!": pt += "<div><img src='soldOutImage.png'></div>";break;
+
+		default:
+			alert('데이터 처리중입니다. 잠시 뒤 다시 시도해주세요.');
+			break;
+		}
+	
+	pt += "<div id='messageNotice'>" + message +"</div>";
+	pt += "</div>"
+	
+	popup.innerHTML = pt;
+	
+	$('#mask').fadeIn();
+	
+	var winH = $(window).height();
+	var winW = $(window).width();
+	
+	//Set the popup window to center
+	$('#popup').css('top',  winH/2-$('#popup').height());
+	$('#popup').css('left', winW/2-$('#popup').width()/2);
+	
+	$('#popup').fadeIn();
+	
+	var mask = document.getElementById("mask");
+	
+	$('#popup').click(function(event){
+		$('#popup').fadeOut();
+		event.preventDefault();
+	});
+	
+	$('#mask').click(function(e){  //배경을 클릭하면 레이어를 사라지게 하는 이벤트 핸들러
+		$('#mask').fadeOut();
+		e.preventDefault();
+	});
+}
