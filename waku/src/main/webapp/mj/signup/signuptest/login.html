@@ -14,6 +14,47 @@
 <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
 <script type="text/javascript" src="FBlogin.js"></script>
 
+<script type="text/javascript">
+	if(localStorage.getItem("mtList")!=null){
+		$.mobile.changePage('startClimbing.html');
+	}
+
+	$(document).on('click', '#checkLogin', function() {
+		checkLogin($('#name').val(), $('#password').val());
+	});
+	function checkLogin(id, pass) {
+		$.ajax({
+			type : 'GET',
+			dataType : 'json',
+			async : false,
+			url : 'user/login.do?"uEmail"+"&uPassword"+='+id+"&password="+pass,
+			success:function(data){
+				jsonCallback(data);
+			}
+		});
+	}
+
+	function jsonCallback(data) {
+		if (data.jsonResult.resultStatus == 0) {
+			localStorage.setItem("uEmail",data.jsonResult.data.uEmail);
+			localStorage.setItem("uWtotal",data.jsonResult.data.uWtotal);
+// 			$.mobile.changePage('startClimbing.html');
+		} else {
+			alert('로그인이 실패 하였습니다.(다시확인해주세요)');
+		}
+	}
+</script>
+<script>
+$(document).ready(function(){
+	if(localStorage.getItem("userInfo")!=null){
+		$.mobile.changePage('home.html');
+	}
+})
+</script>
+
+
+
+
 
 </head>
 <body>

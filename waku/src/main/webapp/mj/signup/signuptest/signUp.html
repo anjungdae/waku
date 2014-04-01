@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+	<head>
+	<script>
+	var baseUrl = 'http://192.168.0.54:9999/mtLeader/mtMap/';
+	</script>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>jQuery Mobile Bootstrap Theme</title>
+		<link rel="stylesheet" href="css/commonMain/jquery.mobile.icons.min.css" />
+		<link rel="stylesheet" href="css/commonMain/Bootstrap.css">
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0/jquery.mobile.structure-1.4.0.min.css" />
+		<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
+		<script src="js/signUp/jquery.validate.js"></script>
+		<script src="js/signUp/check.js"></script>
+	
+	</head>
+	<body>
+		<div data-role="page" data-theme="a">
+			<div data-role="header" data-position="inline">
+				<!-- <h1>jQuery Mobile Bootstrap Theme</h1> -->
+				<div data-role="navbar">
+					<ul>
+						<li><a href="../login/login.html" data-icon="home" class="ui-btn-active">Home</a></li>
+						<li><a href="buttons.html" data-icon="star" >Buttons</a></li>
+						<li><a href="../friends/friend&groups.html" data-icon="grid" >Friends</a></li>
+						<li><a href="nav.html" data-icon="search" >Nav</a></li>
+						<li><a href="forms.html" data-icon="gear" >Forms</a></li>
+					</ul>
+				</div>
+			</div>
+			<div data-role="content" data-theme="a">
+			    <div class="container">
+			    	<form name="signUp" id="valiex" action="add.do" method="post">
+			        <h2 class="form-signin-heading">회원가입</h2>
+			        
+				        <input type="text" name="email" id="email" class="input-block-level" placeholder="Email address">
+				        <input type="password" name="password" id="password" class="input-block-level" placeholder="Password">
+				        <input type="password" name="pwchk" id="pwchk" class="input-block-level" placeholder="RePassword">
+				        <input type="text" name="name" id="name" class="input-block-level" placeholder="Name">
+			       
+			     	<div class="ui-body ui-body-b">
+						<fieldset class="ui-grid-a">
+							<div class="ui-block-a"><button type="submit" data-theme="b">회원가입</button></div>
+							<div class="ui-block-b"><button type="button" data-theme="d" onclick="location.href='index.html';return false;">취소</button></div>
+					    </fieldset>
+					</div>
+			     
+			     
+			      </form>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>jQuery Mobile Bootstrap Theme</title>
+<link rel="stylesheet" href="css/commonMain/Bootstrap.css">
+<link rel="stylesheet"
+	href="http://code.jquery.com/mobile/1.4.0/jquery.mobile.structure-1.4.0.min.css" />
+<link rel="stylesheet" href="css/commonMain/jquery.mobile.icons.min.css" />
+<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+<script
+	src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
+<script type="text/javascript">
+	if(localStorage.getItem("mtList")!=null){
+		$.mobile.changePage('startClimbing.html');
+	}
+
+	$(document).on('click', '#checkLogin', function() {
+		checkLogin($('#name').val(), $('#password').val());
+	});
+	function checkLogin(id, pass) {
+		$.ajax({
+			type : 'GET',
+			dataType : 'json',
+			async : false,
+			url : "http://192.168.0.54:9999/mtLeader/mtMap/user/login.do?userID="+id+"&password="+pass,
+			success:function(data){
+				jsonCallback(data);
+			}
+		});
+	}
+
+	function jsonCallback(data) {
+		if (data.jsonResult.resultStatus == 0) {
+			localStorage.setItem("user_email",data.jsonResult.data.email);
+			localStorage.setItem("user_name",data.jsonResult.data.user_name);
+			localStorage.setItem("user_photo",data.jsonResult.data.user_photo);
+			localStorage.setItem("user_create_Date",data.jsonResult.data.create_Date);
+			$.mobile.changePage('startClimbing.html');
+		} else {
+			alert('로그인이 실패 하였습니다.(다시확인해주세요)');
+		}
+	}
+</script>
+<script>
+$(document).ready(function(){
+	if(localStorage.getItem("userInfo")!=null){
+		$.mobile.changePage('home.html');
+	}
+})
+</script>
+
+
+
+</head>
+<body>
+	<div data-role="page" data-theme="a">
+		<div data-role="header" data-position="inline">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#" data-icon="home" target="_self">Climbing</a></li>
+					<li><a href="#" data-icon="star" target="_self">History</a></li>
+					<li><a href="#" data-icon="grid" target="_self">Chart</a></li>
+					<li><a href="#" data-icon="search" target="_self">Map</a></li>
+					<li><a href="#" data-icon="gear">Friend&Group</a></li>
+				</ul>
+			</div>
+		</div>
+		<div data-role="content" data-theme="a">
+			<div class="container">
+				<form
+					action="http://192.168.0.54:9999/mtLeader/mtMap/ajax/user/login.do"
+					method="get" name="login" class="form-signin">
+					<h2 class="form-signin-heading">Please sign in</h2>
+					<input type="text" id="name" class="input-block-level"
+						placeholder="Email address" name="userID"> <input
+						type="password" id="password" class="input-block-level"
+						placeholder="Password" name="password">
+					<button type="button" id="checkLogin" name="checkLogin"
+						data-role="button" data-theme="b" data-icon="check">LOGIN</button>
+					<a href="signUp.html" target="_self" data-role="button" data-theme="d" data-icon="info">회원가입</a>
+				</form>
+			</div>
+		</div>
+</body>
+</html>
