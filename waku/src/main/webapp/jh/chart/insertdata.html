@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../cordova.js"></script>
+<script type="text/javascript" src="../js/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="../js/Toast.js"></script>
+<script>
+window.onload = function() {
+	$.ajax({
+		url:"http://121.138.120.81:9900/htmltest2/take1/paceOfUser.do?no=1",
+    type:"GET",
+    success:function(data){
+    	//alert(data);
+      var paceData = [];
+      var paceList = data.paceList;
+      var pace;
+      var paceLabel = [];
+      var paceData = [];
+      for(var i = 0 ; i < paceList.length ; i++) {
+        pace = paceList[i];
+        $.each(pace, function(key,value) {
+          if(key === "date") {
+            paceLabel.push(value);
+          }
+          if(key === "walkCount") {
+            paceData.push(value);
+          }
+        });
+      }
+      //console.log(paceLabel);
+      //console.log(paceData);
+      //localStorage.data = [];
+      var inputData = new Object();
+      for(var i = 0 ; i < paceList.length ; i++) {
+        inputData[paceLabel[i]] = paceData[i];
+      }
+      //console.log(inputData);
+      //console.log(inputData["2013-01-01"]);
+      //console.log(JSON.stringify(inputData));
+      localStorage.data = JSON.stringify(inputData);
+      //console.log(localStorage);
+      //var data = JSON.parse(localStorage.data);
+      //alert(data);
+      window.location.href = "chartpage.html";
+    },
+    error:function(){
+      alert("시스템이 바쁩니다.\n나중에 다시 시도해 주세요!");
+    }
+	});
+};
+</script>
+</head>
+<body>
+</body>
+</html>

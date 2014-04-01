@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport"
+	content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+<link rel="stylesheet" href="main.css">
+<link rel="stylesheet" href="../css/jquery.mobile-1.4.2.min.css">
+<!-- cordova -->
+<script type="text/javascript" charset="utf-8" src="../cordova.js"></script>
+<!-- Toast -->
+<script type="text/javascript" src="../js/Toast.js"></script>
+<!-- jquery -->
+<script src="../js/jquery-1.10.1.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+<script type="text/javascript" src="pacecount.js"></script>
+<script type="text/javascript" src="weather.js"></script>
+<!-- google map -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdziY_xl5gxaUkekLDsEZ_FqTeD0D7v5U&sensor=true"></script>
+<script type="text/javascript" charset="utf-8">
+//window.plugins.toast.showShortBottom("map area");
+
+var latlng = null;
+var map;
+var myMarker = null;
+var watchPositionID = null;
+var myLat,myLon = null;
+var mySymbol = {
+    path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+    fillColor: "#00bfff",
+    fillOpacity: 1,
+    scale: 6,
+    strokeColor: "white",
+    strokeWeight: 2
+};
+function onPosSuccess(myPosition) {
+  /*
+  position.coords.latitude
+  position.coords.longitude
+  position.coords.altitude
+  position.coords.accuracy
+  position.coords.altitudeAccuracy
+  position.coords.heading
+  position.coords.speed
+  position.timestamp
+  */
+  myLat = myPosition.coords.latitude;
+  myLon = myPosition.coords.longitude;
+  if(typeof map == "undefined") {
+    initializeMap(myPosition);
+  } else {
+    positionChange(myPosition);
+  }
+};
+function positionChange(myPosition) {
+  latlng = new google.maps.LatLng(myPosition.coords.latitude,myPosition.coords.longitude);
+  if(myPosition.coords.heading) {
+    mySight.rotation = myPosition.coords.heading;
+  }
+  map.panTo(latlng);
+  myMarker.setPosition(latlng);
+}
+function initializeMap(myPosition){
+	weather(myLat,myLon);
+  //window.plugins.toast.showShortBottom("Map initialized...");
+  latlng = new google.maps.LatLng(myPosition.coords.latitude,myPosition.coords.longitude);
+  var mapOptions = {
+      center: latlng,
+      zoom: 18,
+      draggable: false,
+      mapTypeControl: false,
+      disableDoubleClickZoom: true,
+      panControl: false,
+      zoomControl: false,
+      scaleControl: false,
+      streetViewControl:false,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+  map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
+  myMarker = new google.maps.Marker({
+    map: map,
+    position: latlng,
+    icon: mySymbol
+  });
+  myMarker.setZIndex(1000);
+};
+</script>
+<title>for testing</title>
+</head>
+<body>
+  <div id="top" data-role="navbar" data-theme="b">
+    <ul>
+      <li><a href="#"><img src='../img/indexImage/inventory.png'></a></li>
+      <li><a href="../couponbox/mycouponlist.html"><img src='../img/indexImage/clock.png'></a></li>
+      <li><a href="../combineForm/touchtouch.html" target="self"><img src='../img/indexImage/combine.png'></a></li>
+      <li><a href="../chart/chartpage.html" target="self"><img src='../img/indexImage/coupon.png'></a></li>
+    </ul>
+  </div><!-- /navbar -->
+  <!-- 
+  <div id="top">
+    <a id="slidepop" href="#sideList" data-iconpos="notext" class="ui-btn-inline"><img src='../img/indexImage/inventory.png' height="25px"></a>
+    <a id="pcounter" href="#" class="ui-btn-inline"><img src='../img/indexImage/clock.png' height="25px"></a>
+    <a id="inven" href="#" data-transition="slide" class="ui-btn-inline"><img src='../img/indexImage/combine.png' height="25px"></a>
+    <a id="colist" href="../chart/insertdata.html" target="self" data-transition="slide" class="ui-btn-inline"><img src='../img/indexImage/coupon.png' height="25px"></a>
+  </div>
+  -->
+  <div id="weatherForm">
+    <div id="weatherFormIcon">
+      <img id="weatherIcon">
+    </div>
+    <div id="weatherFormNotice">
+      <a id="weahterNotice"></a>
+    </div>
+  </div>
+  <div id="accelerometer">
+    <table>
+      <tr id="accelerWalk"></tr>
+      <tr id="accelerData"></tr>
+    </table>
+  </div>
+  <div id="mapview">
+    <div id="map-canvas"></div>
+  </div>
+</body>
+</html>
