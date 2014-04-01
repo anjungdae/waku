@@ -11,12 +11,46 @@ public class Goods {
 	Date gEdate;
 	boolean gValid;
 	
-	Company company;
-	
-	int iNo;
-	String iClass;
-	String iImage;
-	int iReq;
+	  String  cName;
+	  String   cImage;
+	  String     cPage;
+	  String   cAd;
+	  
+		int iNo;
+		String iClass;
+		String iImage;
+		int iReq;
+	  
+
+	public String getcName() {
+		return cName;
+	}
+	public Goods setcName(String cName) {
+		this.cName = cName;
+		return this;
+	}
+	public String getcImage() {
+		return cImage;
+	}
+	public Goods setcImage(String cImage) {
+		this.cImage = cImage;
+		return this;
+	}
+	public String getcPage() {
+		return cPage;
+	}
+	public Goods setcPage(String cPage) {
+		this.cPage = cPage;
+		return this;
+	}
+	public String getcAd() {
+		return cAd;
+	}
+	public Goods setcAd(String cAd) {
+		this.cAd = cAd;
+		return this;
+	}
+
 	
 	public int getgNo() {
 		return gNo;
@@ -68,13 +102,7 @@ public class Goods {
 		return this;
 	}
 	
-	public Company getCompany() {
-		return company;
-	}
-	public Goods setCompany(Company company) {
-		this.company = company;
-		return this;
-	}
+
 	
 	public int getiNo() {
 		return iNo;

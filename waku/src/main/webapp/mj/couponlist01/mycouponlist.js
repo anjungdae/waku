@@ -49,7 +49,7 @@ function loadCoupon() {
 	    	                	success : function(coupons) {
 	    	                		var company = coupons.jsonResult.data;
 	    	                		console.log(company);
-	    	                		temp += "<div id ='cName'>" +  company[0].company.cName + '</div>';
+	    	                		temp += "<div id ='cName'>" +  company[0].cName + '</div>';
 	    	                	}
 	            		    });
 	            		    
@@ -158,7 +158,7 @@ function loadCoupon() {
 									
 									$.ajax({
 										async: false,
-					                	url : "/waku/barcode/joinGoods.do?gNo="+coupon[i].barCode.gNo,
+					                	url : "/waku/barcode/joinGoods.do?gNo="+coupon[i].gNo,
 					                	success : function(goods) {
                                         console.log(goods);
                                         var goodsData=goods.jsonResult.data;
